@@ -1,0 +1,6 @@
+# Mac Stuff
+.DS_Store
+.sublime-project
+
+# Do not upload CSV files (datasets)
+*.csv
