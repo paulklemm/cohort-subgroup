@@ -1,0 +1,140 @@
+.form-control {
+    outline: 0;
+    border-color: #ECECEC;
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 6px;
+    border-radius: 2px;
+    /*margin-bottom: 5px;*/
+    font-size: 14px;
+}
+
+.bp-autocomplete-holder {
+    position: relative;
+}
+
+.bp-autocomplete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    width: 340px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    margin-top: -6px;
+    background-color: #ffffff;
+}
+
+.bp-autocomplete-searching {
+    color: #bp-acacac;
+    font-size: 14px;
+}
+
+.bp-autocomplete-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+
+}
+
+.bp-autocomplete-row:hover {
+    background-color: lightgreen;
+    color: #ffffff;
+}
+
+.bp-autocomplete-highlight {
+    font-weight:bold;
+    color: #31B404;
+}
+
+.bp-ac {
+    font-family: "bariol_regularregular", Arial;
+    letter-spacing: 0.01em;
+    font-size: 14px;
+    text-rendering: optimizeLegibility;
+    height: 100%;
+    /*width: 340px;*/
+    width: 100%;
+    text-align: left;
+}
+
+.bp-ac input, button, textarea {
+    -webkit-appearance: none;
+}
+
+#bp-ac .white-bg {
+    background: #ffffff;
+    min-height: 100%;
+}
+
+.bp-ac a {
+    color: #5BCDD5;
+    text-decoration: none;
+}
+
+#bp-ac a:hover {
+    color: #F98200;
+}
+
+#bp-ac .centered-heading {
+    font-family: "bariol_regularregular", Arial;
+    font-size: 5em;
+    text-align: center;
+}
+
+#bp-ac h1, h2, h3, h4, h5, h6 {
+    font-family: "bariol_regularregular", Arial;
+    line-height: 1em;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h3 {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*.bp-autocomplete-image-holder {
+    padding-top: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.bp-autocomplete-image {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border-color: #ececec;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.bp-autocomplete-image-default {
+    /* Add your own default image here
+     background-image: url('/assets/default.png');
+    */
+/*    background-position: center;
+    background-size: contain;
+    height: 34px;
+    width: 34px;
+}*/
