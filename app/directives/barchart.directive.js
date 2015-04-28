@@ -1,5 +1,5 @@
 angular.module('gui')
-.directive('barchart', [function(){
+.directive('barchart', ['data', function(data){
   return {
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div class="barchart"></div>',
@@ -7,7 +7,7 @@ angular.module('gui')
       $scope.$on("dataLoaded", function(){
         ages = [];
         for(var i=0; i <= 9; i++){
-          ages[i] = +data[i].Age;
+          ages[i] = +data.dataset[i].Age;
         }
         d3.select(".barchart")
         .selectAll("div")
