@@ -1,5 +1,5 @@
 angular.module('gui')
-.directive('searchbar', [function(){
+.directive('searchbar', ['data', function(data){
   return {
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div id="searchbar"></div>',
@@ -7,13 +7,8 @@ angular.module('gui')
       $scope.attributeClicked = false;
       $scope.$on("dataLoaded", function(){
 
-        var keys;
-
-        //Load attributes as options from CSV
-        d3.csv("data/attributes.csv",function (csv) {
-            keys=csv;
-            start();
-        });
+        var keys = d3.keys(data.dataset[0]);
+        start();
 
         //Call back for when user selects an option
         function onSelect(d) {
@@ -26,7 +21,6 @@ angular.module('gui')
         function start() {
             var mc = autocomplete(document.getElementById('searchbar'))
                     .keys(keys)
-                    .dataField("Attribute")
                     .placeHolder("Search Attributes")
                     //.width(960)
                     //.height(500)
@@ -51,7 +45,6 @@ angular.module('gui')
               _keys,
               _selectedFunction=defaultSelected;
               _minLength = 1,
-              _dataField = "dataField",
               _labelField = "labelField";
 
           _selection=d3.select(parent);
@@ -121,15 +114,15 @@ angular.module('gui')
                   function processResults() {
 
                       var results=dropDown.selectAll(".bp-autocomplete-row").data(_matches, function (d) {
-                          return d[_dataField];});
+                          return d;});
                       results.enter()
                           .append("div").attr("class","bp-autocomplete-row")
                           .on("click",function (d,i) { row_onClick(d); })
                           .append("div").attr("class","bp-autocomplete-title")
                           .html(function (d) {
                               var re = new RegExp(_searchTerm, 'i');
-                              var strPart = d[_dataField].match(re)[0];
-                              return d[_dataField].replace(re, "<span class='bp-autocomplete-highlight'>" + strPart + "</span>");
+                              var strPart = d.match(re)[0];
+                              return d.replace(re, "<span class='bp-autocomplete-highlight'>" + strPart + "</span>");
                           });
 
                       results.exit().remove();
@@ -138,10 +131,10 @@ angular.module('gui')
                       results.select(".bp-autocomplete-title")
                           .html(function (d,i) {
                               var re = new RegExp(_searchTerm, 'i');
-                              var strPart = _matches[i][_dataField].match(re);
+                              var strPart = _matches[i].match(re);
                               if (strPart) {
                                   strPart = strPart[0];
-                                  return _matches[i][_dataField].replace(re, "<span class='bp-autocomplete-highlight'>" + strPart + "</span>");
+                                  return _matches[i].replace(re, "<span class='bp-autocomplete-highlight'>" + strPart + "</span>");
                               }
 
                           });
@@ -159,10 +152,9 @@ angular.module('gui')
                           _matches = [];
                           for (var i = 0; i < _keys.length; i++) {
                               var match = false;
-                              match = match || (_keys[i][_dataField].toLowerCase().indexOf(str.toLowerCase()) >= 0);
+                              match = match || (_keys[i].toLowerCase().indexOf(str.toLowerCase()) >= 0);
                               if (match) {
                                   _matches.push(_keys[i]);
-                                  //console.log("matches " + _keys[i][_dataField]);
                               }
                           }
                       }
@@ -170,7 +162,7 @@ angular.module('gui')
 
                   function row_onClick(d) {
                       hideDropDown();
-                      input.node().value= d[_dataField];
+                      input.node().value= d;
                       _selectedFunction(d);
                   }
 
@@ -205,7 +197,7 @@ angular.module('gui')
           }
 
           function defaultSelected(d) {
-              console.log(d[_dataField] + " selected");
+              console.log(d + " selected");
           }
 
 
@@ -218,12 +210,6 @@ angular.module('gui')
           component.keys = function (_) {
               if (!arguments.length) return _keys;
               _keys = _;
-              return component;
-          }
-
-          component.dataField = function (_) {
-              if (!arguments.length) return _dataField;
-              _dataField = _;
               return component;
           }
 
