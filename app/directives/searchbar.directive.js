@@ -4,7 +4,11 @@ angular.module('gui')
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div id="searchbar"></div>',
     controller: function($scope){
-      $scope.attributeClicked = false;
+      /*$scope.attributeClicked = false;*/
+      /*$scope.attributeName = "";*/
+      this.attributeClicked = false;
+      this.attributeName = "Attributname";
+
       $scope.$on("dataLoaded", function(){
 
         var keys = d3.keys(data.dataset[0]);
@@ -12,9 +16,11 @@ angular.module('gui')
 
         //Call back for when user selects an option
         function onSelect(d) {
-            //alert(d.Attribute);
-            $scope.attributeClicked = true; //TODO: reset this when view is left
-            $scope.$apply(); //TODO: is it possible without scope.apply?
+            /*$scope.attributeClicked = true;*/ //TODO: reset this when view is left
+            /*$scope.attributeName = d;*/
+            this.attributeClicked = true;
+            this.attributeName = d;
+            //$scope.$apply(); //TODO: is it possible without scope.apply?
         }
 
         //Setup and render the autocomplete
