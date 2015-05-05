@@ -4,10 +4,27 @@ angular.module('gui')
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div id="searchbar"></div>',
     controller: function($scope){
-      /*$scope.attributeClicked = false;*/
-      /*$scope.attributeName = "";*/
-      this.attributeClicked = false;
-      this.attributeName = "Attributname";
+      $scope.attributeClicked = false;
+      $scope.attributeName = "";
+      /*this.attributeClicked = true;
+      this.attributeName = "Attributname";*/
+
+      function uniq_fast(a) {
+      var seen = {};
+      var out = [];
+      var len = a.length;
+      var j = 0;
+      for(var i = 0; i < len; i++) {
+           var item = a[i];
+           if(seen[item] !== 1) {
+                 seen[item] = 1;
+                 out[j++] = item;
+           }
+      }
+      return out;
+      }
+
+      console.log(uniq_fast(["hello", "hello", "goodbye"]));
 
       $scope.$on("dataLoaded", function(){
 
@@ -16,11 +33,14 @@ angular.module('gui')
 
         //Call back for when user selects an option
         function onSelect(d) {
-            /*$scope.attributeClicked = true;*/ //TODO: reset this when view is left
-            /*$scope.attributeName = d;*/
-            this.attributeClicked = true;
-            this.attributeName = d;
-            //$scope.$apply(); //TODO: is it possible without scope.apply?
+            $scope.attributeClicked = true; //TODO: reset this when view is left
+            $scope.attributeName = d;
+            /*this.attributeClicked = true;
+            this.attributeName = d;*/
+            $scope.$apply(); //TODO: is it possible without scope.apply?
+
+            console.log(data.jsondata.Mobility.type);
+
         }
 
         //Setup and render the autocomplete

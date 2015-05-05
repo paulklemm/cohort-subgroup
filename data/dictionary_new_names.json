@@ -1,0 +1,1502 @@
+﻿{
+	"Cohort": {
+		"detail": "Cohort affiliation (SHIP-TREND-0 or SHIP-2)",
+		"detail_ger": "Kohortenzugehörigkeit (SHIP-TREND-0 oder SHIP-2)",
+		"type": "nominal"
+	},
+	"zz_nr": {
+		"detail": "Subject-ID",
+		"detail_ger": "Subject-ID",
+		"type": "numerical"
+	},
+	"Examination-Location": {
+		"detail": "Examination-Location",
+		"detail_ger": "Untersuchungsort",
+		"type": "nominal"
+	},
+	"Birthday": {
+		"detail": "Birthday",
+		"detail_ger": "Geburtstag",
+		"type": "nominal"
+	},
+	"Gender": {
+		"detail": "Gender",
+		"detail_ger": "Geschlecht",
+		"type": "dichotomous"
+	},
+	"Examination-Date": {
+		"detail": "Examination-Date",
+		"detail_ger": "Untersuchungstag",
+		"type": "nominal"
+	},
+	"Age": {
+		"detail": "Age",
+		"detail_ger": "Alter am Untersuchungstag",
+		"type": "numerical"
+	},
+	"Mobility": {
+		"detail": "Mobility",
+		"detail_ger": "Beweglichkeit/Mobilität",
+		"type": "ordinal"
+	},
+	"take_care_for_themselves": {
+		"detail": "Subject takes care of themselves",
+		"detail_ger": "Für sich selbst sorgen",
+		"type": "ordinal"
+	},
+	"Problems_Daily_Activities": {
+		"detail": "Problems_Daily_Activities",
+		"detail_ger": "Allgemeine Aktivitäten, z.B. Arbeit, Studium, Hausarbeit, Familien- oder Freizeitaktivitäten",
+		"type": "ordinal"
+	},
+	"Pain_Discomfort": {
+		"detail": "Pain or discomfort",
+		"detail_ger": "Schmerzen / Körperliche Beschwerden",
+		"type": "ordinal"
+	},
+	"Anxiety_Depression": {
+		"detail": "Anxiety_Depression",
+		"detail_ger": "Angst / Niedergeschlagenheit",
+		"type": "ordinal"
+	},
+	"Marital_Status": {
+		"detail": "Marital_Status",
+		"detail_ger": "Familienstand",
+		"type": "nominal"
+	},
+	"Living_With_Partner": {
+		"detail": "Living together with Partner",
+		"detail_ger": "Leben mit dem Partner zusammen",
+		"type": "dichotomous"
+	},
+	"Number_Persons_Household": {
+		"detail": "Number of Persons living in the household",
+		"detail_ger": "Wie viele Personen leben in Ihrem Haushalt, Sie selbst eingerechnet?",
+		"type": "numerical"
+	},
+	"Employed": {
+		"detail": "Are you employed?",
+		"detail_ger": "Sind Sie derzeit erwerbstätig?",
+		"type": "dichotomous"
+	},
+	"Employed_Hours_T0": {
+		"detail": "How many hours per week are you working?",
+		"detail_ger": "Wie viele Stunden pro Woche arbeiten Sie?",
+		"type": "numerical"
+	},
+	"Employment_Type": {
+		"detail": "Type of Employment",
+		"detail_ger": "Welche Art der Erwerbstätigkeit trifft auf Sie zu?",
+		"type": "ordinal"
+	},
+	"Group_Affiliation": {
+		"detail": "Which group are you affiliated with?",
+		"detail_ger": "Sagen Sie mir bitte, zu welcher Gruppe auf der Liste Sie gehören!",
+		"type": "nominal"
+	},
+	"Retirement_Reason": {
+		"detail": "reason of retirement",
+		"detail_ger": "Grund der Pensionierung?",
+		"type": "nominal"
+	},
+	"Last_Occupation": {
+		"detail": "Which is your current or last occupation?",
+		"detail_ger": "Welchen Beruf üben Sie derzeit aus? Wenn Sie nicht mehr berufstätig sind, welchen Beruf haben Sie zuletzt ausgeübt?",
+		"type": "nominal"
+	},
+	"Highest_Graduation_T0": {
+		"detail": "Which is your highest school graduation?",
+		"detail_ger": "Welchen höchsten Schulabschluss haben Sie?",
+		"type": "nominal"
+	},
+	"Highest_Graduation2_T0": {
+		"detail": "Which is your highest school graduation - 2 (strange in Dictionary)?",
+		"detail_ger": "Welchen höchsten Schulabschluss haben Sie - 2 (strange in Dictionary)?",
+		"type": "nominal"
+	},
+	"Which_Graduation_Trainee_Student_T0": {
+		"detail": "Which Graduation do you have? - still trainee, student",
+		"detail_ger": "Welchen Abschluss haben Sie? - Noch Azubi, Student",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_None_T0": {
+		"detail": "Which Graduation do you have? - no occupational graduation and no trainee",
+		"detail_ger": "Welchen Abschluss haben Sie? - Keinen beruflichen Abschluss und bin nicht in beruflicher Ausbildung",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_Vocational_Education_T0": {
+		"detail": "Which Graduation do you have? - Vocational Education",
+		"detail_ger": "Welchen Abschluss haben Sie? - Beruflich-betriebliche Berufsausbildung (Lehre) abgeschlossen",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_Technical_College_T0": {
+		"detail": "Which Graduation do you have? - Technical College",
+		"detail_ger": "Welchen Abschluss haben Sie? - Beruflich-schulische Ausbildung (Berufsfachschule, Handelsschule) abgeschlossen",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_Master_School_T0": {
+		"detail": "Which Graduation do you have? - Master School",
+		"detail_ger": "Welchen Abschluss haben Sie? - Ausbildung an einer Fachschule, Meister-, Technikerschule, Berufs- oder Fachakademie abgeschlossen",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_Advanced_Technical_College_T0": {
+		"detail": "Which Graduation do you have? - advanced technical college",
+		"detail_ger": "Welchen Abschluss haben Sie? - Fachhochschulabschluss",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_University_T0": {
+		"detail": "Which Graduation do you have? - University Degree",
+		"detail_ger": "Welchen Abschluss haben Sie? - Hochschulabschluss",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_Other_T0": {
+		"detail": "Which Graduation do you have? - Other graduation",
+		"detail_ger": "Welchen Abschluss haben Sie? - Anderer Beruflicher Abschluss",
+		"type": "dichotomous"
+	},
+	"Which_Graduation_T0": {
+		"detail": "Which Graduation do you have? - Other graduation - which?",
+		"detail_ger": "Welchen Abschluss haben Sie? - Welcher anderer Ausbildungsabschluss?",
+		"type": "nominal"
+	},
+	"Body_Size": {
+		"detail": "Body Size",
+		"detail_ger": "Körpergröße",
+		"type": "numerical"
+	},
+	"Body_Weight": {
+		"detail": "Body Weight",
+		"detail_ger": "Körpergewicht",
+		"type": "numerical"
+	},
+	"Waist_Circumference": {
+		"detail": "Waist Circumference",
+		"detail_ger": "Taillenumfang",
+		"type": "numerical"
+	},
+	"Hip_Circumference": {
+		"detail": "Hip_Circumference",
+		"detail_ger": "Hüftenumfang",
+		"type": "numerical"
+	},
+	"Body_Fat_Corrected_KG": {
+		"detail": "Body Fat Corrected KG",
+		"detail_ger": "Körperfett korrigiert (kg)",
+		"type": "numerical"
+	},
+	"Body_Fat_Corrected_Percent": {
+		"detail": "Body Fat Corrected percent",
+		"detail_ger": "Körperfett korrigiert (Prozent)",
+		"type": "numerical"
+	},
+	"Body_Water": {
+		"detail": "Body_Water (litres)",
+		"detail_ger": "Körperwasser (Liter)",
+		"type": "numerical"
+	},
+	"Fat_Free_Body_Mass": {
+		"detail": "Fat Free Body Mass (kg)",
+		"detail_ger": "Magermasse (kg)",
+		"type": "numerical"
+	},
+	"Extracellular_Mass": {
+		"detail": "Extracellular Mass (kg)",
+		"detail_ger": "Extrazelluläre Masse (kg)",
+		"type": "numerical"
+	},
+	"Body_Cell_Mass": {
+		"detail": "Cell Mass (kg)",
+		"detail_ger": "Körperzellmasse (kg)",
+		"type": "numerical"
+	},
+	"ECM_BCM_Quotient": {
+		"detail": "Quotient from Body Cell Mass and Extracellular Mass",
+		"detail_ger": "Quotient aus ECM und BCM",
+		"type": "numerical"
+	},
+	"Extracellular_Water": {
+		"detail": "Extracellular Water (l)",
+		"detail_ger": "Extrazelluläres Wasser (l)",
+		"type": "numerical"
+	},
+	"Intracellular_Water": {
+		"detail": "Intracellular Water (l)",
+		"detail_ger": "Intrazelluläres Wasser (l)",
+		"type": "numerical"
+	},
+	"HbA1c": {
+		"detail": "Hb A1 c (%)",
+		"detail_ger": "Hb A1 c (%)",
+		"type": "numerical"
+	},
+	"Triglycerides": {
+		"detail": "Triglycerides (mmol/l)",
+		"detail_ger": "Triglyceride (mmol/l)",
+		"type": "numerical"
+	},
+	"tg_s_z": {
+		"detail": "tg_s_z - not in dictionary",
+		"detail_ger": "tg_s_z - not in dictionary",
+		"type": "numerical"
+	},
+	"tg_s_p": {
+		"detail": "tg_s_p - not in dictionary",
+		"detail_ger": "tg_s_p - not in dictionary",
+		"type": "numerical"
+	},
+	"Cholesterol": {
+		"detail": "Cholesterol (mmol/l)",
+		"detail_ger": "Cholesterol (mmol/l)",
+		"type": "numerical"
+	},
+	"chol_s_z": {
+		"detail": "chol_s_z (not in dictionary)",
+		"detail_ger": "chol_s_z (not in dictionary)",
+		"type": "numerical"
+	},
+	"chol_s_p": {
+		"detail": "chol_s_p (not in dictionary)",
+		"detail_ger": "chol_s_p (not in dictionary)",
+		"type": "numerical"
+	},
+	"LDL_Cholesterol": {
+		"detail": "LDL-Cholesterol (mmol/l)",
+		"detail_ger": "LDL-Cholesterol (mmol/l)",
+		"type": "numerical"
+	},
+	"HDL_Cholesterol": {
+		"detail": "HDL-Cholesterol (mmol/l)",
+		"detail_ger": "HDL-Cholesterol (mmol/l)",
+		"type": "numerical"
+	},
+	"Increased_Blood_Pressure": {
+		"detail": "Are you diagnosed with increased blood pressure?",
+		"detail_ger": "Ist bei Ihnen erhö̈hter oder zu hoher Blutdruck festgestellt worden?",
+		"type": "dichotomous"
+	},
+	"Increased_Blood_Pressure_After_SHIP0": {
+		"detail": "Was the high blood pressure diagnosed after SHIP-0?",
+		"detail_ger": "Wurde hoher Blutdruck nach SHIP-0 diagnostiziert?",
+		"type": "dichotomous"
+	},
+	"Increased_Blood_Pressure_Medication": {
+		"detail": "Are you prescribed medications against high blood pressure in the past year?",
+		"detail_ger": "Hat Ihnen ein Arzt im Laufe des letzten Jahres Medikamente gegen hohen Blutdruck verschrieben?",
+		"type": "dichotomous"
+	},
+	"Diabetes": {
+		"detail": "Are you diagnosed with diabetes?",
+		"detail_ger": "Ist bei Ihnen eine Zuckerkrankheit festgestellt worden?",
+		"type": "dichotomous"
+	},
+	"Diabetes_After_SHIP_0": {
+		"detail": "Are you diagnosed with diabetes after SHIP-0?",
+		"detail_ger": "Wurde Diabetis nach SHIP-0 diagnostiziert?",
+		"type": "dichotomous"
+	},
+	"Diabetes_T0_Year": {
+		"detail": "Please state the Year of the diabetes diagnosis",
+		"detail_ger": "Geben Sie bitte das Jahr an, in dem Diabetis festgestellt wurde!",
+		"type": "ordinal"
+	},
+	"Diabetes_T0_Type": {
+		"detail": "Please state the diabetes type",
+		"detail_ger": "Geben Sie bitte den Diabetis Typ an!",
+		"type": "nominal"
+	},
+	"Diabetes_Treatment": {
+		"detail": "Are you treated for diabetes?",
+		"detail_ger": "Werden sie gegen Diabetis behandelt?",
+		"type": "nominal"
+	},
+	"Cancer": {
+		"detail": "Were you ever diagnosed with cancer?",
+		"detail_ger": "Ist bei Ihnen jemals im Leben eine Krebserkrankung aufgetreten?",
+		"type": "dichotomous"
+	},
+	"Cancer_Breast": {
+		"detail": "Were you ever diagnosed with breast cancer?",
+		"detail_ger": "Ist bei Ihnen jemals im Leben eine Brustkrebserkrankung diagnostiziert worden?",
+		"type": "dichotomous"
+	},
+	"Cancer_Breast_Year": {
+		"detail": "When were you diagnosed with breast cancer?",
+		"detail_ger": "Wann wurde bei Ihnen Brustkrebs festgestellt?",
+		"type": "ordinal"
+	},
+	"Cancer_Ovary": {
+		"detail": "Were you ever diagnosed with ovary cancer?",
+		"detail_ger": "Ist bei Ihnen jemals im Leben eine Eierstockkrebserkrankung festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Thrombosis": {
+		"detail": "Were you diagnosed in the past 12 month with thrombosis/varicose veins/phlebitis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Krampfadern/Thrombose/Venenentzündung festgestellt?",
+		"type": "numerical"
+	},
+		"Disease_Thrombosis_First_Time": {
+		"detail": "Was your thrombosis/varicose veins/phlebitis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Krampfadern/Thrombose/Venenentzündung zum ersten mal festgestellt?",
+		"type": "numerical"
+	},
+	"Disease_Thrombosis_Treatment": {
+		"detail": "Was your thrombosis/varicose veins/phlebitis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Krampfadern/Thrombose/Venenentzündung behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Acne": {
+		"detail": "Were you diagnosed in the past 12 month with acne/inflamatory skin disease?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Akne/entzündliche Hauterkankungen festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Acne_First_Time": {
+		"detail": "Was your acne/inflamatory skin disease diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Akne/entzündliche Hauterkankung zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Acne_Treatment": {
+		"detail": "Was your acne/inflamatory skin treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Akne/entzündliche Hauterkankung behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Kidney_Disorder": {
+		"detail": "Were you diagnosed in the past 12 month with kidney disorder?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen eine Nierenerkrankung festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Kidney_Disorder_Dialysis": {
+		"detail": "Do you receive regular dialysis?",
+		"detail_ger": "Erhalten Sie regelmäßig eine Dialyse?",
+		"type": "dichotomous"
+	},
+	"Disease_Kidney_Disorder_First_Time": {
+		"detail": "Was your kidney disorder diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen die Nierenerkrankung zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Kidney_Disorder_Treatment": {
+		"detail": "Was your kidney disorder treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Ihre Nierenerkrankung behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hypotension": {
+		"detail": "Were you diagnosed in the past 12 month with hypotension",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hypotonie (niedriger Blutdruck) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hypotension_First_Time": {
+		"detail": "Was your hypotension diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hypotonie (niedriger Blutdruck) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hypotension_Treatment": {
+		"detail": "Was your hypotension treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hypotonie (niedriger Blutdruck) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Arthrosis": {
+		"detail": "Were you diagnosed in the past 12 month with arthrosis",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Arthrose (Gelenkverschleiß) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Arthrosis_First_Time": {
+		"detail": "Was your arthrosis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Arthrose (Gelenkverschleiß) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Arthrosis_Treatment": {
+		"detail": "Was your arthrosis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Arthrose (Gelenkverschleiß) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Spine_Attrition": {
+		"detail": "Were you diagnosed in the past 12 month with spine attrition?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Abnutzungserscheinungen der Wirbelsäule festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Spine_Attrition_First_Time": {
+		"detail": "Was your spine attrition diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Abnutzungserscheinungen der Wirbelsäule zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Spine_Attrition_Treatment": {
+		"detail": "Was your spine attrition treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Abnutzungserscheinungen der Wirbelsäule behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Inflammatory_Joint_Disease": {
+		"detail": "Were you diagnosed in the past 12 month with inflammatory joint disease?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen entzündliche Glenkerkrankungen festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Inflammatory_Joint_Disease_First_Time": {
+		"detail": "Was your inflammatory joint disease diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen entzündliche Glenkerkrankungen zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Inflammatory_Joint_Disease_Treatment": {
+		"detail": "Was your inflammatory joint disease treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen entzündliche Glenkerkrankungen behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Osteoporosis": {
+		"detail": "Were you diagnosed in the past 12 month with osteoporosis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Osteoporose festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Osteoporosis_First_Time": {
+		"detail": "Was your osteoporosis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Osteoporose zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Osteoporosis_Treatment": {
+		"detail": "Was your osteoporosis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Osteoporose behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastric_Ulcer": {
+		"detail": "Were you diagnosed in the past 12 month with gastric ulcer?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Magen/Zwölffingerdarmgeschwür festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastric_Ulcer_First_Time": {
+		"detail": "Was your gastric ulcer diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Magen/Zwölffingerdarmgeschwür zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastric_Ulcer_Treatment": {
+		"detail": "Was your gastric ulcer treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Magen/Zwölffingerdarmgeschwür behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastritis": {
+		"detail": "Were you diagnosed in the past 12 month with gastritis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gastritis (Magenschleimhautentzündung) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastritis_First_Time": {
+		"detail": "Was your gastritis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gastritis (Magenschleimhautentzündung) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gastritis_Treatment": {
+		"detail": "Was your gastritis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gastritis (Magenschleimhautentzündung) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Liver_Zirrhosis": {
+		"detail": "Were you diagnosed in the past 12 month with liver zirrhosis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen eine Leberzirrhose festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Liver_Zirrhosis_First_Time": {
+		"detail": "Was your liver zirrhosis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen eine Leberzirrhose zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Liver_Zirrhosis_Treatment": {
+		"detail": "Was your liver zirrhosis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen die Leberzirrhose behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hepatitis": {
+		"detail": "Were you diagnosed in the past 12 month with hepatitis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hepatitis (Leberentzündung) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hepatitis_First_Time": {
+		"detail": "Was your hepatitis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hepatitis (Leberentzündung) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Hepatitis_Treatment": {
+		"detail": "Was your hepatitis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Hepatitis (Leberentzündung) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Fatty_Liver": {
+		"detail": "Were you diagnosed in the past 12 month with fatty liver?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Fettleber festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Fatty_Liver_First_Time": {
+		"detail": "Was your fatty liver diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Fettleber zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Fatty_Liver_Treatment": {
+		"detail": "Was your fatty liver treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Fettleber behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gallbladder_Inflammation": {
+		"detail": "Were you diagnosed in the past 12 month with gallbladder inflammation?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gallenblasenentzündung oder Gallensteine festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gallbladder_Inflammation_First_Time": {
+		"detail": "Was your gallbladder inflammation diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gallenblasenentzündung oder Gallensteine zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gallbladder_Inflammation_Treatment": {
+		"detail": "Was your gallbladder inflammation treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gallenblasenentzündung oder Gallensteine behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_High_Blood_Fat": {
+		"detail": "Were you diagnosed in the past 12 month with high blood fat?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen erhöhte bloodfette (Cholesterin, Triglyceride) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_High_Blood_Fat_First_Time": {
+		"detail": "Was your high blood fat diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen erhöhte bloodfette (Cholesterin, Triglyceride) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_High_Blood_Fat_Treatment": {
+		"detail": "Was your high blood fat treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen erhöhte bloodfette (Cholesterin, Triglyceride) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_T0_Lung_Asthma": {
+		"detail": "Were you diagnosed in the past 12 month with Lung Asthma?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Lungenasthma (Bronchialasthma) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gout": {
+		"detail": "Were you diagnosed in the past 12 month with gout?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gicht/erhöhte Harnsäurewerte festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gout_First_Time": {
+		"detail": "Was your gout diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gicht/erhöhte Harnsäurewerte zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Gout_Treatment": {
+		"detail": "Was your gout treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Gicht/erhöhte Harnsäurewerte behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Urinary": {
+		"detail": "Were you diagnosed in the past 12 month with uronary diseases?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen urologische Harnwegserkrankungen (z.B. Prostataprobleme) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Urinary_First_Time": {
+		"detail": "Was your uronary diseases diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen urologische Harnwegserkrankungen (z.B. Prostataprobleme) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Urinary_Treatment": {
+		"detail": "Was your uronary diseases treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen urologische Harnwegserkrankungen (z.B. Prostataprobleme) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Parkinson": {
+		"detail": "Were you diagnosed in the past 12 month with parkinson disease?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Schüttellähmung (Parkinson) festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Parkinson_First_Time": {
+		"detail": "Was your parkinson disease diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Schüttellähmung (Parkinson) zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Parkinson_Treatment": {
+		"detail": "Was your parkinson disease treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Schüttellähmung (Parkinson) behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_1": {
+		"detail": "Were you diagnosed in the past 12 month with other disease 1?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen eine andere Krankheit festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_1_Which": {
+		"detail": "Which other disease were you diagnosed with?",
+		"detail_ger": "Welche Krankheit wurde bei Ihnen festgestellt?",
+		"type": "nominal"
+	},
+	"Disease_Other_1_First_Time": {
+		"detail": "Was your other disease 1 diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen einer anderen Krankheit 1 zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_1_Treatment": {
+		"detail": "Was your other disease 1 treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen einer anderen Krankheit 1 behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_2": {
+		"detail": "Were you diagnosed in the past 12 month with other disease 2?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen einer anderen Krankheit 2 festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_2_Which": {
+		"detail": "Which other disease were you diagnosed with?",
+		"detail_ger": "Welche Krankheit wurde bei Ihnen festgestellt?",
+		"type": "nominal"
+	},
+	"Disease_Other_2_First_Time": {
+		"detail": "Was your other disease 2 diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen einer anderen Krankheit 2 zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Other_2_Treatment": {
+		"detail": "Was your other disease 2 treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen einer anderen Krankheit 2 behandelt?",
+		"type": "dichotomous"
+	},
+	"Disease_Bronchitis": {
+		"detail": "Were you diagnosed in the past 12 month with bronchitis?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Bronchitis festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Bronchitis_First_Time": {
+		"detail": "Was your bronchitis diagnosed the first time in the past 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Bronchitis zum ersten mal festgestellt?",
+		"type": "dichotomous"
+	},
+	"Disease_Bronchitis_Treatment": {
+		"detail": "Was your bronchitis treated in the last 12 month?",
+		"detail_ger": "Wurde in den letzten 12 Monaten bei Ihnen Bronchitis behandelt?",
+		"type": "dichotomous"
+	},
+	"Women_Pregnant": {
+		"detail": "Were you ever pregnant?",
+		"detail_ger": "Waren Sie jemals schwanger?",
+		"type": "dichotomous"
+	},
+	"Women_Pregnant_Frequency": {
+		"detail": "How often were you pregnant?",
+		"detail_ger": "Wie oft waren Sie schwanger?",
+		"type": "numerical"
+	},
+	"Women_Number_Children": {
+		"detail": "To how many children did you gave birth?",
+		"detail_ger": "Wie viele Kinder haben Sie lebend geboren?",
+		"type": "numerical"
+	},
+	"Women_Child1_Birthdate": {
+		"detail": "Birthdate of Child 1",
+		"detail_ger": "Geburtstag von Kind 1",
+		"type": "ordinal"
+	},
+	"Women_Child1_Breastfed": {
+		"detail": "Child 1 was breastfed",
+		"detail_ger": "Kind 1 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child1_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 1 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 1",
+		"type": "ordinal"
+	},
+	"Women_Child2_Birthdate": {
+		"detail": "Birthdate of Child 2",
+		"detail_ger": "Geburtstag von Kind 2",
+		"type": "ordinal"
+	},
+	"Women_Child2_Breastfed": {
+		"detail": "Child 2 was breastfed",
+		"detail_ger": "Kind 2 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child2_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 2 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 2",
+		"type": "ordinal"
+	},
+	"Women_Child3_Birthdate": {
+		"detail": "Birthdate of Child 3",
+		"detail_ger": "Geburtstag von Kind 3",
+		"type": "ordinal"
+	},
+	"Women_Child3_Breastfed": {
+		"detail": "Child 3 was breastfed",
+		"detail_ger": "Kind 3 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child3_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 3 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 3",
+		"type": "ordinal"
+	},
+	"Women_Child4_Birthdate": {
+		"detail": "Birthdate of Child 4",
+		"detail_ger": "Geburtstag von Kind 4",
+		"type": "ordinal"
+	},
+	"Women_Child4_Breastfed": {
+		"detail": "Child 4 was breastfed",
+		"detail_ger": "Kind 4 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child4_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 4 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 4",
+		"type": "ordinal"
+	},
+	"Women_Child5_Birthdate": {
+		"detail": "Birthdate of Child 5",
+		"detail_ger": "Geburtstag von Kind 5",
+		"type": "ordinal"
+	},
+	"Women_Child5_Breastfed": {
+		"detail": "Child 5 was breastfed",
+		"detail_ger": "Kind 5 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child5_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 5 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 5",
+		"type": "ordinal"
+	},
+	"Women_Child6_Birthdate": {
+		"detail": "Birthdate of Child 6",
+		"detail_ger": "Geburtstag von Kind 6",
+		"type": "ordinal"
+	},
+	"Women_Child6_Breastfed": {
+		"detail": "Child 6 was breastfed",
+		"detail_ger": "Kind 6 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child6_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 6 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 6",
+		"type": "ordinal"
+	},
+	"Women_Child7_Birthdate": {
+		"detail": "Birthdate of Child 7",
+		"detail_ger": "Geburtstag von Kind 7",
+		"type": "ordinal"
+	},
+	"Women_Child7_Breastfed": {
+		"detail": "Child 7 was breastfed",
+		"detail_ger": "Kind 7 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child7_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 7 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 7",
+		"type": "ordinal"
+	},
+	"Women_Child8_Birthdate": {
+		"detail": "Birthdate of Child 8",
+		"detail_ger": "Geburtstag von Kind 8",
+		"type": "ordinal"
+	},
+	"Women_Child8_Breastfed": {
+		"detail": "Child 8 was breastfed",
+		"detail_ger": "Kind 8 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child8_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 8 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 8",
+		"type": "ordinal"
+	},
+	"Women_Child9_Birthdate": {
+		"detail": "Birthdate of Child 9",
+		"detail_ger": "Geburtstag von Kind 9",
+		"type": "ordinal"
+	},
+	"Women_Child9_Breastfed": {
+		"detail": "Child 9 was breastfed",
+		"detail_ger": "Kind 9 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child9_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 9 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 9",
+		"type": "ordinal"
+	},
+	"Women_Child1_Birthdate": {
+		"detail": "Birthdate of Child 10",
+		"detail_ger": "Geburtstag von Kind 10",
+		"type": "ordinal"
+	},
+	"Women_Child10_Breastfed": {
+		"detail": "Child 10 was breastfed",
+		"detail_ger": "Kind 10 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child10_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 10 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 10",
+		"type": "ordinal"
+	},
+	"Women_Child1_Birthdate": {
+		"detail": "Birthdate of Child 11",
+		"detail_ger": "Geburtstag von Kind 11",
+		"type": "ordinal"
+	},
+	"Women_Child11_Breastfed": {
+		"detail": "Child 11 was breastfed",
+		"detail_ger": "Kind 11 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child11_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 11 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 11",
+		"type": "ordinal"
+	},
+	"Women_Child12_Birthdate": {
+		"detail": "Birthdate of Child 12",
+		"detail_ger": "Geburtstag von Kind 12",
+		"type": "ordinal"
+	},
+	"Women_Child12_Breastfed": {
+		"detail": "Child 12 was breastfed",
+		"detail_ger": "Kind 12 wurde gestillt",
+		"type": "dichotomous"
+	},
+	"Women_Child12_Birthdate_Incomplete": {
+		"detail": "If birthdate of Child 12 incomplete, put remeaining information here",
+		"detail_ger": "Falls Geburtsdatum nicht vollständig, hier verfügbare Angaben eintragen Kind 12",
+		"type": "ordinal"
+	},
+	"Women_Uterus_Removed": {
+		"detail": "Was your uterus removed?",
+		"detail_ger": "Ist bei Ihnen die Gebährmutter entfernt worden?",
+		"type": "dichotomous"
+	},
+	"Women_Uterus_Removed_Age": {
+		"detail": "How old were you when your uterus was removed?",
+		"detail_ger": "Wie alt waren Sie, als Ihr Uterus entfernt wurde?",
+		"type": "numerical"
+	},
+	"Women_Ovaries_Removed": {
+		"detail": "Were both your ovaries removed?",
+		"detail_ger": "Sind bei Ihnen beide Eierstöcke entfernt worden?",
+		"type": "dichotomous"
+	},
+	"Women_Ovaries_Removed_Age": {
+		"detail": "How old were you when your ovaries were removed?",
+		"detail_ger": "Wie alt waren Sie, als Ihre Eierstöcke entfernt wurden?",
+		"type": "numerical"
+	},
+	"Women_Menstrual_Period_Starting_Age": {
+		"detail": "How old were you when your menstrual period started?",
+		"detail_ger": "Wie alt waren Sie, als Ihre Regelblutung begann?",
+		"type": "numerical"
+	},
+	"Women_Birth_Control_Pill": {
+		"detail": "Did you ever took birth control pills?",
+		"detail_ger": "Haben Sie jemals die Anti Baby Pille genommen?",
+		"type": "dichotomous"
+	},
+	"Women_Birth_Control_Pill_Years": {
+		"detail": "How many years did you take the birth control pill?",
+		"detail_ger": "Wie viele Jahre haben Sie die Anti-Baby-Pille genommen?",
+		"type": "numerical"
+	},
+	"Women_Birth_Control_Pill_Current": {
+		"detail": "Do you currently take the birth control pill?",
+		"detail_ger": "Nehmen Sie derzeit die Anti Baby Pille?",
+		"type": "dichotomous"
+	},
+	"Women_Hormone_Replacement_Therapy": {
+		"detail": "Did you ever had a hormone replacement therapy?",
+		"detail_ger": "Haben Sie jemals eine Hormonersatztherapie gemacht?",
+		"type": "dichotomous"
+	},
+	"Women_Hormone_Replacement_Therapy_Age_Starting": {
+		"detail": "How old were you when your hormone replacement therapy started?",
+		"detail_ger": "Wie alt waren Sie, als Sie Ihre Hormonersatztherapie begonnen haben?",
+		"type": "numerical"
+	},
+	"Women_Hormone_Replacement_Therapy_Current": {
+		"detail": "Did currently receive a hormone replacement therapy?",
+		"detail_ger": "Machen Sie derzeit eine Hormonersatztherapie?",
+		"type": "dichotomous"
+	},
+	"Women_Hormone_Replacement_Therapy_Ending": {
+		"detail": "How old were you when your last hormone replacement therapy ended?",
+		"detail_ger": "Wie alt waren Sie, als Sie Ihre letzte Hormonersatztherapie beendet haben?",
+		"type": "numerical"
+	},
+	"Women_Hormone_Replacement_Therapy_Total_Duration": {
+		"detail": "For how long did you receive hormone replacement therapy in total?",
+		"detail_ger": "Wie lange insgesamt haben Sie eine Hormonersatztherapie gemacht?",
+		"type": "numerical"
+	},
+	"Women_Hormone_Replacement_Compount": {
+		"detail": "Do you currently use one of the following hormone compound?",
+		"detail_ger": "Nehmen Sie zurzeit eines der folgenden hormonhaltigen Präparate?",
+		"type": "dichotomous"
+	},
+	"Women_Menstrual_Period_Current": {
+		"detail": "Do you currently have your menstrual period?",
+		"detail_ger": "Haben Sie aktuelle ihre Regelblutung?",
+		"type": "dichotomous"
+	},
+	"Women_Menstrual_Period_Reason_Stopped": {
+		"detail": "Why did your menstrual period stop?",
+		"detail_ger": "Warum hat Ihre Regelblutung aufgehört?",
+		"type": "nominal"
+	},
+	"Women_Menstrual_Period_Reason_Stopped_Other": {
+		"detail": "Why did your menstrual period stop - other Reason?",
+		"detail_ger": "Warum hat Ihre Regelblutung aufgehört - anderer Grund?",
+		"type": "nominal"
+	},
+	"Women_Menstrual_Period_Stopped_Age": {
+		"detail": "How old were you when your menstrual period stopped?",
+		"detail_ger": "Wie alt waren Sie, als Ihre Regelblutung aufgehört hat?",
+		"type": "numerical"
+	},
+	"Women_Menstrual_Period_Stopped_Age2": {
+		"detail": "How old were you when your menstrual bleeding stopped?",
+		"detail_ger": "Wie alt waren Sie, als Ihre Blutungen aufgehört haben?",
+		"type": "dichotomous"
+	},
+	"Medication_Past_7_Days": {
+		"detail": "Did you receive medications in the past 7 days",
+		"detail_ger": "Haben Sie innerhalb der letzten sieben Tage Medikamente wie Tabletten, Tropfen, Zäpfchen usw. eingenommen oder irgendwelche Spritzen bekommen?",
+		"type": "dichotomous"
+	},
+	"Alcohol_Frequency_12_Month": {
+		"detail": "How often did you drink alkohol in the past 12 month?",
+		"detail_ger": "Wie oft nahmen Sie in den letzten 12 Monaten ein alkoholisches Getränk zu sich?",
+		"type": "ordinal"
+	},
+	"Alcohol_Frequency_When_Taken": {
+		"detail": "When you drink alkohol, how much do you drink?",
+		"detail_ger": "Wenn Sie alkoholische Getränke zu sich nehmen, wie viel trinken Sie dann typischerweise an einem Tag?",
+		"type": "ordinal"
+	},
+	"Alcohol_Large_Intake_Frequency": {
+		"detail": "In the past 12 month, how often did you drink more than 6 or more glasses consecutively?",
+		"detail_ger": "Wie oft haben Sie innerhalb der letzten 12 Monate 6 oder mehr Gläser hintereinander getrunken?",
+		"type": "ordinal"
+	},
+	"Alcohol_Last_30_Days_Beer": {
+		"detail": "On how many days in the past moth did you drink beer?",
+		"detail_ger": "An wie vielen Tagen im vergangenen Monat haben Sie Bier getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Wine": {
+		"detail": "On how many days in the past moth did you drink wine?",
+		"detail_ger": "An wie vielen Tagen im vergangenen Monat haben Sie Wein getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Spirituous": {
+		"detail": "On how many days in the past moth did you drink spirituous beverages?",
+		"detail_ger": "An wie vielen Tagen im vergangenen Monat haben Sie Spirituosen getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Beer_Number_Small": {
+		"detail": "When you drank beer in the past month, how many small glasses did you had?",
+		"detail_ger": "Wenn Sie Bier getrunken haben, wie viele kleine Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Beer_Number_Large": {
+		"detail": "When you drank beer in the past month, how many large glasses did you had?",
+		"detail_ger": "Wenn Sie Bier getrunken haben, wie viele große Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Wine_Number_Glasses": {
+		"detail": "When you drank wine in the past month, how many glasses did you drink?",
+		"detail_ger": "Wenn Sie Wein getrunken haben, wie viele Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Wine_Number_Glasses_Small_T0": {
+		"detail": "When you drank wine in the past month, how many small glasses did you drink?",
+		"detail_ger": "Wenn Sie Wein getrunken haben, wie viele kleine Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Wine_Number_Glasses_Large_T0": {
+		"detail": "When you drank wine in the past month, how many large glasses did you drink?",
+		"detail_ger": "Wenn Sie Wein getrunken haben, wie viele große Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Spirituous_Number_Small": {
+		"detail": "When you drank spirituous beverages in the past month, how many small glasses did you had?",
+		"detail_ger": "Wenn Sie Spirituosen getrunken haben, wie viele kleine Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Alcohol_Last_30_Days_Spirituous_Number_Large": {
+		"detail": "When you drank spirituous beverages in the past month, how many large glasses did you had?",
+		"detail_ger": "Wenn Sie Spirituosen getrunken haben, wie viele große Gläser haben Sie getrunken?",
+		"type": "numerical"
+	},
+	"Smoking_Status": {
+		"detail": "Do you smoke?",
+		"detail_ger": "Rauchen Sie?",
+		"type": "dichotomous"
+	},
+	"Smoking_Starting_Age": {
+		"detail": "How old were you when you started smoking?",
+		"detail_ger": "Wie alt waren Sie, als Sie zu rauchen begannen?",
+		"type": "numerical"
+	},
+	"Smoking_Occasionally": {
+		"detail": "Do you smoke occasionally?",
+		"detail_ger": "Rauchen Sie gelegentlich?",
+		"type": "dichotomous"
+	},
+	"Smoking_Number_Cigarettes": {
+		"detail": "How many cigarettes do you smoke per day?",
+		"detail_ger": "Wie viele Zigaretten rauchen Sie am Tag?",
+		"type": "numerical"
+	},
+	"Smoking_Ever": {
+		"detail": "Did you ever smoke?",
+		"detail_ger": "Haben Sie jemals geraucht?",
+		"type": "dichotomous"
+	},
+	"Smoking_Starting_Age2": {
+		"detail": "How old were you when you started smoking?",
+		"detail_ger": "Wie alt waren Sie, als Sie zu rauchen begannen?",
+		"type": "numerical"
+	},
+	"Smoking_Past_Occasionally": {
+		"detail": "When you were smoking, did you smoke occasionally?",
+		"detail_ger": "Als Sie noch rauchten, rauchten Sie gelegentlich?",
+		"type": "dichotomous"
+	},
+	"Smoking_Quit_Year": {
+		"detail": "In which year did you quit smoking?",
+		"detail_ger": "In welchem Jahr haben Sie aufgehört zu rauchen?",
+		"type": "ordinal"
+	},
+	"Smoking_Largest_Amount_Cigarettes_Daily": {
+		"detail": "Which was the largest numbe of cigarettes you smoked daily through a year?",
+		"detail_ger": "Was war die größte Anzahl Zigaretten, die Sie täglich über ein Jahr geraucht haben?",
+		"type": "numerical"
+	},
+	"FPC": {
+		"detail": "Strata Size Population",
+		"detail_ger": "Strata Size Population",
+		"type": "numerical"
+	},
+	"STRATA": {
+		"detail": "Strats for age, gender, county",
+		"detail_ger": "Straten für Alter, Geschlecht, Landkreis",
+		"type": "numerical"
+	},
+	"W_SAMPLE": {
+		"detail": "Sociodemographic Poststratification Weight",
+		"detail_ger": "Sociodemographic Poststratification Weight",
+		"type": "numerical"
+	},
+	"W_SAMPLING": {
+		"detail": "Sociodemographic Sampling Weight",
+		"detail_ger": "Sociodemographic Sampling Weight",
+		"type": "numerical"
+	},
+	"W_NONRESPONSE": {
+		"detail": "Sociodemographic Nonresponse Weight",
+		"detail_ger": "Sociodemographic Nonresponse Weight",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Native_KM": {
+		"detail": "Nativ/KM",
+		"detail_ger": "Nativ/KM",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Menopause": {
+		"detail": "Menopause",
+		"detail_ger": "Menopause",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Menopause_Entry_Known": {
+		"detail": "Entry Age of Menopause is known",
+		"detail_ger": "Eintrittsalter der Menopause ist bekannt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Menopause_Entry_Age": {
+		"detail": "Entry Age of Menopause",
+		"detail_ger": "Eintrittsalter der Menopause",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Hormone_Replacement_Therapy": {
+		"detail": "Do you receive hormone replacement therapie",
+		"detail_ger": "Führen Sie eine Hormonersatztherapie durch?",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Cycle_Day_Known": {
+		"detail": "Current day in menstrual cycle known",
+		"detail_ger": "Aktueller zyklustag bekannt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Cycle_Day": {
+		"detail": "Current day in menstrual cycle",
+		"detail_ger": "Aktueller Zyklustag",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Cycle_Group": {
+		"detail": "Cycle Group",
+		"detail_ger": "Zyklusgruppe",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Cycle_Length_Known": {
+		"detail": "Length of a menstrual cycle known",
+		"detail_ger": "Zykluslänge bekannt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Cycle_Length": {
+		"detail": "Length of a menstrual cycle",
+		"detail_ger": "Zykluslänge",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Cycle_Regular": {
+		"detail": "Menstrual cycle is regular",
+		"detail_ger": "Menstrualzyklus ist regelmäßig",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Contraception_Oral": {
+		"detail": "Oral Contraception",
+		"detail_ger": "Orale Kontrazeption",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Contraception_Spiral": {
+		"detail": "Spiral Contraception",
+		"detail_ger": "Kontrazeption durch Spirale",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_State_After_Mamma_Ca": {
+		"detail": "State after Mamma-Ca",
+		"detail_ger": "Zustand nach Mamma-Ca",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Localization_Mamma_Ca": {
+		"detail": "Localization of the Mamma-Ca",
+		"detail_ger": "Lokalisation des Mamma-Ca",
+		"type": "nominal"
+	},
+	"MAMMA_Anamnesis_Diagnosis_Age_Known": {
+		"detail": "Age of Mamma-Ca is known",
+		"detail_ger": "Alter bei erkennung der Erkrankung ist bekannt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Diagnosis_Age": {
+		"detail": "Age of Mamma-Ca is known",
+		"detail_ger": "Alter bei erkennung der Erkrankung",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Ablatio_BET": {
+		"detail": "Ablation/BET",
+		"detail_ger": "Ablation/BET",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Family_Anamnesis": {
+		"detail": "Family Anemnesis was conducted",
+		"detail_ger": "Familien Anemnese wurde durchgeführt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Children_Born": {
+		"detail": "Do you gave birth to children?",
+		"detail_ger": "Wurden Kinder geboren?",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Children_Born_Number": {
+		"detail": "Number of born children",
+		"detail_ger": "Anzahl der geborenen Kinder",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Breastfed": {
+		"detail": "Children were breastfed",
+		"detail_ger": "Kinder wurden gestillt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Breastfed_Length_Known": {
+		"detail": "Length of breastfeeding is known",
+		"detail_ger": "Stilldauer ist bekannt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Breastfed_Length": {
+		"detail": "Length of breastfeeding in month",
+		"detail_ger": "Stilldauer in Monaten",
+		"type": "numerical"
+	},
+	"MAMMA_Anamnesis_Mammography": {
+		"detail": "Mammography conducted",
+		"detail_ger": "Mammographie durchgeführt",
+		"type": "dichotomous"
+	},
+	"MAMMA_Anamnesis_Discomforts_Current": {
+		"detail": "Current discomforts",
+		"detail_ger": "Aktuelle Beschwerden",
+		"type": "dichotomous"
+	},
+	"Examination_Number": {
+		"detail": "Examination Number",
+		"detail_ger": "Untersuchungsnummer",
+		"type": "numerical"
+	},
+	"Mammography_Image_Exists": {
+		"detail": "Mammography image exists",
+		"detail_ger": "Mammographie Bild existiert",
+		"type": "dichotomous"
+	},
+	"Mammography_Image_Quality": {
+		"detail": "Mammography image quality",
+		"detail_ger": "Mammographie Bild qualität",
+		"type": "nominal"
+	},
+	"Mammography_Which_Mammae_Exists": {
+		"detail": "Which Mammae exists",
+		"detail_ger": "Welche Mammae ist vorhanden?",
+		"type": "nominal"
+	},
+	"Mammography_Right_Glandular_Tissue_Density": {
+		"detail": "Glandular tissue density right",
+		"detail_ger": "Drüsenkörperdichte rechts",
+		"type": "ordinal"
+	},
+	"Mammography_Right_Lesion": {
+		"detail": "Number lesion right",
+		"detail_ger": "Herdbefund rechts",
+		"type": "ordinal"
+	},
+	"Mammography_Right_Number_Focus": {
+		"detail": "Number focus right",
+		"detail_ger": "Anzahl Fokus rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Size_Focus": {
+		"detail": "Size focus right",
+		"detail_ger": "Größe Fokus rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Focus_Localization": {
+		"detail": "Localization focus right",
+		"detail_ger": "Lokalisation Fokus rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Lesion_Number": {
+		"detail": "Number of lesions right",
+		"detail_ger": "Anzahl Herd rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Lesion_Size": {
+		"detail": "Size of lesion right",
+		"detail_ger": "Größe Herd rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Lesion_Localization": {
+		"detail": "Localization lesion right",
+		"detail_ger": "Lokalisation Herd rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_Lesion_Shape": {
+		"detail": "Shape of right lesion",
+		"detail_ger": "Form des Herdbefundes rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Lesion_Boundary": {
+		"detail": "Boundary of right lesion",
+		"detail_ger": "Begrenzung des Herdbefundes rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Intern_Enhancement": {
+		"detail": "Intern enhancement right",
+		"detail_ger": "Internes enhancement rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Initial_Signal_Gain": {
+		"detail": "Initial signal gain right",
+		"detail_ger": "Initialer Signalanstieg rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Post_Initial_Signal_Course": {
+		"detail": "Post initial signal course right.",
+		"detail_ger": "Postinitialer Signalverlauf rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Non_Mass_Enhancement": {
+		"detail": "Non-mass-like enhancement right",
+		"detail_ger": "Non-mass-like enhancement rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Intern_Morphology_Contrast_Agent": {
+		"detail": "Intern morphology of the contrast agent absorbtion right",
+		"detail_ger": "Interne Morphologie der KM-Aufnahme rechts",
+		"type": "nominal"
+	},
+	"Mammography_Right_Zysts": {
+		"detail": "Zysts right",
+		"detail_ger": "Zysten rechts",
+		"type": "dichotomous"
+	},
+	"Mammography_Right_Mastopathy": {
+		"detail": "Mastopathy right",
+		"detail_ger": "Mastopathie rechts",
+		"type": "dichotomous"
+	},
+	"Mammography_Right_Goettingen_Score": {
+		"detail": "Göttingen score right",
+		"detail_ger": "Göttingen-Score rechts",
+		"type": "numerical"
+	},
+	"Mammography_Right_BI_RADS": {
+		"detail": "BI-RADS right",
+		"detail_ger": "BI-RADS rechts",
+		"type": "ordinal"
+	},
+	"Mammography_Left_Glandular_Tissue_Density": {
+		"detail": "Glandular tissue density left",
+		"detail_ger": "Drüsenkörperdichte links",
+		"type": "ordinal"
+	},
+	"Mammography_Left_Lesion": {
+		"detail": "Number lesion left",
+		"detail_ger": "Herdbefund links",
+		"type": "ordinal"
+	},
+	"Mammography_Left_Number_Focus": {
+		"detail": "Number focus left",
+		"detail_ger": "Anzahl Fokus links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Size_Focus": {
+		"detail": "Size focus left",
+		"detail_ger": "Größe Fokus links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Focus_Localization": {
+		"detail": "Localization focus left",
+		"detail_ger": "Lokalisation Fokus links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Lesion_Number": {
+		"detail": "Number of lesions left",
+		"detail_ger": "Anzahl Herd links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Lesion_Size": {
+		"detail": "Size of lesion left",
+		"detail_ger": "Größe Herd links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Lesion_Localization": {
+		"detail": "Localization lesion left",
+		"detail_ger": "Lokalisation Herd links",
+		"type": "numerical"
+	},
+	"Mammography_Left_Lesion_Shape": {
+		"detail": "Shape of left lesion",
+		"detail_ger": "Form des Herdbefundes links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Lesion_Boundary": {
+		"detail": "Boundary of left lesion",
+		"detail_ger": "Begrenzung des Herdbefundes links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Intern_Enhancement": {
+		"detail": "Intern enhancement left",
+		"detail_ger": "Internes enhancement links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Initial_Signal_Gain": {
+		"detail": "Initial signal gain left",
+		"detail_ger": "Initialer Signalanstieg links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Post_Initial_Signal_Course": {
+		"detail": "Post initial signal course left.",
+		"detail_ger": "Postinitialer Signalverlauf links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Non_Mass_Enhancement": {
+		"detail": "Non-mass-like enhancement left",
+		"detail_ger": "Non-mass-like enhancement links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Intern_Morphology_Contrast_Agent": {
+		"detail": "Intern morphology of the contrast agent absorbtion left",
+		"detail_ger": "Interne Morphologie der KM-Aufnahme links",
+		"type": "nominal"
+	},
+	"Mammography_Left_Zysts": {
+		"detail": "Zysts left",
+		"detail_ger": "Zysten links",
+		"type": "dichotomous"
+	},
+	"Mammography_Left_Mastopathy": {
+		"detail": "Mastopathy left",
+		"detail_ger": "Mastopathie right",
+		"type": "dichotomous"
+	},
+	"Mammography_Left_Goettingen_Score": {
+		"detail": "Göttingen score left",
+		"detail_ger": "Göttingen-Score right",
+		"type": "numerical"
+	},
+	"Mammography_Left_BI_RADS": {
+		"detail": "BI-RADS left",
+		"detail_ger": "BI-RADS right",
+		"type": "ordinal"
+	},
+	"Mammography_Remark_Existing": {
+		"detail": "Remark in Mammographie existing",
+		"detail_ger": "Bemerkung zu Mammographie existiert",
+		"type": "dichotomous"
+	},
+	"Mammography_Remark": {
+		"detail": "Remark in Mammographie",
+		"detail_ger": "Bemerkung zu Mammographie",
+		"type": "nominal"
+	},
+	"Segmentation_Image_Exist": {
+		"detail": "Mammography images exist",
+		"detail_ger": "Mammographiebilder existieren",
+		"type": "dichotomous"
+	},
+	"Segmentation_Right_Ablatio": {
+		"detail": "Ablation right",
+		"detail_ger": "Ablatio (pathologische Ablösung) rechts",
+		"type": "dichotomous"
+	},
+	"Segmentation_Right_Volume": {
+		"detail": "Volume right (ml)",
+		"detail_ger": "Volumen (ml) rechts",
+		"type": "numerical"
+	},
+	"Segmentation_Right_Parenchym": {
+		"detail": "Parenchym right",
+		"detail_ger": "Parenchym (organspezifisches Gewebe) rechts",
+		"type": "numerical"
+	},
+	"Segmentation_Right_Fat": {
+		"detail": "Fat tissue right",
+		"detail_ger": "Fettgeweebe rechts",
+		"type": "numerical"
+	},
+	"Segmentation_Left_Ablatio": {
+		"detail": "Ablation left",
+		"detail_ger": "Ablatio (pathologische Ablösung) links",
+		"type": "dichotomous"
+	},
+	"Segmentation_Left_Volume": {
+		"detail": "Volume left (ml)",
+		"detail_ger": "Volumen (ml) links",
+		"type": "numerical"
+	},
+	"Segmentation_Left_Parenchym": {
+		"detail": "Parenchym left",
+		"detail_ger": "Parenchym (organspezifisches Gewebe) links",
+		"type": "numerical"
+	},
+	"Segmentation_Left_Fat": {
+		"detail": "Fat tissue left",
+		"detail_ger": "Fettgeweebe links",
+		"type": "numerical"
+	},
+	"Segmentation_Remark_Existing": {
+		"detail": "Remark in Segmentation existing",
+		"detail_ger": "Bemerkung zu Segementierung existiert",
+		"type": "dichotomous"
+	},
+	"Segmentation_Remark": {
+		"detail": "Remark in Segmentation",
+		"detail_ger": "Bemerkung zu Segementierung",
+		"type": "nominal"
+	}
+}
