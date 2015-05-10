@@ -4,15 +4,15 @@ angular.module('gui')
     var Attribute = function(name){
       this.name = name;
       this.type = data.jsondata[this.name].type;
-      this.values = Attribute.setPossibleAttributeValues();
-      /*this.distribution = [(key, value), (key, value)] with key = possible attribute value and value = number people, get this from data.dataset*/
+      this.values = this.setPossibleAttributeValues();
+      this.distribution = this.setDistribution(); // {key:value, key:value, ...} with key = possible attribute value and value = number people
     }
 
     Attribute.setPossibleAttributeValues = function(){
-      //mögliche Attributausprägungen erstmal nur für kategorische Attribute
+      // so far for ordinal attributes only
       if(data.jsondata[this.name].type == "nominal" || data.jsondata[this.name].type == "ordinal" || data.jsondata[this.name].type == "dichotomous"){
         values = [];
-        //collect attribute values of every proband for this specific attribute, contains possible duplicates
+        // collect attribute values of every proband for this specific attribute, contains possible duplicates
         for(var i = 0; i < data.dataset.length; i++){
           values[i] = data.dataset[i][this.name];
         }
@@ -25,16 +25,25 @@ angular.module('gui')
     }
 
     Attribute.setDistribution = function(){
-      if(this.values != null){
-        //TODO: for each attribute value filter probands and count results
-        for(var i = 0; i < this.values.length; i++){
+      var result = {};
 
+      if(this.values != null){
+        // for each attribute value filter probands and count results
+        for(var i = 0; i < this.values.length; i++){
+          var selection = data.dataset.filter( function(d){
+            if (d[this.name] == this.values[i]){
+              return d;
+            }
+          });
+          var key = this.values[i];
+          var value = selection.length;
+          result[key] = value;
         }
       }
-      /*return*/
+      return result;
     }
 
-    //this private function removes duplicates from a javascript array, call with uniq(["hello", "hello", "goodbye"]), only works if all elements of the array have the same type
+    // this private function removes duplicates from a javascript array, only works if all elements of the array have the same type
     function uniq_fast(a) {
     var seen = {};
     var out = [];

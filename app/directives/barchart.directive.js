@@ -1,7 +1,7 @@
 angular.module('gui')
 .directive('barchart', ['data', function(data){
   return {
-    restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
+    restrict: 'E',
     template: '<div class="barchart"></div>',
     controller: function($scope){
       $scope.$on("dataLoaded", function(){
@@ -9,35 +9,41 @@ angular.module('gui')
         for(var i=0; i <= 9; i++){
           ages[i] = +data.dataset[i].Age;
         }
-        d3.select(".barchart")
+
+        // horizontal barchart
+        /*d3.select(".barchart")
         .selectAll("div")
         .data(ages)
         .enter().append("div")
         .style("width", function(d) { return d + "%"; })
-        .text(function(d) { return d; });
-        /*var width = 300;
-        var height = 150;
-        var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-        var y = d3.scale.linear().rangeRound([height,0]);
-        d3.select(".barchart").append("svg")
-          .attr("width", width)
-          .attr("height", height)
-          .append("g");
-        x.domain(ages.map(function(d){
-          return d;
-        }));
-        y.domain([0, d3.max(ages, function (d){
-          return d;
-        })]);
-        var age = svg.selectAll(".age")
-        .data(ages)
-        .enter().append("g")
-        .attr("class", "g")
-        .attr("transform", function (d) {
-        return "translate(" + x(d) + ",0)";
-      });*/
+        .text(function(d) { return d; });*/
 
-      })
+        // vertical barchart
+        var width = 300;
+        var height = 450;
+
+        var datas = ages;
+
+        var scaleX = d3.scale.ordinal()
+          .domain(datas.map(function (d){ return d; }))
+          .rangeRoundBands([0, width], .1);
+
+        var scaleY = d3.scale.linear()
+          .domain([0, d3.max(datas, function(d){ return d; })])
+          .range([0, height]);
+
+        var svg = d3.select(".barchart").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+        svg.selectAll("rect")
+          .data(datas)
+          .enter().append("rect")
+          .attr("transform", function(d){ return "translate(" + scaleX(d) + ",0)"; })
+          .attr("y", 0)
+          .attr("width", 20)
+          .attr("height", function(d){ return scaleY(d); });
+        })
     },
     controllerAs: 'barchartCtrl'
 };
