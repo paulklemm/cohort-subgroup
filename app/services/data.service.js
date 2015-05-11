@@ -4,7 +4,7 @@ angular.module('gui')
     var dataService = function(data, json){
       this.dataset = data;
       this.jsondata = json;
-      this.selectedAttribute = null;
+      //this.selectedAttribute = null;
     };
 
     dataService.setCurrentAttribute = function(name){
@@ -13,3 +13,5 @@ angular.module('gui')
 
     return dataService;
   }/*]*/);
+
+// TODO: solve circular dependency that occurs because data depends on attribute and attribute itself depends on data

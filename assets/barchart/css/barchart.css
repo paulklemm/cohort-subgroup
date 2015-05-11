@@ -10,3 +10,21 @@
 .barchart {
     margin-top: 30px;
 }
+
+#barchartContainer{
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 17em;
+  height: 200px;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
