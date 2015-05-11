@@ -5,7 +5,7 @@ angular.module('gui')
       this.name = name;
       this.type = data.jsondata[this.name].type;
       this.values = this.setPossibleAttributeValues();
-      this.distribution = this.setDistribution(); // {key:value, key:value, ...} with key = possible attribute value and value = number people
+      this.distribution = this.setDistribution(); // von der Form [{attributeValue: "SHIP2", value: 300}, {attributeValue: "TREND0", value: 400}]
     }
 
     Attribute.setPossibleAttributeValues = function(){
@@ -25,19 +25,20 @@ angular.module('gui')
     }
 
     Attribute.setDistribution = function(){
-      var result = {};
+      var result = [];
 
       if(this.values != null){
         // for each attribute value filter probands and count results
         for(var i = 0; i < this.values.length; i++){
+          var obj = {};
           var selection = data.dataset.filter( function(d){
             if (d[this.name] == this.values[i]){
               return d;
             }
           });
-          var key = this.values[i];
-          var value = selection.length;
-          result[key] = value;
+          obj["attributeValue"] = this.values[i];
+          obj["value"] = selection.length
+          result.push(obj);
         }
       }
       return result;
