@@ -29,6 +29,10 @@ angular.module('gui')
           .scale(scaleX)
           .orient("bottom");
 
+        var yAxis = d3.svg.axis()
+          .scale(scaleY)
+          .orient("left");
+
         var chart = d3.select(".barchart")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
@@ -39,6 +43,16 @@ angular.module('gui')
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
+
+        chart.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 10)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Probands");
 
         chart.selectAll(".bar")
             .data(myObject)

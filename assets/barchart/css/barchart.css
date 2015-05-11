@@ -28,3 +28,11 @@
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.bar{
+  fill: blue;
+}
+
+.x.axis path{
+  display: none;
+}
