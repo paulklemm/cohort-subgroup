@@ -22,7 +22,7 @@ angular.module('gui')
           .rangeRoundBands([0, width], .1);
 
         var scaleY = d3.scale.linear()
-          .domain([0, d3.max(myObject, function(d){ return +d.value; })])
+          .domain([0, d3.max(myObject, function(d){ return +d.value; })+50])
           .range([height, 0]);
 
         var xAxis = d3.svg.axis()
@@ -47,12 +47,12 @@ angular.module('gui')
         chart.append("g")
           .attr("class", "y axis")
           .call(yAxis)
-          .append("text")
+          /*.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 10)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Probands");
+            .text("Probands");*/
 
         chart.selectAll(".bar")
             .data(myObject)

@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="assets/barchart/css/barchart.css"/>
     <script src="app/directives/barchart.directive.js"></script>
 
+    <!-- graph -->
+    <script src="app/directives/graph.directive.js"></script>
+
     <script type='text/javascript' src='app/services/data.service.js'></script>
     <script type='text/javascript' src='app/services/attribute.service.js'></script>
 
@@ -68,10 +71,14 @@
         </div>
         <div class='col-md-3' style='height:570px;' ng-show="searchbarCtrl.attributeClicked">
           <div class="container" style="padding-top:20px; padding-bottom:20px;">
-            <p>{{searchbarCtrl.attributeName}}</p>
-            <div id="barchartContainer">
-              <barchart><barchart>
-            </div>
+            <h3 style="text-align: center;">Kontextinformationen</h3>
+              <p>Attribut: {{searchbarCtrl.attributeName}}</p>
+              <div id="barchartContainer">
+                <barchart></barchart>
+              </div>
+              <div id="graphContainer">
+                <graph></graph>
+              </div>
           </div>
         </div>
       </div>
