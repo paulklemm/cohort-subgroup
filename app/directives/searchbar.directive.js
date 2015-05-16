@@ -12,19 +12,19 @@ angular.module('gui')
 
         // test begin --------------------------------------------
 
-        /*values = [];
+        values = [];
         // collect attribute values of every proband for this specific attribute, contains possible duplicates
         for(var i = 0; i < data.dataset.length; i++){
           if(data.jsondata.Body_Weight.type == "nominal" || data.jsondata.Body_Weight.type == "ordinal" || data.jsondata.Body_Weight.type == "dichotomous"){
             values[i] = data.dataset[i][this.name];
           // if continuous attribute then possible attribute values are numbers instead of strings and values are rounded
           }else{
-            values[i] = +data.dataset[i].Body_Weight;
+            values[i] = d3.round(+data.dataset[i].Body_Weight);
           }
         }
 
         possibleValues = uniq_fast(values); //without duplicates
-        console.log(possibleValues); //441 verschiedene Werte für das Gewicht in einem Bereich von [44,108], auf eine Kommastelle genau, aufrunden?
+        //console.log(possibleValues); //441 verschiedene Werte für das Gewicht in einem Bereich von [44,108], auf eine Kommastelle genau, durchschnittlich 4-5 Personen pro Wert, aufrunden?
 
         var result = [];
 
@@ -38,7 +38,7 @@ angular.module('gui')
                     return d;
                   }
                 }else{
-                  if (+d.Body_Weight == possibleValues[i]){
+                  if (d3.round(+d.Body_Weight) == possibleValues[i]){
                     return d;
                   }
                 }
@@ -48,7 +48,7 @@ angular.module('gui')
               result.push(obj);
             }
           }
-        console.log(result);
+        //console.log(result);
 
         function uniq_fast(a) {
         var seen = {};
@@ -63,7 +63,7 @@ angular.module('gui')
              }
         }
         return out;
-      }*/
+      }
 
         // test end --------------------------------------------
 

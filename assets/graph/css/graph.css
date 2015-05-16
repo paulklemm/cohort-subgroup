@@ -1,0 +1,21 @@
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+#graphContainer{
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 17em;
+  height: 200px;
+  margin-top: 20px;
+}

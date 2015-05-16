@@ -9,9 +9,11 @@ angular.module('gui')
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
         //TODO: make width of barchart dependent from width of parent element
-        var width = parseInt(d3.select('#barchartContainer').style('width')) - margin.left - margin.right;
+        //var width = parseInt(d3.select('#barchartContainer').style('width')) - margin.left - margin.right;
+        var width = 168;
         //var width = parseInt(window.getComputedStyle(document.getElementById('barchartContainer')).width); TODO: get this working with multiple divs having percentage width
-        var height = parseInt(d3.select('#barchartContainer').style('height')) - margin.top - margin.bottom;
+        //var height = parseInt(d3.select('#barchartContainer').style('height')) - margin.top - margin.bottom;
+        var height = 150;
 
         var myObject = [{attributeValue: "SHIP2", value: 200}, {attributeValue: "TREND0", value: 300}];
 

@@ -1,3 +1,9 @@
+/*Bei stetigen Attributen sind die Ausprägungen Kommazahlen, beispielsweise beim Gewicht z.B. 68.5kg.
+Macht es Sinn da zu runden? --Ich denke schon, bei 441 auf der x-Achse, erkennt man eh nix.
+Ohne Runden kommt man auf 441 verschiedene Ausprägungen im Intervall [44, 120] bei 1018 Probanden beim Gewicht. Das sind dann durchschnittlich 4-6 Probanden pro Ausprägung.
+Mit Runden auf ganze Zahlen sind es nur noch 74 verschiedene Ausprägungen. Hier sind es ca. 10-40 Probanden pro Ausprägung.
+Ist der Fehler, der beim Runden passiert, vernachlässigbar?*/
+
 angular.module('gui')
   .factory('attribute', ['data', function(data){
 
@@ -19,7 +25,8 @@ angular.module('gui')
             values[i] = data.dataset[i][this.name];
           // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
           }else{
-            values[i] = +data.dataset[i][this.name]; //TODO: round numbers -> does that make sense in every case?
+            //values[i] = +data.dataset[i][this.name]; // without rounding
+            values[i] = d3.round(+data.dataset[i][this.name]); // with rounding
           }
         }
 
@@ -41,7 +48,8 @@ angular.module('gui')
                   return d;
                 }
               }else{
-                if (+d[this.name] == this.values[i]){ //TODO: add rounding before checking if necessary
+                //if (+d[this.name] == this.values[i]){ // without rounding
+                if(d3.round(+d[this.name]) == this.values[i]){ // with rounding
                   return d;
                 }
               }
