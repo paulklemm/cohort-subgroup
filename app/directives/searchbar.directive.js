@@ -7,6 +7,7 @@ angular.module('gui')
       controllerObj = this;
       this.attributeClicked = false;
       this.attributeName = "";
+      this.isContinuous = false;
 
       $scope.$on("dataLoaded", function(){
 
@@ -74,6 +75,10 @@ angular.module('gui')
         function onSelect(d) {
             controllerObj.attributeClicked = true;
             controllerObj.attributeName = d;
+            if(data.jsondata[d].type == "numerical")
+              controllerObj.isContinuous = false;
+            else
+              controllerObj.isContinuous = true;
             $scope.$apply();
         }
 
@@ -203,7 +208,6 @@ angular.module('gui')
                   function search() {
 
                       var str=_searchTerm;
-                      console.log("searching on " + _searchTerm);
 
                       if (str.length >= _minLength) {
                           _matches = [];

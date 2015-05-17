@@ -9,7 +9,7 @@ angular.module('gui')
 
     var Attribute = function(name){
       this.name = name;
-      this.type = data.jsondata[this.name].type;
+      //this.type = data.jsondata[this.name].type;
       this.values = this.setPossibleAttributeValues();
       this.distribution = this.setDistribution(); // von der Form [{attributeValue: "SHIP2", value: 300}, {attributeValue: "TREND0", value: 400}, ...] für nominale Attribute bzw.
                                                   // von der Form [{attributeValue: 57, value: 25}, {attributeValue: 65, value: 40}, ...] für stetige Attribute

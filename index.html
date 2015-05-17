@@ -80,10 +80,10 @@
           <div class="container" style="padding-top:20px; padding-bottom:20px;">
             <h3 style="text-align: center; margin-bottom: 20px;">Kontextinformationen</h3>
               <p>Attribut: {{searchbarCtrl.attributeName}}</p>
-              <div id="barchartContainer">
+              <div id="barchartContainer" ng-hide="!searchbarCtrl.isContinuous">
                 <barchart></barchart>
               </div>
-              <div id="graphContainer">
+              <div id="graphContainer" ng-hide="searchbarCtrl.isContinuous">
                 <graph></graph>
               </div>
           </div>
