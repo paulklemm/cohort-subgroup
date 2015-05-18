@@ -13,7 +13,7 @@ angular.module('gui')
 
         // test begin --------------------------------------------
 
-        values = [];
+        /*values = [];
         // collect attribute values of every proband for this specific attribute, contains possible duplicates
         for(var i = 0; i < data.dataset.length; i++){
           if(data.jsondata.Body_Weight.type == "nominal" || data.jsondata.Body_Weight.type == "ordinal" || data.jsondata.Body_Weight.type == "dichotomous"){
@@ -25,7 +25,6 @@ angular.module('gui')
         }
 
         possibleValues = uniq_fast(values); //without duplicates
-        //console.log(possibleValues); //441 verschiedene Werte für das Gewicht in einem Bereich von [44,108], auf eine Kommastelle genau, durchschnittlich 4-5 Personen pro Wert, aufrunden?
 
         var result = [];
 
@@ -49,7 +48,6 @@ angular.module('gui')
               result.push(obj);
             }
           }
-        //console.log(result);
 
         function uniq_fast(a) {
         var seen = {};
@@ -64,7 +62,7 @@ angular.module('gui')
              }
         }
         return out;
-      }
+      }*/
 
         // test end --------------------------------------------
 
@@ -73,6 +71,7 @@ angular.module('gui')
 
         //Call back for when user selects an option
         function onSelect(d) {
+            data.setCurrentAttribute(d);
             controllerObj.attributeClicked = true;
             controllerObj.attributeName = d;
             if(data.jsondata[d].type == "numerical")

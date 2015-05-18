@@ -15,7 +15,8 @@ angular.module('gui')
         //var height = parseInt(d3.select('#barchartContainer').style('height')) - margin.top - margin.bottom;
         var height = 150;
 
-        var myObject = [{attributeValue: "SHIP2", value: 200}, {attributeValue: "TREND0", value: 300}];
+        //var myObject = [{attributeValue: "SHIP2", value: 200}, {attributeValue: "TREND0", value: 300}];
+        var myObject = data.currentAttribute.distribution;
 
         var barWidth = width / myObject.length;
 

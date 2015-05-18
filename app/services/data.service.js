@@ -1,17 +1,15 @@
 angular.module('gui')
-  .factory('data', /*['attribute', */function(){
+  .factory('data', ['attribute', function(attribute){
 
     var dataService = function(data, json){
       this.dataset = data;
       this.jsondata = json;
-      //this.selectedAttribute = null;
+      this.currentAttribute = null;
     };
 
     dataService.setCurrentAttribute = function(name){
-      //this.selectedAttribute = new Attribute(name);
+      this.currentAttribute = new attribute(name, this.dataset, this.jsondata);
     }
 
     return dataService;
-  }/*]*/);
-
-// TODO: solve circular dependency that occurs because data depends on attribute and attribute itself depends on data
+  }]);

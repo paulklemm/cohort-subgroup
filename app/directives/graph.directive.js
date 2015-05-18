@@ -11,7 +11,8 @@ angular.module('gui')
         var width = 168;
         var height = 150;
 
-        var myObject = [{ x: 1, y: 5 }, { x: 20, y: 20 }, { x: 40, y: 10 }, { x: 60, y: 40 }, { x: 80, y: 5 }, { x: 100, y: 60 }];
+        //var myObject = [{ x: 1, y: 5 }, { x: 20, y: 20 }, { x: 40, y: 10 }, { x: 60, y: 40 }, { x: 80, y: 5 }, { x: 100, y: 60 }];
+        var myObject = data.currentAttribute.distribution;
 
         var graph = d3.select(".graph")
           .attr("width", width + margin.left + margin.right)
@@ -22,7 +23,7 @@ angular.module('gui')
         var scaleX = d3.scale.linear()
           .domain([0, d3.max(myObject, function(d){ return d.x; })])
           .range([0, width]);
-          
+
         var scaleY = d3.scale.linear()
           .domain([0, d3.max(myObject, function(d){ return d.y; })])
           .range([height, 0]);

@@ -5,28 +5,26 @@ Mit Runden auf ganze Zahlen sind es nur noch 74 verschiedene Ausprägungen. Hier
 Ist der Fehler, der beim Runden passiert, vernachlässigbar?*/
 
 angular.module('gui')
-  .factory('attribute', ['data', function(data){
+  .factory('attribute', function(){
 
-    var Attribute = function(name){
+    var Attribute = function(name, dataset, jsondata){
       this.name = name;
-      //this.type = data.jsondata[this.name].type;
-      this.values = this.setPossibleAttributeValues();
-      this.distribution = this.setDistribution(); // von der Form [{attributeValue: "SHIP2", value: 300}, {attributeValue: "TREND0", value: 400}, ...] für nominale Attribute bzw.
-                                                  // von der Form [{attributeValue: 57, value: 25}, {attributeValue: 65, value: 40}, ...] für stetige Attribute
-    }
+      this.type = jsondata[this.name].type;
+      this.values = this.setPossibleAttributeValues(dataset, jsondata);
+      this.distribution = this.setDistribution(dataset, jsondata); // von der Form [{attributeValue: "SHIP2", value: 300}, {attributeValue: "TREND0", value: 400}, ...] für nominale Attribute bzw.                                         // von der Form [{attributeValue: 57, value: 25}, {attributeValue: 65, value: 40}, ...] für stetige Attribute
+  }
 
-    Attribute.setPossibleAttributeValues = function(){
-
+    Attribute.prototype.setPossibleAttributeValues = function(dataset, jsondata){
         values = [];
         // collect attribute values of every proband for this specific attribute, contains possible duplicates
-        for(var i = 0; i < data.dataset.length; i++){
+        for(var i = 0; i < dataset.length; i++){
           // if attribute is ordinal, then possible values are strings, e.g. "SHIP2"
-          if(data.jsondata[this.name].type == "nominal" || data.jsondata[this.name].type == "ordinal" || data.jsondata[this.name].type == "dichotomous"){
-            values[i] = data.dataset[i][this.name];
+          if(this.type == "nominal" || this.type == "ordinal" || this.type == "dichotomous"){
+            values[i] = dataset[i][this.name];
           // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
           }else{
             //values[i] = +data.dataset[i][this.name]; // without rounding
-            values[i] = d3.round(+data.dataset[i][this.name]); // with rounding
+            values[i] = d3.round(+dataset[i][this.name]); // with rounding
           }
         }
 
@@ -35,20 +33,21 @@ angular.module('gui')
         return possibleValues;
     }
 
-    Attribute.setDistribution = function(){
+    Attribute.prototype.setDistribution = function(dataset, jsondata){
       var result = [];
 
         if(this.values != null){
           // for each attribute value filter probands and count results
           for(var i = 0; i < this.values.length; i++){
             var obj = {};
-            var selection = data.dataset.filter( function(d){
-              if(data.jsondata[this.name].type == "nominal" || data.jsondata[this.name].type == "ordinal" || data.jsondata[this.name].type == "dichotomous"){
+            var selection = dataset.filter( function(d){
+              console.log(this.type);
+              if(this.type == "nominal" || this.type == "ordinal" || this.type == "dichotomous"){
+                console.log(this.name);
                 if (d[this.name] == this.values[i]){
                   return d;
                 }
               }else{
-                //if (+d[this.name] == this.values[i]){ // without rounding
                 if(d3.round(+d[this.name]) == this.values[i]){ // with rounding
                   return d;
                 }
@@ -79,4 +78,4 @@ angular.module('gui')
     }
 
     return Attribute;
-  }]);
+  });
