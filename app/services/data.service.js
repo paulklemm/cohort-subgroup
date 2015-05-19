@@ -1,5 +1,5 @@
 angular.module('gui')
-  .factory('data', ['attribute', function(attribute){
+  .factory('data', ['attribute', '$rootScope', function(attribute, $rootScope){
 
     var dataService = function(data, json){
       this.dataset = data;
@@ -9,6 +9,7 @@ angular.module('gui')
 
     dataService.setCurrentAttribute = function(name){
       this.currentAttribute = new attribute(name, this.dataset, this.jsondata);
+      $rootScope.$broadcast("attributeSet");
     }
 
     return dataService;

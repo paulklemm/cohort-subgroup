@@ -41,9 +41,9 @@ angular.module('gui')
           for(var i = 0; i < this.values.length; i++){
             var obj = {};
             var selection = dataset.filter( function(d){
-              console.log(this.type);
+              //console.log(this.type);
+              //console.log(this.name);
               if(this.type == "nominal" || this.type == "ordinal" || this.type == "dichotomous"){
-                console.log(this.name);
                 if (d[this.name] == this.values[i]){
                   return d;
                 }

@@ -1,5 +1,5 @@
 angular.module('gui')
-.directive('searchbar', ['data', function(data){
+.directive('searchbar', ['data', 'attribute', function(data, attribute){
   return {
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div id="searchbar"></div>',

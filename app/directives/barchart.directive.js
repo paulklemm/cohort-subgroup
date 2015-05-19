@@ -4,7 +4,7 @@ angular.module('gui')
     restrict: 'E',
     template: '<svg class="barchart"></svg>',
     controller: function($scope){
-      $scope.$on("dataLoaded", function(){
+      $scope.$on("attributeSet", function(){
 
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
