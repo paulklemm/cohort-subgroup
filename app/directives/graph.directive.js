@@ -11,8 +11,11 @@ angular.module('gui')
         var width = 168;
         var height = 150;
 
-        //var myObject = [{ x: 1, y: 5 }, { x: 20, y: 20 }, { x: 40, y: 10 }, { x: 60, y: 40 }, { x: 80, y: 5 }, { x: 100, y: 60 }];
+        // sort distribution for valueline
         var myObject = data.currentAttribute.distribution;
+        myObject.sort(function(a,b){
+          return a.attributeValue - b.attributeValue;
+        });
 
         var graph = d3.select(".graph")
           .attr("width", width + margin.left + margin.right)
@@ -21,11 +24,11 @@ angular.module('gui')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var scaleX = d3.scale.linear()
-          .domain([0, d3.max(myObject, function(d){ return d.x; })])
+          .domain([0, d3.max(myObject, function(d){ return d.attributeValue; })])
           .range([0, width]);
 
         var scaleY = d3.scale.linear()
-          .domain([0, d3.max(myObject, function(d){ return d.y; })])
+          .domain([0, d3.max(myObject, function(d){ return d.value; })])
           .range([height, 0]);
 
         var xAxis = d3.svg.axis()
@@ -46,8 +49,8 @@ angular.module('gui')
           .call(yAxis);
 
         var valueline = d3.svg.line()
-          .x(function(d) { return scaleX(d.x); })
-          .y(function(d) { return scaleY(d.y); })
+          .x(function(d) { return scaleX(d.attributeValue); })
+          .y(function(d) { return scaleY(d.value); })
           .interpolate('linear');
 
         graph.append("path")

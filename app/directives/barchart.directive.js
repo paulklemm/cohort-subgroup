@@ -6,6 +6,9 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("attributeSet", function(){
 
+        // if chart already exists, remove its content
+        d3.selectAll("svg > *").remove();
+
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
         //TODO: make width of barchart dependent from width of parent element
@@ -15,7 +18,6 @@ angular.module('gui')
         //var height = parseInt(d3.select('#barchartContainer').style('height')) - margin.top - margin.bottom;
         var height = 150;
 
-        //var myObject = [{attributeValue: "SHIP2", value: 200}, {attributeValue: "TREND0", value: 300}];
         var myObject = data.currentAttribute.distribution;
 
         var barWidth = width / myObject.length;

@@ -40,15 +40,16 @@ angular.module('gui')
           // for each attribute value filter probands and count results
           for(var i = 0; i < this.values.length; i++){
             var obj = {};
+            var self = this;
             var selection = dataset.filter( function(d){
               //console.log(this.type);
               //console.log(this.name);
-              if(this.type == "nominal" || this.type == "ordinal" || this.type == "dichotomous"){
-                if (d[this.name] == this.values[i]){
+              if(self.type == "nominal" || self.type == "ordinal" || self.type == "dichotomous"){
+                if (d[self.name] == self.values[i]){
                   return d;
                 }
               }else{
-                if(d3.round(+d[this.name]) == this.values[i]){ // with rounding
+                if(d3.round(+d[self.name]) == self.values[i]){ // with rounding
                   return d;
                 }
               }
