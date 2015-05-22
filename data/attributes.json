@@ -1,0 +1,91 @@
+{
+    "name": "root",
+    "children": [{
+        "name": "study",
+        "children": [{
+            "name": "Cohort",
+            "size": 8833
+        }]
+    }, {
+        "name": "personal",
+        "children": [{
+            "name": "Age",
+            "size": 8833
+        }, {
+            "name": "Marital_Status",
+            "size": 8833
+        }, {
+            "name": "Living_With_Partner",
+            "size": 8833
+        }, {
+            "name": "Number_Persons_Household",
+            "size": 8833
+        }]
+    }, {
+        "name": "general_health_status",
+        "children": [{
+            "name": "Mobility",
+            "size": 8833
+        }, {
+            "name": "take_care_for_themselves",
+            "size": 8833
+        }, {
+            "name": "Problems_Daily_Activities",
+            "size": 8833
+        }, {
+            "name": "Pain_Discomfort",
+            "size": 8833
+        }, {
+            "name": "Anxiety_Depression",
+            "size": 8833
+        }]
+    }, {
+        "name": "display",
+        "children": [{
+            "name": "DirtySprite",
+            "size": 8833
+        }, {
+            "name": "LineSprite",
+            "size": 1732
+        }, {
+            "name": "RectSprite",
+            "size": 3623
+        }, {
+            "name": "TextSprite",
+            "size": 10066
+        }]
+    }, {
+        "name": "flex",
+        "children": [{
+            "name": "FlareVis",
+            "size": 4116
+        }]
+    }, {
+        "name": "physics",
+        "children": [{
+            "name": "DragForce",
+            "size": 1082
+        }, {
+            "name": "GravityForce",
+            "size": 1336
+        }, {
+            "name": "IForce",
+            "size": 319
+        }, {
+            "name": "NBodyForce",
+            "size": 10498
+        }, {
+            "name": "Particle",
+            "size": 2822
+        }, {
+            "name": "Simulation",
+            "size": 9983
+        }, {
+            "name": "Spring",
+            "size": 2213
+        }, {
+            "name": "SpringForce",
+            "size": 1681
+        }]
+    }]
+}

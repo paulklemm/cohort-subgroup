@@ -1,9 +1,10 @@
 angular.module('gui')
   .factory('data', ['attribute', '$rootScope', function(attribute, $rootScope){
 
-    var dataService = function(data, json){
+    var dataService = function(data, json, vis){
       this.dataset = data;
       this.jsondata = json;
+      this.visdata = vis;
       this.currentAttribute = null;
     };
 

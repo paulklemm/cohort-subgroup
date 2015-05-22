@@ -19,17 +19,21 @@
     <script type='text/javascript' src='app.js'></script>
 
     <!-- searchbar -->
-    <link rel="stylesheet" href="assets/searchbar/fonts/bariol/bariol.css"/>
-    <link rel="stylesheet" href="assets/searchbar/css/style.css"/>
+    <link rel="stylesheet" href="assets/fonts/searchbar/bariol/bariol.css"/>
+    <link rel="stylesheet" href="assets/css/searchbar/style.css"/>
     <script src="app/directives/searchbar.directive.js"></script>
 
     <!-- barchart -->
-    <link rel="stylesheet" href="assets/barchart/css/barchart.css"/>
+    <link rel="stylesheet" href="assets/css/barchart/barchart.css"/>
     <script src="app/directives/barchart.directive.js"></script>
 
     <!-- graph -->
-    <link rel="stylesheet" href="assets/graph/css/graph.css"/>
+    <link rel="stylesheet" href="assets/css/graph/graph.css"/>
     <script src="app/directives/graph.directive.js"></script>
+
+    <!-- tree -->
+    <link rel="stylesheet" href="assets/css/tree/tree.css"/>
+    <script src="app/directives/tree.directive.js"></script>
 
     <!-- angular services -->
     <script type='text/javascript' src='app/services/attribute.service.js'></script>
@@ -75,7 +79,9 @@
         <div class='col-md-7' style='height:570px; text-align:center;'>
           <div class='row'>time bar</div>
           <div class='row'>progress bar</div>
-          <div class='row'>visualization</div>
+          <div class='row'>
+            <tree></tree>
+          </div>
         </div>
         <div class='col-md-3' style='height:570px;' ng-show="searchbarCtrl.attributeClicked">
           <div class="container" style="padding-top:20px; padding-bottom:20px;">
