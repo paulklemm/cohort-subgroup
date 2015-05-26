@@ -2,7 +2,7 @@ angular.module('gui')
 .directive('graph', ['data', function(data){
   return {
     restrict: 'E',
-    template: '<svg class="graph"></svg>',
+    template: '<div class="graph"></div>',
     controller: function($scope){
       $scope.$on("attributeSet", function(){
 
@@ -18,6 +18,7 @@ angular.module('gui')
         });
 
         var graph = d3.select(".graph")
+          .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")

@@ -8,8 +8,7 @@ angular.module('gui')
 
         /* enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link */
         /* hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js */
-
-        /*TODO: fix issue that visualisation disappears when context information are opened */
+        /* small multiples: http://bl.ocks.org/mbostock/1157787 */
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 1000 - margin.right - margin.left,

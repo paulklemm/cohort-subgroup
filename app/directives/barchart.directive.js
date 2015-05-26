@@ -2,12 +2,13 @@ angular.module('gui')
 .directive('barchart', ['data', function(data){
   return {
     restrict: 'E',
-    template: '<svg class="barchart"></svg>',
+    template: '<div class="barchart"></div>',
     controller: function($scope){
       $scope.$on("attributeSet", function(){
 
         // if chart already exists, remove its content
-        d3.selectAll("svg > *").remove();
+        d3.selectAll(".barchart").select("svg").remove();
+        d3.selectAll(".graph").select("svg").remove();
 
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
@@ -39,6 +40,7 @@ angular.module('gui')
           .orient("left");
 
         var chart = d3.select(".barchart")
+          .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
