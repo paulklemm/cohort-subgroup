@@ -1,0 +1,13 @@
+/* better visualize the columns */
+.row > div {
+  box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
+}
+
+/* remove left and right padding from bootstrap columns */
+div[class*="col-md"] {
+  padding: 0;
+}
+
+.noborder {
+  box-shadow: none !important;
+}

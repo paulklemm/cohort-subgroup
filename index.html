@@ -39,23 +39,7 @@
     <script type='text/javascript' src='app/services/attribute.service.js'></script>
     <script type='text/javascript' src='app/services/data.service.js'></script>
 
-
-    <!-- better visualize the columns -->
-    <style>
-      .row > div {
-        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
-      }
-      /*div[class*="col-md"] > div {
-        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
-      }*/
-    </style>
-
-    <!-- remove left and right padding from bootstrap columns -->
-    <style>
-      div[class*="col-md"] {
-      padding: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/main.css"/>
 
   </head>
   <body>
@@ -80,7 +64,7 @@
           <div class='row'>time bar</div>
           <div class='row'>progress bar</div>
           <div class='row'>
-            <tree></tree>
+            <div class="noborder" style="margin-left: -150px;"><tree></tree></div>
           </div>
         </div>
         <div class='col-md-3' style='height:570px;' ng-show="searchbarCtrl.attributeClicked">

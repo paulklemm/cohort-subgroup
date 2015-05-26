@@ -7,6 +7,9 @@ angular.module('gui')
       $scope.$on("visDataLoaded", function(){
 
         /* enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link */
+        /* hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js */
+
+        /*TODO: fix issue that visualisation disappears when context information are opened */
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 1000 - margin.right - margin.left,
@@ -76,26 +79,7 @@ angular.module('gui')
               .attr("class", "node")
               .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
               /*.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })*/
-              .on("click", click)
-              .on("mouseover", function(d) {
-                link.style("stroke-width", function(l) {
-                  //console.log(d);
-                  if(d == l.source || d == l.target)
-                    return "4px";
-                  else
-                    return "1.5px";
-                })
-                link.style("stroke", function(l){
-                  if(d == l.source || d == l.target)
-                    return "red";
-                  else
-                    return "#ccc";
-                })
-              })
-              .on("mouseout", function(){
-                link.style("stroke-width", "1.5px");
-                link.style("stroke", "#ccc");
-              });
+              .on("click", click);
 
           nodeEnter.append("circle")
               .attr("r", 1e-6)
@@ -112,6 +96,38 @@ angular.module('gui')
               .text(function(d) { return d.name; })
               .style("fill-opacity", 1e-6);
               /*.style("fill-opacity", 1);*/
+
+          node.on("mouseover", function(d){
+              link.style("stroke-width", function(l) {
+                if(d == l.target)
+                  return "4px";
+                else
+                  return "1.5px";
+              })
+              link.style("stroke", function(l){
+                if(d == l.source || d == l.target)
+                  return "#31B404";
+                else
+                  return "#CCC";
+              })
+              if(d.depth == 2){
+                d3.select(this).select('circle')
+                  .attr("r", 8)
+                  .style("stroke-width", "4px");
+                d3.select(this).select('text')
+                  .style("font-size", "14px");
+              }
+          })
+
+          node.on("mouseout", function(d){
+              d3.select(this).select('circle')
+                .attr("r", 5)
+                .style("stroke-width", "1.5px");
+              d3.select(this).select('text')
+                .style("font-size", "10px");
+              link.style("stroke-width", "1.5px");
+              link.style("stroke", "#ccc");
+          })
 
           // Transition nodes to their new position.
           var nodeUpdate = node.transition()
@@ -173,7 +189,6 @@ angular.module('gui')
 
         // Toggle children on click.
         function click(d) {
-          console.log(d._children);
           if (d.children) {
             d._children = d.children;
             d.children = null;

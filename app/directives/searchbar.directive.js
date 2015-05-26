@@ -11,61 +11,6 @@ angular.module('gui')
 
       $scope.$on("dataLoaded", function(){
 
-        // test begin --------------------------------------------
-
-        /*values = [];
-        // collect attribute values of every proband for this specific attribute, contains possible duplicates
-        for(var i = 0; i < data.dataset.length; i++){
-          if(data.jsondata.Body_Weight.type == "nominal" || data.jsondata.Body_Weight.type == "ordinal" || data.jsondata.Body_Weight.type == "dichotomous"){
-            values[i] = data.dataset[i][this.name];
-          // if continuous attribute then possible attribute values are numbers instead of strings and values are rounded
-          }else{
-            values[i] = d3.round(+data.dataset[i].Body_Weight);
-          }
-        }
-
-        possibleValues = uniq_fast(values); //without duplicates
-
-        var result = [];
-
-          if(possibleValues != null){
-            // for each attribute value filter probands and count results
-            for(var i = 0; i < possibleValues.length; i++){
-              var obj = {};
-              var selection = data.dataset.filter( function(d){
-                if(data.jsondata.Body_Weight.type == "nominal" || data.jsondata.Body_Weight.type == "ordinal" || data.jsondata.Body_Weight.type == "dichotomous"){
-                  if (d.Body_Weight == possibleValues[i]){
-                    return d;
-                  }
-                }else{
-                  if (d3.round(+d.Body_Weight) == possibleValues[i]){
-                    return d;
-                  }
-                }
-              });
-              obj["attributeValue"] = possibleValues[i];
-              obj["value"] = selection.length;
-              result.push(obj);
-            }
-          }
-
-        function uniq_fast(a) {
-        var seen = {};
-        var out = [];
-        var len = a.length;
-        var j = 0;
-        for(var i = 0; i < len; i++) {
-             var item = a[i];
-             if(seen[item] !== 1) {
-                   seen[item] = 1;
-                   out[j++] = item;
-             }
-        }
-        return out;
-      }*/
-
-        // test end --------------------------------------------
-
         var keys = d3.keys(data.dataset[0]);
         start();
 
