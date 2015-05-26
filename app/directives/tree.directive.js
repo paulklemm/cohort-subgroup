@@ -39,7 +39,21 @@ angular.module('gui')
           }
         }
 
+        /*function collapseAll(d){
+          if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapseAll);
+            d.children = null;
+          }
+          else if(d._children) {
+            d._children.forEach(collapseAll);
+          }
+        }*/
+
         root.children.forEach(collapse);
+        root.children.forEach(function(d){ hidden = false; });
+        //collapseAll(root);
+        root.hidden = true;
         update(root);
 
         d3.select(self.frameElement).style("height", "500px");
@@ -47,11 +61,11 @@ angular.module('gui')
         function update(source) {
 
           // Compute the new tree layout.
-          var nodes = tree.nodes(root).reverse();
+          var nodes = tree.nodes(root).filter(function(d){ return !d.hidden; }).reverse();
           var links = tree.links(nodes);
 
           // Normalize for fixed-depth.
-          nodes.forEach(function(d) { d.y = d.depth * 300; });
+          nodes.forEach(function(d) { d.y = d.depth * 200; });
 
           // Declare the nodes...
           var node = svg.selectAll("g.node")
@@ -65,6 +79,7 @@ angular.module('gui')
               .on("click", click)
               .on("mouseover", function(d) {
                 link.style("stroke-width", function(l) {
+                  //console.log(d);
                   if(d == l.source || d == l.target)
                     return "4px";
                   else
@@ -158,6 +173,7 @@ angular.module('gui')
 
         // Toggle children on click.
         function click(d) {
+          console.log(d._children);
           if (d.children) {
             d._children = d.children;
             d.children = null;
