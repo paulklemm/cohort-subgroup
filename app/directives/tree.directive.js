@@ -85,6 +85,11 @@ angular.module('gui')
               /*.attr("r", 10)*/
               .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
+          /* TODO: add small multiples, change graph directive to function with parameter small multiple yes/no
+          nodeEnter.append("svg")
+            . ...
+          */
+
           nodeEnter.append("text")
               .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
               /*.attr("y", function(d) { return d.children || d._children ? -10 : 10; })*/
