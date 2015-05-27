@@ -9,7 +9,20 @@ app.run(['$rootScope', 'data', function($rootScope, data){
   data.currentAttribute = null;
 }]);
 
-
+app.controller('attributeCtrl', ['$scope', 'data', function($scope, data) {
+  $scope.attributeClicked = false;
+  $scope.attributeName = "";
+  $scope.isContinuous = false;
+  $scope.$on("attributeSet", function(){
+    $scope.attributeClicked = true;
+    $scope.attributeName = data.currentAttribute.name;
+    if(data.currentAttribute.type == "numerical")
+      $scope.isContinuous = false;
+    else
+      $scope.isContinuous = true;
+    $scope.$apply();
+  });
+}]);
 
 app.controller('ListCtrl', ['$scope', function($scope) {
   var i = 0;

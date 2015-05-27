@@ -67,17 +67,17 @@
             <div class="noborder" style="margin-left: -150px;"><tree></tree></div>
           </div>
         </div>
-        <div class='col-md-3' style='height:570px;' ng-show="searchbarCtrl.attributeClicked">
+        <div class='col-md-3' style='height:570px;' ng-controller="attributeCtrl" ng-show="attributeClicked">
           <div class="container" style="padding-top:20px; padding-bottom:20px;">
             <h3 style="text-align: center; margin-bottom: 20px;">Kontextinformationen</h3>
-              <p>Attribut: {{searchbarCtrl.attributeName}}</p>
-              <div id="barchartContainer" ng-hide="!searchbarCtrl.isContinuous">
+              <p>Attribut: {{attributeName}}</p>
+              <div id="barchartContainer" ng-hide="!isContinuous">
                 <barchart></barchart>
               </div>
-              <div id="graphContainer" ng-hide="searchbarCtrl.isContinuous">
+              <div id="graphContainer" ng-hide="isContinuous">
                 <graph></graph>
               </div>
-          </div>
+            </div>
         </div>
       </div>
   </body>

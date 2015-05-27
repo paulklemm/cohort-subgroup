@@ -188,6 +188,8 @@ angular.module('gui')
 
         // Toggle children on click.
         function click(d) {
+          if(d.depth == 2)
+            data.setCurrentAttribute(d.name);
           if (d.children) {
             d._children = d.children;
             d.children = null;

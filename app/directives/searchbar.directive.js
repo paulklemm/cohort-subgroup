@@ -4,10 +4,6 @@ angular.module('gui')
     restrict: 'E', //directive can be invoked on the page via <searchbar></searchbar>
     template: '<div id="searchbar"></div>',
     controller: function($scope){
-      controllerObj = this;
-      this.attributeClicked = false;
-      this.attributeName = "";
-      this.isContinuous = false;
 
       $scope.$on("dataLoaded", function(){
 
@@ -17,12 +13,6 @@ angular.module('gui')
         //Call back for when user selects an option
         function onSelect(d) {
             data.setCurrentAttribute(d);
-            controllerObj.attributeClicked = true;
-            controllerObj.attributeName = d;
-            if(data.jsondata[d].type == "numerical")
-              controllerObj.isContinuous = false;
-            else
-              controllerObj.isContinuous = true;
             $scope.$apply();
         }
 
