@@ -6,9 +6,11 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("visDataLoaded", function(){
 
-        /* enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link */
-        /* hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js */
-        /* small multiples: http://bl.ocks.org/mbostock/1157787 */
+        // enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link
+        // hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js
+        // small multiples: http://bl.ocks.org/mbostock/1157787
+        // TODO: add small multiples through graph directive with parameter small multiple yes/no
+        // TODO: change input to attribute distribution, problem: needs distribution of every attribute before any attribute is clicked
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 1000 - margin.right - margin.left,
@@ -62,6 +64,28 @@ angular.module('gui')
 
         function update(source) {
 
+          // parameter for sparklines
+          var widthSparkline = 60;
+          var heightSparkline = 20;
+
+          var myObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
+          myObject.sort(function(a,b){
+            return a.attributeValue - b.attributeValue;
+          });
+
+          var scaleXSparkline = d3.scale.linear()
+            .domain([0, d3.max(myObject, function(d){ return d.attributeValue; })])
+            .range([0, widthSparkline]);
+
+          var scaleYSparkline = d3.scale.linear()
+            .domain([0, d3.max(myObject, function(d){ return d.value; })])
+            .range([heightSparkline, 0]);
+
+          var valueline = d3.svg.line()
+            .x(function(d) { return scaleXSparkline(d.attributeValue); })
+            .y(function(d) { return scaleYSparkline(d.value); })
+            .interpolate('linear');
+
           // Compute the new tree layout.
           var nodes = tree.nodes(root).filter(function(d){ return !d.hidden; }).reverse();
           var links = tree.links(nodes);
@@ -75,31 +99,40 @@ angular.module('gui')
 
           // Enter any new nodes at the parent's previous position.
           var nodeEnter = node.enter().append("g")
-              .attr("class", "node")
+              .attr("class", function(n){
+                if(n._children)
+                  return "inner node";
+                else {
+                  return "leaf node";
+                }
+              })
               .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-              /*.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })*/
               .on("click", click);
 
-          nodeEnter.append("circle")
+          svg.selectAll("g.node")
+            .append("circle")
               .attr("r", 1e-6)
-              /*.attr("r", 10)*/
-              .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+              //.attr("r", 10)
+              .style("fill", function(d){ return d._children ? "lightsteelblue" : "#fff"; });
 
-          /* TODO: add small multiples, change graph directive to function with parameter small multiple yes/no
-          nodeEnter.append("svg")
-            . ...
-          */
-
-          nodeEnter.append("text")
-              .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-              /*.attr("y", function(d) { return d.children || d._children ? -10 : 10; })*/
-              /*.attr("y", function(d) { return d.children || d._children ? -18 : 18; })*/
+          svg.selectAll('g.node')
+            .append("text")
+              .attr("x", function(d) { return d.children || d._children ? -10 : 80; })
               .attr("dy", ".35em")
               .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-              /*.attr("text-anchor", "middle")*/
               .text(function(d) { return d.name; })
               .style("fill-opacity", 1e-6);
-              /*.style("fill-opacity", 1);*/
+
+          svg.selectAll('g.leaf.node')
+            .append("svg")
+              .attr("width", widthSparkline)
+              .attr("height", heightSparkline)
+              .attr("x", 10)
+              .attr("y", -7)
+              .append("g")
+              .append("path")
+                .attr("class", "line")
+                .attr("d", valueline(myObject));
 
           node.on("mouseover", function(d){
               link.style("stroke-width", function(l) {
@@ -168,7 +201,6 @@ angular.module('gui')
                 var o = {x: source.x0, y: source.y0};
                 return diagonal({source: o, target: o});
               })
-              /*.attr("d", diagonal);*/
 
           // Transition links to their new position.
           link.transition()

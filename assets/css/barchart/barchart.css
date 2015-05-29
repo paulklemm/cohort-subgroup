@@ -33,6 +33,10 @@
   fill: #31B404;
 }
 
+.bar:hover{
+  fill: #CA0420;
+}
+
 .x.axis path{
   display: none;
 }
