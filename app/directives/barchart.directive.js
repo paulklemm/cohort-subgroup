@@ -9,6 +9,7 @@ angular.module('gui')
         // if chart already exists, remove its content
         d3.selectAll(".barchart").select("svg").remove();
         d3.selectAll(".graph").select("svg").remove();
+        d3.selectAll(".barchart").select("button").remove();
 
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
@@ -39,8 +40,8 @@ angular.module('gui')
           .scale(scaleY)
           .orient("left");
 
-        var chart = d3.select(".barchart")
-          .append("svg")
+        var barchart = d3.select(".barchart");
+        var chart = barchart.append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
@@ -68,8 +69,30 @@ angular.module('gui')
             .attr("x", function(d){ return scaleX(d.attributeValue); })
             .attr("y", function(d){ return scaleY(+d.value); })
             .attr("width", scaleX.rangeBand())
-            .attr("height", function(d){ return height - scaleY(+d.value); });
-        })
+            .attr("height", function(d){ return height - scaleY(+d.value); })
+            .on("click", click);
+
+        barchart.append("button")
+          .attr("class", "btn btn-default")
+          .attr("type", "button")
+          .style("width", "100%")
+          .on("click", buttonClick)
+          .append("text")
+            .text("Apply filter");
+
+
+        function click(d) {
+          var filterValue = (d.attributeValue);
+          d3.select(this)
+            .style("fill", function(d){ return (d3.select(this).style("fill") == "rgb(202, 4, 32)") ? "#31B404" : "#CA0420"; });
+        }
+
+        function buttonClick(d){
+          // TODO: collect chosen attribute values for filtering
+          // TODO: start filtering
+        }
+
+      })
     },
     controllerAs: 'barchartCtrl'
 };

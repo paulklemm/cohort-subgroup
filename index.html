@@ -57,14 +57,14 @@
             <ul id="subgroupList" style="text-align: left; list-style-type: square;">
               <li style="margin-left: -15px;">Alle</li>
             </ul>
-            <button class="btn btn-default" ng-click="extendSubgroupList()">Neue Subgruppe</button>
+            <button class="btn btn-default" ng-click="extendSubgroupList()" style="position: relative; z-index: 2;">Neue Subgruppe</button>
           </div>
         </div>
         <div class='col-md-7' style='height:570px; text-align:center;'>
           <div class='row'>time bar</div>
           <div class='row'>progress bar</div>
           <div class='row'>
-            <div class="noborder" style="margin-left: -150px;"><tree></tree></div>
+            <div class="noborder" style="margin-left: -150px; position: relative; z-index: 1;"><tree></tree></div>
           </div>
         </div>
         <div class='col-md-3' style='height:570px;' ng-controller="attributeCtrl" ng-show="attributeClicked">

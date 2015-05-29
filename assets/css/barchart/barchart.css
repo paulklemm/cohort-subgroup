@@ -34,7 +34,7 @@
 }
 
 .bar:hover{
-  fill: #CA0420;
+  opacity: 0.85;
 }
 
 .x.axis path{
