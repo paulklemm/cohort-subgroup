@@ -91,7 +91,13 @@ angular.module('gui')
         }
 
         function buttonClick(d){
-          // TODO: collect chosen attribute values for filtering
+          var chosenBars = d3.selectAll(".bar").filter(function(d){ return (d3.select(this).style("fill") == "rgb(202, 4, 32)"); });
+          var filterValues = [];
+          chosenBars[0].forEach(function(bar){
+            value = bar.__data__.attributeValue;
+            filterValues.push(value);
+          });
+          console.log(filterValues);
           // TODO: start filtering
         }
 
