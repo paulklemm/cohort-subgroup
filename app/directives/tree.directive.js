@@ -138,6 +138,7 @@ angular.module('gui')
                 .attr("y", -7)
                   .append("g")
                   .append("path")
+                    .style("stroke-width", 1)
                     .attr("class", "line")
                     .attr("d", valueline(distribution));
             }else{
