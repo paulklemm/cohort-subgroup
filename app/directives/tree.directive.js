@@ -106,36 +106,36 @@ angular.module('gui')
           var chartWidth = 60;
           var chartHeight = 20;
 
-          // graph
-          var graphObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
-          graphObject.sort(function(a,b){
-            return a.attributeValue - b.attributeValue;
-          });
+            // graph
+            var graphObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
+            graphObject.sort(function(a,b){
+              return a.attributeValue - b.attributeValue;
+            });
 
-          var scaleXSparkline = d3.scale.linear()
-            .domain([0, d3.max(graphObject, function(d){ return d.attributeValue; })])
-            .range([0, chartWidth]);
+            var scaleXSparkline = d3.scale.linear()
+              .domain([0, d3.max(graphObject, function(d){ return d.attributeValue; })])
+              .range([0, chartWidth]);
 
-          var scaleYSparkline = d3.scale.linear()
-            .domain([0, d3.max(graphObject, function(d){ return d.value; })])
-            .range([chartHeight, 0]);
+            var scaleYSparkline = d3.scale.linear()
+              .domain([0, d3.max(graphObject, function(d){ return d.value; })])
+              .range([chartHeight, 0]);
 
-          var valueline = d3.svg.line()
-            .x(function(d) { return scaleXSparkline(d.attributeValue); })
-            .y(function(d) { return scaleYSparkline(d.value); })
-            .interpolate('linear');
+            var valueline = d3.svg.line()
+              .x(function(d) { return scaleXSparkline(d.attributeValue); })
+              .y(function(d) { return scaleYSparkline(d.value); })
+              .interpolate('linear');
 
-          // barchart
-          var barchartObject = [{attributeValue:"SHIP-2", value: 381}, {attributeValue: "TREND-0", value: 697}];
-          var barWidth = chartWidth / barchartObject.length;
+            // barchart
+            var barchartObject = [{attributeValue:"SHIP-2", value: 381}, {attributeValue: "TREND-0", value: 697}];
+            var barWidth = chartWidth / barchartObject.length;
 
-          var scaleXBar = d3.scale.ordinal()
-            .domain(barchartObject.map(function (d){ return d.attributeValue; }))
-            .rangeRoundBands([0, chartWidth], .1);
+            var scaleXBar = d3.scale.ordinal()
+              .domain(barchartObject.map(function (d){ return d.attributeValue; }))
+              .rangeRoundBands([0, chartWidth], .1);
 
-          var scaleYBar = d3.scale.linear()
-            .domain([0, d3.max(barchartObject, function(d){ return +d.value; })])
-            .range([chartHeight, 0]);
+            var scaleYBar = d3.scale.linear()
+              .domain([0, d3.max(barchartObject, function(d){ return +d.value; })])
+              .range([chartHeight, 0]);
 
           // append graph small multiples for nodes with continuous attributes
           var graphNodes = svg.selectAll('g.leaf.node').filter(function(d){
