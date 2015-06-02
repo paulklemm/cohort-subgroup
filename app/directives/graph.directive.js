@@ -12,7 +12,7 @@ angular.module('gui')
         var height = 150;
 
         // sort distribution for valueline
-        var myObject = data.currentAttribute.distribution;
+        var myObject = data.attributes[data.currentAttribute].distribution;
         myObject.sort(function(a,b){
           return a.attributeValue - b.attributeValue;
         });

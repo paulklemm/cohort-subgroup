@@ -1,8 +1,11 @@
 angular.module('gui')
-  .factory('data', ['attribute', '$rootScope', function(attribute, $rootScope){
+  .factory('data', ['$rootScope', function($rootScope){
 
     var dataService = function(data, json, vis){
-
+      this.dataset = data;
+      this.jsondata = json;
+      this.visdata = vis;
+      this.visdatas = {};
     };
 
     dataService.setCurrentAttribute = function(name){
@@ -12,19 +15,15 @@ angular.module('gui')
 
     dataService.setAttributes = function(){
       res = {};
+      var keys = d3.keys(this.dataset[0]);
       self = this;
-      $rootScope.$on("dataLoaded", function(){
-        var keys = d3.keys(self.dataset[0]);
-        keys.forEach(function(key){
-          tmp = {};
-          //tmp["distribution"] = [{attributeValue: "Nein", value: 30}, {attributeValue: "Ja", value: 20}];
-          tmp["distribution"] = self.calcDistribution(key);
-          tmp["type"] = self.jsondata[key].type;
-          res[key] = tmp;
-        });
-        //console.log(res);
-        return res;
+      keys.forEach(function(key){
+        tmp = {};
+        tmp["distribution"] = self.calcDistribution(key);
+        tmp["type"] = self.jsondata[key].type;
+        res[key] = tmp;
       });
+      return res;
     }
 
     dataService.calcDistribution = function(key){
