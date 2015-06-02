@@ -8,8 +8,6 @@ angular.module('gui')
   .factory('attribute', function(){
 
     var Attribute = function(name, dataset, jsondata){
-      this.name = name;
-      this.type = jsondata[this.name].type;
       this.values = this.setPossibleAttributeValues(dataset, jsondata);
       this.distribution = this.setDistribution(dataset, jsondata); // von der Form [{attributeValue: "SHIP2", value: 300}, {attributeValue: "TREND0", value: 400}, ...] für nominale Attribute bzw.                                         // von der Form [{attributeValue: 57, value: 25}, {attributeValue: 65, value: 40}, ...] für stetige Attribute
   }
