@@ -5,7 +5,7 @@ angular.module('gui')
       this.dataset = data;
       this.jsondata = json;
       this.visdata = vis;
-      this.currentAttribute = null;
+      this.currentAttribute = {};
     };
 
     dataService.setCurrentAttribute = function(name){
