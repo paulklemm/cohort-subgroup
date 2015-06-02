@@ -68,7 +68,7 @@ angular.module('gui')
           var widthSparkline = 60;
           var heightSparkline = 20;
 
-          var myObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
+          var myObject = [{attributeValue: 30, value: 10}, {attributeValue: 0, value: 30}, {attributeValue: 10, value: 20}, {attributeValue: 20, value: 40}];
           myObject.sort(function(a,b){
             return a.attributeValue - b.attributeValue;
           });

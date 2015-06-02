@@ -50,17 +50,20 @@ angular.module('gui')
         chart.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+          .call(xAxis)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("transform", "rotate(-45)"); //TODO: fix long texts that go out of the svg element
 
         chart.append("g")
           .attr("class", "y axis")
           .call(yAxis)
-          /*.append("text")
+          .append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 10)
+            .attr("y", -40)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Probands");*/
+            .text("Probands");
 
         chart.selectAll(".bar")
             .data(myObject)
