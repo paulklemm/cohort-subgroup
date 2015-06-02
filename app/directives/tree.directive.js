@@ -10,7 +10,7 @@ angular.module('gui')
         // hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js
         // small multiples: http://bl.ocks.org/mbostock/1157787
         // TODO: add small multiples through graph directive with parameter small multiple yes/no
-        // TODO: change input to attribute distribution, problem: needs distribution of every attribute before any attribute is clicked
+        // TODO: adjust size and positioning of small multiples
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,
@@ -106,72 +106,68 @@ angular.module('gui')
           var chartWidth = 60;
           var chartHeight = 20;
 
-            // graph
-            var graphObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
-            graphObject.sort(function(a,b){
-              return a.attributeValue - b.attributeValue;
-            });
+          // append small multiple dependent on type and distribution of attribute of node
+          var leafnodes = svg.selectAll('g.leaf.node');
+          leafnodes[0].forEach(function(leafnode){
+            var name = leafnode.__data__.name;
+            var type = data.attributes[name].type;
+            var distribution = data.attributes[name].distribution;
+            if(type == "numerical"){
 
-            var scaleXSparkline = d3.scale.linear()
-              .domain([0, d3.max(graphObject, function(d){ return d.attributeValue; })])
-              .range([0, chartWidth]);
+              distribution.sort(function(a,b){
+                return a.attributeValue - b.attributeValue;
+              });
 
-            var scaleYSparkline = d3.scale.linear()
-              .domain([0, d3.max(graphObject, function(d){ return d.value; })])
-              .range([chartHeight, 0]);
+              var scaleX = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return d.attributeValue; })])
+                .range([0, chartWidth]);
 
-            var valueline = d3.svg.line()
-              .x(function(d) { return scaleXSparkline(d.attributeValue); })
-              .y(function(d) { return scaleYSparkline(d.value); })
-              .interpolate('linear');
+              var scaleY = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return d.value; })])
+                .range([chartHeight, 0]);
 
-            // barchart
-            var barchartObject = [{attributeValue:"SHIP-2", value: 381}, {attributeValue: "TREND-0", value: 697}];
-            var barWidth = chartWidth / barchartObject.length;
+              var valueline = d3.svg.line()
+                .x(function(d) { return scaleX(d.attributeValue); })
+                .y(function(d) { return scaleY(d.value); })
+                .interpolate('linear');
 
-            var scaleXBar = d3.scale.ordinal()
-              .domain(barchartObject.map(function (d){ return d.attributeValue; }))
-              .rangeRoundBands([0, chartWidth], .1);
+              leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: kann ich irgendwie direkt an den leafnode appenden, ohne zu filtern?
+                .attr("width", chartWidth)
+                .attr("height", chartHeight)
+                .attr("x", 10)
+                .attr("y", -7)
+                  .append("g")
+                  .append("path")
+                    .attr("class", "line")
+                    .attr("d", valueline(distribution));
+            }else{
+              var barWidth = chartWidth / distribution.length;
 
-            var scaleYBar = d3.scale.linear()
-              .domain([0, d3.max(barchartObject, function(d){ return +d.value; })])
-              .range([chartHeight, 0]);
+              var scaleX = d3.scale.ordinal()
+                .domain(distribution.map(function (d){ return d.attributeValue; }))
+                .rangeRoundBands([0, chartWidth], .1);
 
-          // append graph small multiples for nodes with continuous attributes
-          var graphNodes = svg.selectAll('g.leaf.node').filter(function(d){
-            return (data.attributes[d.name].type == "numerical");
+              var scaleY = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return +d.value; })])
+                .range([chartHeight, 0]);
+
+              var chart = leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: direktes Appenden an leafnode, siehe todo oben
+                  .attr("width", chartWidth)
+                  .attr("height", chartHeight)
+                  .attr("x", 10)
+                  .attr("y", -7)
+                    .append("g");
+
+              chart.selectAll(".bar")
+                  .data(distribution)
+                .enter().append("rect")
+                  .attr("class", "bar")
+                  .attr("x", function(d){ return scaleX(d.attributeValue); })
+                  .attr("y", function(d){ return scaleY(+d.value); })
+                  .attr("width", scaleX.rangeBand())
+                  .attr("height", function(d){ return chartHeight - scaleY(+d.value); });
+            }
           });
-          graphNodes
-            .append("svg")
-              .attr("width", chartWidth)
-              .attr("height", chartHeight)
-              .attr("x", 10)
-              .attr("y", -7)
-                .append("g")
-                .append("path")
-                  .attr("class", "line")
-                  .attr("d", valueline(graphObject));
-
-          // append barchart small multiples for nodes with ordinal attributes
-          var barchartNodes = svg.selectAll('g.leaf.node').filter(function(d){
-            return (data.attributes[d.name].type != "numerical");
-          });
-          var chart = barchartNodes
-            .append("svg")
-              .attr("width", chartWidth)
-              .attr("height", chartHeight)
-              .attr("x", 10)
-              .attr("y", -7)
-                .append("g");
-
-          chart.selectAll(".bar")
-              .data(barchartObject)
-            .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d){ return scaleXBar(d.attributeValue); })
-              .attr("y", function(d){ return scaleYBar(+d.value); })
-              .attr("width", scaleXBar.rangeBand())
-              .attr("height", function(d){ return chartHeight - scaleYBar(+d.value); })
 
 
           node.on("mouseover", function(d){
