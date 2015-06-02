@@ -64,28 +64,6 @@ angular.module('gui')
 
         function update(source) {
 
-          // parameter for sparklines
-          var widthSparkline = 60;
-          var heightSparkline = 20;
-
-          var myObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
-          myObject.sort(function(a,b){
-            return a.attributeValue - b.attributeValue;
-          });
-
-          var scaleXSparkline = d3.scale.linear()
-            .domain([0, d3.max(myObject, function(d){ return d.attributeValue; })])
-            .range([0, widthSparkline]);
-
-          var scaleYSparkline = d3.scale.linear()
-            .domain([0, d3.max(myObject, function(d){ return d.value; })])
-            .range([heightSparkline, 0]);
-
-          var valueline = d3.svg.line()
-            .x(function(d) { return scaleXSparkline(d.attributeValue); })
-            .y(function(d) { return scaleYSparkline(d.value); })
-            .interpolate('linear');
-
           // Compute the new tree layout.
           var nodes = tree.nodes(root).filter(function(d){ return !d.hidden; }).reverse();
           var links = tree.links(nodes);
@@ -123,16 +101,78 @@ angular.module('gui')
               .text(function(d) { return d.name; })
               .style("fill-opacity", 1e-6);
 
-          svg.selectAll('g.leaf.node')
+
+          // parameter for small multiples
+          var chartWidth = 60;
+          var chartHeight = 20;
+
+          // graph
+          var graphObject = [{attributeValue: 14, value: 30}, {attributeValue: 3, value: 15}, {attributeValue: 30, value: 10}, {attributeValue: 25, value: 15}, {attributeValue: 10, value: 30}, {attributeValue: 20, value: 10}];
+          graphObject.sort(function(a,b){
+            return a.attributeValue - b.attributeValue;
+          });
+
+          var scaleXSparkline = d3.scale.linear()
+            .domain([0, d3.max(graphObject, function(d){ return d.attributeValue; })])
+            .range([0, chartWidth]);
+
+          var scaleYSparkline = d3.scale.linear()
+            .domain([0, d3.max(graphObject, function(d){ return d.value; })])
+            .range([chartHeight, 0]);
+
+          var valueline = d3.svg.line()
+            .x(function(d) { return scaleXSparkline(d.attributeValue); })
+            .y(function(d) { return scaleYSparkline(d.value); })
+            .interpolate('linear');
+
+          // barchart
+          var barchartObject = [{attributeValue:"SHIP-2", value: 381}, {attributeValue: "TREND-0", value: 697}];
+          var barWidth = chartWidth / barchartObject.length;
+
+          var scaleXBar = d3.scale.ordinal()
+            .domain(barchartObject.map(function (d){ return d.attributeValue; }))
+            .rangeRoundBands([0, chartWidth], .1);
+
+          var scaleYBar = d3.scale.linear()
+            .domain([0, d3.max(barchartObject, function(d){ return +d.value; })])
+            .range([chartHeight, 0]);
+
+          // append graph small multiples for nodes with continuous attributes
+          var graphNodes = svg.selectAll('g.leaf.node').filter(function(d){
+            return (data.attributes[d.name].type == "numerical");
+          });
+          graphNodes
             .append("svg")
-              .attr("width", widthSparkline)
-              .attr("height", heightSparkline)
+              .attr("width", chartWidth)
+              .attr("height", chartHeight)
               .attr("x", 10)
               .attr("y", -7)
-              .append("g")
-              .append("path")
-                .attr("class", "line")
-                .attr("d", valueline(myObject));
+                .append("g")
+                .append("path")
+                  .attr("class", "line")
+                  .attr("d", valueline(graphObject));
+
+          // append barchart small multiples for nodes with ordinal attributes
+          var barchartNodes = svg.selectAll('g.leaf.node').filter(function(d){
+            return (data.attributes[d.name].type != "numerical");
+          });
+          var chart = barchartNodes
+            .append("svg")
+              .attr("width", chartWidth)
+              .attr("height", chartHeight)
+              .attr("x", 10)
+              .attr("y", -7)
+                .append("g");
+
+          chart.selectAll(".bar")
+              .data(barchartObject)
+            .enter().append("rect")
+              .attr("class", "bar")
+              .attr("x", function(d){ return scaleXBar(d.attributeValue); })
+              .attr("y", function(d){ return scaleYBar(+d.value); })
+              .attr("width", scaleXBar.rangeBand())
+              .attr("height", function(d){ return chartHeight - scaleYBar(+d.value); })
+
 
           node.on("mouseover", function(d){
               link.style("stroke-width", function(l) {
