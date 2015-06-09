@@ -147,7 +147,7 @@ angular.module('gui')
 
         function buttonClick(d){
           // TODO: collect chosen attribute values for filtering
-          // TODO: start filtering
+          // TODO: start filtering data.filterToCSV(...) -> Filter- und Konvertierungsfunktion im DataService
         }
 
       })
