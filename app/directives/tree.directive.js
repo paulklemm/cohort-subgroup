@@ -10,7 +10,7 @@ angular.module('gui')
         // hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js
         // small multiples: http://bl.ocks.org/mbostock/1157787
         // TODO: add small multiples through graph directive with parameter small multiple yes/no
-        // TODO: change input to attribute distribution, problem: needs distribution of every attribute before any attribute is clicked
+        // TODO: adjust size and positioning of small multiples
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,
@@ -64,28 +64,6 @@ angular.module('gui')
 
         function update(source) {
 
-          // parameter for sparklines
-          var widthSparkline = 60;
-          var heightSparkline = 20;
-
-          var myObject = [{attributeValue: 30, value: 10}, {attributeValue: 0, value: 30}, {attributeValue: 10, value: 20}, {attributeValue: 20, value: 40}];
-          myObject.sort(function(a,b){
-            return a.attributeValue - b.attributeValue;
-          });
-
-          var scaleXSparkline = d3.scale.linear()
-            .domain([0, d3.max(myObject, function(d){ return d.attributeValue; })])
-            .range([0, widthSparkline]);
-
-          var scaleYSparkline = d3.scale.linear()
-            .domain([0, d3.max(myObject, function(d){ return d.value; })])
-            .range([heightSparkline, 0]);
-
-          var valueline = d3.svg.line()
-            .x(function(d) { return scaleXSparkline(d.attributeValue); })
-            .y(function(d) { return scaleYSparkline(d.value); })
-            .interpolate('linear');
-
           // Compute the new tree layout.
           var nodes = tree.nodes(root).filter(function(d){ return !d.hidden; }).reverse();
           var links = tree.links(nodes);
@@ -123,16 +101,75 @@ angular.module('gui')
               .text(function(d) { return d.name; })
               .style("fill-opacity", 1e-6);
 
-          svg.selectAll('g.leaf.node')
-            .append("svg")
-              .attr("width", widthSparkline)
-              .attr("height", heightSparkline)
-              .attr("x", 10)
-              .attr("y", -7)
-              .append("g")
-              .append("path")
-                .attr("class", "line")
-                .attr("d", valueline(myObject));
+
+          // parameter for small multiples
+          var chartWidth = 60;
+          var chartHeight = 20;
+
+          // append small multiple dependent on type and distribution of attribute of node
+          var leafnodes = svg.selectAll('g.leaf.node');
+          leafnodes[0].forEach(function(leafnode){
+            var name = leafnode.__data__.name;
+            var type = data.attributes[name].type;
+            var distribution = data.attributes[name].distribution;
+            if(type == "numerical"){
+
+              distribution.sort(function(a,b){
+                return a.attributeValue - b.attributeValue;
+              });
+
+              var scaleX = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return d.attributeValue; })])
+                .range([0, chartWidth]);
+
+              var scaleY = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return d.value; })])
+                .range([chartHeight, 0]);
+
+              var valueline = d3.svg.line()
+                .x(function(d) { return scaleX(d.attributeValue); })
+                .y(function(d) { return scaleY(d.value); })
+                .interpolate('linear');
+
+              leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: kann ich irgendwie direkt an den leafnode appenden, ohne zu filtern?
+                .attr("width", chartWidth)
+                .attr("height", chartHeight)
+                .attr("x", 10)
+                .attr("y", -7)
+                  .append("g")
+                  .append("path")
+                    .style("stroke-width", 1)
+                    .attr("class", "line")
+                    .attr("d", valueline(distribution));
+            }else{
+              var barWidth = chartWidth / distribution.length;
+
+              var scaleX = d3.scale.ordinal()
+                .domain(distribution.map(function (d){ return d.attributeValue; }))
+                .rangeRoundBands([0, chartWidth], .1);
+
+              var scaleY = d3.scale.linear()
+                .domain([0, d3.max(distribution, function(d){ return +d.value; })])
+                .range([chartHeight, 0]);
+
+              var chart = leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: direktes Appenden an leafnode, siehe todo oben
+                  .attr("width", chartWidth)
+                  .attr("height", chartHeight)
+                  .attr("x", 10)
+                  .attr("y", -7)
+                    .append("g");
+
+              chart.selectAll(".bar")
+                  .data(distribution)
+                .enter().append("rect")
+                  .attr("class", "bar")
+                  .attr("x", function(d){ return scaleX(d.attributeValue); })
+                  .attr("y", function(d){ return scaleY(+d.value); })
+                  .attr("width", scaleX.rangeBand())
+                  .attr("height", function(d){ return chartHeight - scaleY(+d.value); });
+            }
+          });
+
 
           node.on("mouseover", function(d){
               link.style("stroke-width", function(l) {
