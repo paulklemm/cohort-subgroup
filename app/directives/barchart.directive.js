@@ -1,5 +1,5 @@
 angular.module('gui')
-.directive('barchart', ['data', function(data){
+.directive('barchart', ['data', '$rootScope', function(data, $rootScope){
   return {
     restrict: 'E',
     template: '<div class="barchart"></div>',
@@ -82,8 +82,6 @@ angular.module('gui')
 
           svg.append("rect")
           .attr({
-            rx: 6,
-            ry: 6,
             class: "selection",
             x: p[0],
             y: p[1],
@@ -121,6 +119,16 @@ angular.module('gui')
             }
 
             s.attr( d);
+
+            var selectionWidth = d.width;
+
+            d3.select('.barchart').selectAll('rect.bar').each(function(bar, i){
+              var barX = d3.select(this)[0][0].x.baseVal.value;
+              if( !d3.select(this).classed('selected')  && barX >= d.x-margin.left && barX+barWidth <= d.x-margin.left+selectionWidth ){
+                d3.select(this)
+                .classed('selected', true);
+              }
+            });
           }
         })
         .on("mouseup", function(){
@@ -141,7 +149,6 @@ angular.module('gui')
 
 
         function click(d) {
-          //console.log(d3.select(this)); //rect.bar.selected
           if(d3.select(this).classed("selected"))
             d3.select(this).classed("selected", false);
           else
@@ -155,8 +162,8 @@ angular.module('gui')
             value = bar.__data__.attributeValue;
             filterValues.push(value);
           });
-          console.log(filterValues);
-          // TODO: start filtering data.filterToCSV(...) -> Filter- und Konvertierungsfunktion im DataService
+          data.filterToCSV(filterValues);
+          $rootScope.$broadcast('filtered');
         }
 
       })

@@ -29,7 +29,6 @@ app.controller('ListCtrl', ['$scope', function($scope) {
   var i = 0;
   $scope.extendSubgroupList = function() {
     i += 1;
-    console.log('extend');
     var list = d3.select("#subgroupList")
       .append("li")
       .text("Subgruppe " + i);

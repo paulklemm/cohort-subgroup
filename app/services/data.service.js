@@ -26,6 +26,39 @@ angular.module('gui')
       return res;
     }
 
+    dataService.filterToCSV = function(filterValues){
+      var keys = d3.keys(this.dataset[0]);
+      var csv = "\"" + keys.join("\",\"") + "\"\n";
+      var currAtt = this.currentAttribute;
+      var subgroup = this.dataset.filter(function(proband){
+        var value = proband[currAtt];
+        for(i=0; i < filterValues.length; i++){
+          if(value == filterValues[i]){
+            return true;
+          }
+        }
+        return false;
+      });
+      subgroup.forEach(function(proband){
+        var attributeValue;
+        for(i=0; i < keys.length-1; i++){
+          if(!isNaN(Number(proband[keys[i]]))){
+            attributeValue = Number(proband[keys[i]]);
+          }else{
+            attributeValue = "\"" + proband[keys[i]] + "\"";
+          }
+          csv += attributeValue + ",";
+        }
+        // not necessary cause last attribute value of a proband is always a string
+        if(!isNaN(Number(proband[keys[keys.length-1]]))){
+          attributeValue = Number(proband[keys[keys.length-1]]);
+        }
+        attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
+        csv += attributeValue + "\n";
+      });
+      //console.log(csv);
+    }
+
     dataService.calcDistribution = function(key){
       // compute possible attribute values
       var type = this.jsondata[key].type;
