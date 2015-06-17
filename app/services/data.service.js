@@ -6,6 +6,7 @@ angular.module('gui')
       this.jsondata = json;
       this.visdata = vis;
       this.visdatas = {};
+      this.subgroups = [];
     };
 
     dataService.setCurrentAttribute = function(name){
@@ -27,6 +28,7 @@ angular.module('gui')
     }
 
     dataService.filterToCSV = function(filterValues){
+      var elementIndex = this.subgroups.length;
       var keys = d3.keys(this.dataset[0]);
       var csv = "\"" + keys.join("\",\"") + "\"\n";
       var currAtt = this.currentAttribute;
@@ -39,6 +41,8 @@ angular.module('gui')
         }
         return false;
       });
+      this.subgroups.push(subgroup);
+
       subgroup.forEach(function(proband){
         var attributeValue;
         for(i=0; i < keys.length-1; i++){
@@ -57,6 +61,7 @@ angular.module('gui')
         csv += attributeValue + "\n";
       });
       //console.log(csv);
+      $rootScope.$broadcast('filtered', elementIndex);
     }
 
     dataService.calcDistribution = function(key){

@@ -7,6 +7,7 @@ app.run(['$rootScope', 'data', function($rootScope, data){
   d3.json('data/dictionary_new_names.json', function(result){ data.jsondata = result; });
   d3.json('data/attributes.json', function(result){ data.visdata = result; $rootScope.$broadcast("visDataLoaded"); });
   data.currentAttribute = "";
+  data.subgroups = [];
 }]);
 
 app.controller('attributeCtrl', ['$scope', 'data', function($scope, data) {

@@ -8,7 +8,7 @@ angular.module('gui')
 
         var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
-        var width = 168;
+        var width = parseInt(d3.select('.graph').style('width'))-margin.left-margin.right;
         var height = 150;
 
         // sort distribution for valueline
