@@ -29,8 +29,6 @@ angular.module('gui')
 
     dataService.filterToCSV = function(filterValues){
       var elementIndex = this.subgroups.length;
-      var keys = d3.keys(this.dataset[0]);
-      var csv = "\"" + keys.join("\",\"") + "\"\n";
       var currAtt = this.currentAttribute;
       var subgroup = this.dataset.filter(function(proband){
         var value = proband[currAtt];
@@ -43,25 +41,9 @@ angular.module('gui')
       });
       this.subgroups.push(subgroup);
 
-      subgroup.forEach(function(proband){
-        var attributeValue;
-        for(i=0; i < keys.length-1; i++){
-          if(!isNaN(Number(proband[keys[i]]))){
-            attributeValue = Number(proband[keys[i]]);
-          }else{
-            attributeValue = "\"" + proband[keys[i]] + "\"";
-          }
-          csv += attributeValue + ",";
-        }
-        // not necessary cause last attribute value of a proband is always a string
-        if(!isNaN(Number(proband[keys[keys.length-1]]))){
-          attributeValue = Number(proband[keys[keys.length-1]]);
-        }
-        attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
-        csv += attributeValue + "\n";
-      });
-      //console.log(csv);
-      $rootScope.$broadcast('filtered', elementIndex);
+      var csvString = this.getCSVString(subgroup);
+      //console.log(csvString);
+      $rootScope.$broadcast('filtered', {index: elementIndex, attribute: currAtt, values: filterValues});
     }
 
     dataService.calcDistribution = function(key){
@@ -105,6 +87,30 @@ angular.module('gui')
           }
         }
       return result;
+    }
+
+    dataService.getCSVString = function(subgroup){
+      var keys = d3.keys(this.dataset[0]);
+      var csv = "\"" + keys.join("\",\"") + "\"\n";
+
+      subgroup.forEach(function(proband){
+        var attributeValue;
+        for(i=0; i < keys.length-1; i++){
+          if(!isNaN(Number(proband[keys[i]]))){
+            attributeValue = Number(proband[keys[i]]);
+          }else{
+            attributeValue = "\"" + proband[keys[i]] + "\"";
+          }
+          csv += attributeValue + ",";
+        }
+        // not necessary cause last attribute value of a proband is always a string
+        if(!isNaN(Number(proband[keys[keys.length-1]]))){
+          attributeValue = Number(proband[keys[keys.length-1]]);
+        }
+        attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
+        csv += attributeValue + "\n";
+      });
+      return csv;
     }
 
     dataService.uniq_fast = function(a) {

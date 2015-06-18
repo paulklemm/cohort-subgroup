@@ -16,13 +16,32 @@ angular.module('gui')
           .attr("height", 50)
         .append("g");
 
-      $scope.$on('filtered', function(event, index){
+      $scope.$on('filtered', function(event, arg){
+        var attributeText = arg.attribute + ":";
+        var elementText = "";
+        for(i=0; i < arg.values.length-1; i++){
+          elementText += arg.values[i] + ", ";
+        }
+        elementText += arg.values[arg.values.length-1];
+        console.log(elementText);
+
         filterbar.append("rect")
           .attr("class", "filterelement")
-          .attr("x", 30 + (index%5)*(elementWidth+margin))
+          .attr("x", 30 + (arg.index%5)*(elementWidth+margin))
           .attr("y", 15)
           .attr("width", elementWidth)
           .attr("height", elementHeight);
+
+        filterbar.append("text")
+          .attr("y", 15)
+          .append("tspan")
+            .attr("x", 35 + (arg.index%5)*(elementWidth+margin))
+            .attr("dy", "1.2em")
+            .text(attributeText)
+          .append("tspan")
+            .attr("x", 35 + (arg.index%5)*(elementWidth+margin))
+            .attr("dy", "1.2em")
+            .text(elementText);
       })
     },
     controllerAs: 'filterbarCtrl'
