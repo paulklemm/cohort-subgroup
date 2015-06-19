@@ -41,9 +41,20 @@ angular.module('gui')
       });
       this.subgroups.push(subgroup);
 
-      var csvString = this.getCSVString(subgroup);
-      //console.log(csvString);
+      var csvArray = this.getCSVString(subgroup);
+      console.log(csvArray);
       $rootScope.$broadcast('filtered', {index: elementIndex, attribute: currAtt, values: filterValues});
+
+      // download csv file
+      //var csvString = csvArray.join("%0A");
+      var csvString = encodeURI(csvArray);
+      //TODO: delete commas at the beginning of each proband that come through encodeURI
+      var a = document.createElement('a');
+      a.href = 'data:attachment/csv,' + csvString;
+      a.target = '_blank';
+      a.download = 'subgroup.csv';
+      document.body.appendChild(a);
+      a.click();
     }
 
     dataService.calcDistribution = function(key){
@@ -90,10 +101,12 @@ angular.module('gui')
     }
 
     dataService.getCSVString = function(subgroup){
+      var csvArray = [];
       var keys = d3.keys(this.dataset[0]);
-      var csv = "\"" + keys.join("\",\"") + "\"\n";
+      csvArray.push("\"" + keys.join("\",\"") + "\"\n");
 
       subgroup.forEach(function(proband){
+        var csv = "";
         var attributeValue;
         for(i=0; i < keys.length-1; i++){
           if(!isNaN(Number(proband[keys[i]]))){
@@ -109,8 +122,9 @@ angular.module('gui')
         }
         attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
         csv += attributeValue + "\n";
+        csvArray.push(csv);
       });
-      return csv;
+      return csvArray;
     }
 
     dataService.uniq_fast = function(a) {
