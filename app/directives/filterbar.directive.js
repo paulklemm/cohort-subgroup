@@ -28,7 +28,6 @@ angular.module('gui')
           elementText += arg.values[i] + ", ";
         }
         elementText += arg.values[arg.values.length-1];
-        console.log(elementText);
 
         filterbar.append("rect")
           .attr("class", "filterelement")

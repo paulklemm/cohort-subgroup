@@ -28,9 +28,11 @@ angular.module('gui')
     }
 
     dataService.filterToCSV = function(filterValues){
-      var elementIndex = this.subgroups.length;
+      //TODO: prevent from filtering by attribute if this attribute was already used for filtering
+      var elementIndex = this.subgroups.length-1;
       var currAtt = this.currentAttribute;
-      var subgroup = this.dataset.filter(function(proband){
+      // concatenating filter (result of previous filtering gets filtered, first subgroup is initially the whole proband set)
+      var subgroup = this.subgroups[elementIndex].filter(function(proband){
         var value = proband[currAtt];
         for(i=0; i < filterValues.length; i++){
           if(value == filterValues[i]){
@@ -41,12 +43,13 @@ angular.module('gui')
       });
       this.subgroups.push(subgroup);
 
-      var csvArray = this.getCSVString(subgroup);
-      console.log(csvArray);
-      $rootScope.$broadcast('filtered', {index: elementIndex, attribute: currAtt, values: filterValues});
+      // how many probands remain?
+      var percentage = subgroup.length/this.dataset.length;
 
-      // download csv file
-      //var csvString = csvArray.join("%0A");
+      var csvArray = this.getCSVString(subgroup);
+      $rootScope.$broadcast('filtered', {index: (elementIndex), attribute: currAtt, values: filterValues, progress: percentage});
+
+      // open/save csv file
       var csvString = encodeURI(csvArray);
       // remove commas from the beginning of each proband that come through encodeURI
       csvString = csvString.split('%0A,').join('%0A');
@@ -55,7 +58,7 @@ angular.module('gui')
       a.target = '_blank';
       a.download = 'subgroup.csv';
       document.body.appendChild(a);
-      a.click();
+      //a.click();
     }
 
     dataService.calcDistribution = function(key){

@@ -27,8 +27,16 @@ angular.module('gui')
         .attr("x", 1)
         .attr("y", 1);
 
+      progressbar.append("text")
+        .attr("y", 11)
+        .attr("x", width/2-13) // 13 is half of the text length of "100%"
+        .text("100%");
+
+      // update progress bar
       $scope.$on('filtered', function(event, arg){
-        var progress = d3.select(".progress").attr("width", width-100);
+        var percent = Math.round(arg.progress*100);
+        d3.select(".progress").attr("width", arg.progress*width);
+        progressbar.select("text").text(percent + "%");
       })
     },
     controllerAs: 'progressbarCtrl'
