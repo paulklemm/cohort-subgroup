@@ -29,10 +29,10 @@ angular.module('gui')
 
     dataService.filterToCSV = function(filterValues){
       //TODO: prevent from filtering by attribute if this attribute was already used for filtering
-      var elementIndex = this.subgroups.length-1;
+      var elementIndex = this.subgroups.length;
       var currAtt = this.currentAttribute;
       // concatenating filter (result of previous filtering gets filtered, first subgroup is initially the whole proband set)
-      var subgroup = this.subgroups[elementIndex].filter(function(proband){
+      var subgroup = this.subgroups[elementIndex-1].filter(function(proband){
         var value = proband[currAtt];
         for(i=0; i < filterValues.length; i++){
           if(value == filterValues[i]){
