@@ -33,6 +33,11 @@ angular.module('gui')
           .attr("dy", "1.2em")
           .text("all");
 
+      // add initial subgroup to subgroup list
+      d3.select("#subgroupList").append("li")
+        .attr("id", 0)
+        .text("All");
+
       $scope.$on('filtered', function(event, arg){
         var attributeText = arg.attribute + ":";
         var elementText = "";
@@ -60,10 +65,18 @@ angular.module('gui')
             .attr("x", 90 + ((arg.index-1)%5)*(elementWidth+margin))
             .attr("dy", "1.2em")
             .text(elementText);
+
+        // add subgroup to subgroup list
+        d3.select("#subgroupList").append("li")
+          .attr("id", arg.index)
+          .text("Subgroup" + arg.index);
       })
 
       function click(d) {
-        console.log(d3.select(this));
+        var id = Number(d3.select(this)[0][0].id);
+        // only one selected element at a time
+        d3.select('.selected').classed('selected', false);
+        d3.select(this).classed('selected', true);
       }
 
     },

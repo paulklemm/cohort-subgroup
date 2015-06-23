@@ -3,6 +3,15 @@
   cursor: pointer;
 }
 
+.filterelement.selected{
+  fill: darkgrey;
+}
+
 g text{
   font-size: 10px;
+}
+
+#subgroupList li{
+  margin-left: -15px;
+  cursor: pointer;
 }

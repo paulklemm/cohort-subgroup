@@ -31,13 +31,3 @@ app.controller('attributeCtrl', ['$scope', 'data', function($scope, data) {
     $scope.$apply();
   });
 }]);
-
-app.controller('ListCtrl', ['$scope', function($scope) {
-  var i = 0;
-  $scope.extendSubgroupList = function() {
-    i += 1;
-    var list = d3.select("#subgroupList")
-      .append("li")
-      .text("Subgruppe " + i);
-  };
-}]);
