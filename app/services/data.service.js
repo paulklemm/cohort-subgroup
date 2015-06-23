@@ -48,7 +48,6 @@ angular.module('gui')
       // download csv file
       //var csvString = csvArray.join("%0A");
       var csvString = encodeURI(csvArray);
-      console.log(csvString);
       // remove commas from the beginning of each proband that come through encodeURI
       csvString = csvString.split('%0A,').join('%0A');
       var a = document.createElement('a');

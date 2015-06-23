@@ -1,0 +1,9 @@
+.border{
+  fill: none;
+  stroke: black;
+  stroke-width: 2;
+}
+
+.progress{
+  fill: #31B404;
+}

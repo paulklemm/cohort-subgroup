@@ -13,8 +13,13 @@ angular.module('gui')
       var filterbar = d3.select("#filterbar")
         .append("svg")
           .attr("width", width)
-          .attr("height", 50)
+          .attr("height", 45)
         .append("g");
+
+      /*filterbar.append("rect")
+        .attr("width", width)
+        .attr("height", 15)
+        .style("stroke", "black");*/
 
       $scope.$on('filtered', function(event, arg){
         var attributeText = arg.attribute + ":";
@@ -28,12 +33,12 @@ angular.module('gui')
         filterbar.append("rect")
           .attr("class", "filterelement")
           .attr("x", 30 + (arg.index%5)*(elementWidth+margin))
-          .attr("y", 15)
+          .attr("y", 10)
           .attr("width", elementWidth)
           .attr("height", elementHeight);
 
         filterbar.append("text")
-          .attr("y", 15)
+          .attr("y", 10)
           .append("tspan")
             .attr("x", 35 + (arg.index%5)*(elementWidth+margin))
             .attr("dy", "1.2em")

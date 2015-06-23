@@ -4,7 +4,8 @@
 
 .node circle {
   fill: #FFF;
-  stroke: #31B404;
+  /*stroke: #31B404;*/
+  stroke: #057D9F;
   stroke-width: 1.5px;
 }
 
