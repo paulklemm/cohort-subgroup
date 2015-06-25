@@ -7,6 +7,10 @@
   fill: darkgrey;
 }
 
+li.selected{
+  border: 1px solid darkgrey;
+}
+
 g text{
   font-size: 10px;
 }

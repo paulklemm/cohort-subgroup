@@ -5,6 +5,8 @@ angular.module('gui')
     template: '<div id="searchbar"></div>',
     controller: function($scope){
 
+      //TODO: hide dropdown when clicked outside of dropdown/searchfield
+
       $scope.$on("dataLoaded", function(){
 
         var keys = d3.keys(data.dataset[0]);

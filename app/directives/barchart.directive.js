@@ -11,11 +11,11 @@ angular.module('gui')
         d3.selectAll(".graph").select("svg").remove();
         d3.selectAll(".barchart").select("button").remove();
 
-        var margin = {top: 20, right: 30, bottom: 30, left: 40};
+        var margin = {top: 20, right: 30, bottom: 60, left: 40};
 
         var width = parseInt(d3.select('.barchart').style('width'))-margin.left-margin.right;
 
-        var height = 150;
+        var height = 180;
 
         var myObject = data.attributes[data.currentAttribute].distribution;
 
@@ -140,6 +140,7 @@ angular.module('gui')
           .attr("class", "btn btn-default")
           .attr("type", "button")
           .style("width", "100%")
+          .style("margin-top", "30px")
           .on("click", buttonClick)
           .append("text")
             .text("Apply filter");

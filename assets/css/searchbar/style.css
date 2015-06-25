@@ -42,13 +42,13 @@
 }
 
 .bp-autocomplete-row:hover {
-    background-color: lightgreen;
+    background-color: lightblue;
     color: #ffffff;
 }
 
 .bp-autocomplete-highlight {
     font-weight:bold;
-    color: #31B404;
+    color: #025167;
 }
 
 .bp-ac {

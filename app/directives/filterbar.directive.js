@@ -73,12 +73,21 @@ angular.module('gui')
       })
 
       function click(d) {
+        // get id of clicked element
         var id = Number(d3.select(this)[0][0].id);
-        // only one selected element at a time
-        d3.select('.selected').classed('selected', false);
+        // select element in filterbar, only one selected element at a time
+        console.log(d3.select(this));
+        d3.select('.filterelement.selected').classed('selected', false);
         d3.select(this).classed('selected', true);
-      }
 
+        // select corresponding subgroup in list
+        var listItems = d3.select("#subgroupList").selectAll("li");
+        listItems.classed('selected', false);
+        listItems.each(function(item){
+          if(Number(d3.select(this)[0][0].id) == id)
+            d3.select(this).classed('selected', true);
+        });
+      }
     },
     controllerAs: 'filterbarCtrl'
 };
