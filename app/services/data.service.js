@@ -1,12 +1,8 @@
 angular.module('gui')
   .factory('data', ['$rootScope', function($rootScope){
 
-    var dataService = function(data, json, vis){
-      this.dataset = data;
-      this.jsondata = json;
-      this.visdata = vis;
-      this.visdatas = {};
-      this.subgroups = [];
+    var dataService = function(){
+
     };
 
     dataService.setCurrentAttribute = function(name){
@@ -29,10 +25,15 @@ angular.module('gui')
 
     dataService.filterToCSV = function(filterValues){
       //TODO: prevent from filtering by attribute if this attribute was already used for filtering
-      var elementIndex = this.subgroups.length;
+      var subgroup = {};
+      subgroup["row"] = this.currentSubgroup.row;
+      subgroup["column"] = this.subgroups[this.currentSubgroup.row].length;
+      subgroup["selected"] = true;
       var currAtt = this.currentAttribute;
-      // concatenating filter (result of previous filtering gets filtered, first subgroup is initially the whole proband set)
-      var subgroup = this.subgroups[elementIndex-1].filter(function(proband){
+      subgroup["attribute"] = currAtt;
+      subgroup["filterValues"] = filterValues;
+      // concatenating filter (selected subgroup gets filtered, first subgroup is initially the whole proband set)
+      subgroup["data"] = this.subgroups[subgroup.row][subgroup.column-1].data.filter(function(proband){
         var value = proband[currAtt];
         for(i=0; i < filterValues.length; i++){
           if(value == filterValues[i]){
@@ -41,13 +42,24 @@ angular.module('gui')
         }
         return false;
       });
-      this.subgroups.push(subgroup);
+      this.subgroups[subgroup.row].push(subgroup);
+
+      this.subgroups.push([{row: 1, column: 0}, {row: 1, column: 1}]);
+
+      console.log(this.subgroups);
+
+      /*var arr = [];
+      arr[3] = 5;
+      console.log(arr);*/
+
+      this.currentSubgroup = subgroup;
 
       // how many probands remain?
-      var percentage = subgroup.length/this.dataset.length;
+      var percentage = subgroup.data.length/this.dataset.length;
 
-      var csvArray = this.getCSVString(subgroup);
-      $rootScope.$broadcast('filtered', {index: (elementIndex), attribute: currAtt, values: filterValues, progress: percentage});
+      $rootScope.$broadcast('filtered', {subgroup: subgroup, progress: percentage});
+
+      var csvArray = this.getCSVString(subgroup.data);
 
       // open/save csv file
       var csvString = encodeURI(csvArray);

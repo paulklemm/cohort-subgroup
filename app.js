@@ -5,9 +5,9 @@ var app = angular.module('gui', []);
 app.run(['$rootScope', 'data', function($rootScope, data){
   d3.csv('data/breast_fat_labels.csv', function(result){
     data.dataset = result;
-    data.subgroups = [];
     // initialize subgroups with dataset
-    data.subgroups.push(result);
+    data.subgroups = [[{row: 0, column: 0, selected: true, attribute: "all", filterValues: null, data: result}]];
+    data.currentSubgroup = data.subgroups[0][0];
     data.attributes = data.setAttributes();
     $rootScope.$broadcast("dataLoaded");
   });

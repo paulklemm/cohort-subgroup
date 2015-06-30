@@ -6,14 +6,14 @@ angular.module('gui')
     controller: function($scope){
 
       var width = parseInt(d3.select('#filterbar').style('width'));
-      var elementWidth = Math.floor((width-175)/5);
-      var elementHeight = 30;
+      var elementWidth = Math.floor((width-175)/10);
+      var elementHeight = 40;
       var margin = 15;
 
       var filterbar = d3.select("#filterbar")
         .append("svg")
           .attr("width", width)
-          .attr("height", 45)
+          .attr("height", 55)
         .append("g");
 
       // initial "all" filter element
@@ -22,7 +22,7 @@ angular.module('gui')
         .attr("id", 0)
         .attr("x", 30)
         .attr("y", 10)
-        .attr("width", 40)
+        .attr("width", elementWidth)
         .attr("height", elementHeight)
         .on("click", click);
 
@@ -33,25 +33,18 @@ angular.module('gui')
           .attr("dy", "1.2em")
           .text("all");
 
-      // add initial subgroup to subgroup list
-      d3.select("#subgroupList").append("li")
-        .attr("id", 0)
-        .text("All")
-        .on("click", listClick);
-
       $scope.$on('filtered', function(event, arg){
-        var attributeText = arg.attribute + ":";
+        var attributeText = arg.subgroup.attribute + ":";
         var elementText = "";
-        for(i=0; i < arg.values.length-1; i++){
-          elementText += arg.values[i] + ", ";
+        for(i=0; i < arg.subgroup.filterValues.length-1; i++){
+          elementText += arg.subgroup.filterValues[i] + ", ";
         }
-        elementText += arg.values[arg.values.length-1];
+        elementText += arg.subgroup.filterValues[arg.subgroup.filterValues.length-1];
 
         var filterelement = filterbar.append("rect");
         filterelement
           .attr("class", "filterelement")
-          .attr("id", arg.index)
-          .attr("x", 85 + ((arg.index-1)%5)*(elementWidth+margin))
+          .attr("x", 30 + ((arg.subgroup.column)%5)*(elementWidth+margin))
           .attr("y", 10)
           .attr("width", elementWidth)
           .attr("height", elementHeight)
@@ -60,22 +53,16 @@ angular.module('gui')
         filterbar.append("text")
           .attr("y", 10)
           .append("tspan")
-            .attr("x", 90 + ((arg.index-1)%5)*(elementWidth+margin))
+            .attr("x", 35 + ((arg.subgroup.column)%5)*(elementWidth+margin))
             .attr("dy", "1.2em")
             .text(attributeText)
           .append("tspan")
-            .attr("x", 90 + ((arg.index-1)%5)*(elementWidth+margin))
+            .attr("x", 35 + ((arg.subgroup.column)%5)*(elementWidth+margin))
             .attr("dy", "1.2em")
             .text(elementText);
 
-        // add subgroup to subgroup list
-        d3.select("#subgroupList").append("li")
-          .attr("id", arg.index)
-          .text("Subgroup" + arg.index)
-          .on("click", listClick);
-
-        // set filter element and list elemented selected
-        setActive(filterelement, arg.index, false);
+        // set filter element selected
+        setActive(filterelement, arg.subgroup.column, false);
       })
 
       function click(d) {
@@ -86,41 +73,10 @@ angular.module('gui')
         setActive(element, id, false);
       }
 
-      function listClick(d) {
-        var element = d3.select(this);
-        // get id of clicked element
-        var id = Number(element[0][0].id);
-        // set clicked filter element selected
-        setActive(element, id, true);
-      }
-
       function setActive(element, id, list){
-        if(list == false){
-          // select element in filterbar, only one selected element at a time
-          d3.select('.filterelement.selected').classed('selected', false);
-          element.classed('selected', true);
-
-          // select corresponding subgroup in list
-          var listItems = d3.select("#subgroupList").selectAll("li");
-          listItems.classed('selected', false);
-          listItems.each(function(item){
-            if(Number(d3.select(this)[0][0].id) == id)
-              d3.select(this).classed('selected', true);
-          });
-        }
-        else{
-          // select element in list, only one selected element at a time
-          d3.select('#subgroupList').selectAll("li").classed('selected', false);
-          element.classed('selected', true);
-
-          // select corresponding subgroup in filterbar
-          var filterbarElements = d3.select("#filterbar").selectAll(".filterelement");
-          filterbarElements.classed('selected', false);
-          filterbarElements.each(function(item){
-            if(Number(d3.select(this)[0][0].id) == id)
-              d3.select(this).classed('selected', true);
-          });
-        }
+        // select element in filterbar, only one selected element at a time
+        d3.select('.filterelement.selected').classed('selected', false);
+        element.classed('selected', true);
       }
     },
     controllerAs: 'filterbarCtrl'

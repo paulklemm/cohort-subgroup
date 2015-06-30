@@ -131,9 +131,6 @@ angular.module('gui')
         .on("mouseup", function(){
           // remove selection frame
           svg.selectAll( "rect.selection").remove();
-
-          // remove temporary selection marker class
-          //d3.selectAll( 'g.state.selection').classed( "selection", false);
         });
 
         barchart.append("button")
