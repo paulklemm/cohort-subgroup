@@ -27,12 +27,7 @@ angular.module('gui')
       //TODO: prevent from filtering by attribute if this attribute was already used for filtering
       //TODO: adjust progressbar when selecting different subgroups, until now the progressbar only adjusts directly after filtering
       // get selected subgroup
-      selectedSub = this.subgroups.map(function(subgroupRow){
-        return subgroupRow.filter(function(subgroup){
-          return subgroup.selected == true;
-        })
-      });
-      selectedSub = selectedSub[0][0]; //object
+      selectedSub = this.getSelectedSub();
       // create object for new subgroup
       var subgroup = {};
       subgroup["row"] = selectedSub.row;
@@ -56,6 +51,9 @@ angular.module('gui')
       if(rightNeigh){
         subgroup.row += 1;
         newRow = [];
+        for(i=0; i < subgroup.column; i++){
+          newRow[i] = null;
+        }
         newRow[subgroup.column] = subgroup;
         this.subgroups.push(newRow);
       }
@@ -64,25 +62,10 @@ angular.module('gui')
         this.subgroups[subgroup.row].push(subgroup);
       }
 
-      console.log(this.subgroups);
-
       // how many probands remain?
       var percentage = subgroup.data.length/this.dataset.length;
 
       $rootScope.$broadcast('filtered', {subgroup: subgroup, progress: percentage});
-
-      var csvArray = this.getCSVString(subgroup.data);
-
-      // open/save csv file
-      var csvString = encodeURI(csvArray);
-      // remove commas from the beginning of each proband that come through encodeURI
-      csvString = csvString.split('%0A,').join('%0A');
-      var a = document.createElement('a');
-      a.href = 'data:attachment/csv,' + csvString;
-      a.target = '_blank';
-      a.download = 'subgroup.csv';
-      document.body.appendChild(a);
-      //a.click();
     }
 
     dataService.calcDistribution = function(key){
@@ -153,6 +136,35 @@ angular.module('gui')
         csvArray.push(csv);
       });
       return csvArray;
+    }
+
+    dataService.saveSubgroup = function(){
+      // get selected subgroup
+      var subgroup = this.getSelectedSub();
+
+      // get csv string from subgroup
+      var csvArray = this.getCSVString(subgroup.data);
+
+      // save csv file
+      var csvString = encodeURI(csvArray);
+        // remove commas from the beginning of each proband that come through encodeURI
+      csvString = csvString.split('%0A,').join('%0A');
+      var a = document.createElement('a');
+      a.href = 'data:attachment/csv,' + csvString;
+      a.target = '_blank';
+      a.download = 'subgroup.csv';
+      document.body.appendChild(a);
+      a.click();
+    }
+
+    dataService.getSelectedSub = function(){
+      var group = this.subgroups.map(function(subgroupRow){
+        return subgroupRow.filter(function(subgroup){
+          if(subgroup)
+            return subgroup.selected == true;
+        })
+      });
+      return group[0][0];
     }
 
     dataService.uniq_fast = function(a) {
