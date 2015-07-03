@@ -7,7 +7,6 @@ app.run(['$rootScope', 'data', function($rootScope, data){
     data.dataset = result;
     // initialize subgroups with dataset
     data.subgroups = [[{row: 0, column: 0, selected: true, attribute: "all", filterValues: null, data: result}]];
-    data.currentSubgroup = data.subgroups[0][0];
     data.attributes = data.setAttributes();
     $rootScope.$broadcast("dataLoaded");
   });

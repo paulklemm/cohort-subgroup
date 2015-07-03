@@ -25,15 +25,24 @@ angular.module('gui')
 
     dataService.filterToCSV = function(filterValues){
       //TODO: prevent from filtering by attribute if this attribute was already used for filtering
+      //TODO: adjust progressbar when selecting different subgroups, until now the progressbar only adjusts directly after filtering
+      // get selected subgroup
+      selectedSub = this.subgroups.map(function(subgroupRow){
+        return subgroupRow.filter(function(subgroup){
+          return subgroup.selected == true;
+        })
+      });
+      selectedSub = selectedSub[0][0]; //object
+      // create object for new subgroup
       var subgroup = {};
-      subgroup["row"] = this.currentSubgroup.row;
-      subgroup["column"] = this.subgroups[this.currentSubgroup.row].length;
+      subgroup["row"] = selectedSub.row;
+      subgroup["column"] = selectedSub.column+1;
       subgroup["selected"] = true;
       var currAtt = this.currentAttribute;
       subgroup["attribute"] = currAtt;
       subgroup["filterValues"] = filterValues;
-      // concatenating filter (selected subgroup gets filtered, first subgroup is initially the whole proband set)
-      subgroup["data"] = this.subgroups[subgroup.row][subgroup.column-1].data.filter(function(proband){
+      // filter selected subgroup
+      subgroup["data"] = selectedSub.data.filter(function(proband){
         var value = proband[currAtt];
         for(i=0; i < filterValues.length; i++){
           if(value == filterValues[i]){
@@ -42,17 +51,20 @@ angular.module('gui')
         }
         return false;
       });
-      this.subgroups[subgroup.row].push(subgroup);
-
-      this.subgroups.push([{row: 1, column: 0}, {row: 1, column: 1}]);
+      // if selected element was not the end of the row: start new row
+      rightNeigh = this.subgroups[subgroup.row][subgroup.column];
+      if(rightNeigh){
+        subgroup.row += 1;
+        newRow = [];
+        newRow[subgroup.column] = subgroup;
+        this.subgroups.push(newRow);
+      }
+      // else: just push subgroup to end of row
+      else {
+        this.subgroups[subgroup.row].push(subgroup);
+      }
 
       console.log(this.subgroups);
-
-      /*var arr = [];
-      arr[3] = 5;
-      console.log(arr);*/
-
-      this.currentSubgroup = subgroup;
 
       // how many probands remain?
       var percentage = subgroup.data.length/this.dataset.length;
