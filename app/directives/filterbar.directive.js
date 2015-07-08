@@ -25,51 +25,27 @@ angular.module('gui')
         .append("text")
           .text("Save");
 
-      // initial "all" filter element
-      /*filterbar.append("rect")
-        .attr("class", "filterelement")
-        .attr("id", 0)
-        .attr("x", 30)
-        .attr("y", 10)
-        .attr("width", elementWidth)
-        .attr("height", elementHeight)
-        .on("click", click);
-
-      filterbar.append("text")
-        .attr("y", 10)
-        .append("tspan")
-          .attr("x", 43)
-          .attr("dy", "1.2em")
-          .text("all"); */
-
-      $scope.$on('filtered', function(event, arg){
+      $scope.$on('update', function(event, arg){
         // visualize/update subgroup matrix
         var dataset = data.subgroups;
+        // 2) TODO: implement shrinking of elements
+        // 3) TODO: set last filtered element selected (corresponding subgroup is already selected) -> use enter
 
-        //TODO: handle initial element
-        //TODO: implement shrinking of elements
-        //TODO: set last filtered element selected (-> TODO in setActive)
-        //TODO: change use of row and column attributes to indices in subgroup matrix so that row and column attributes get useless and can be removed
-        //TODO: when filtered three times then third row is mapped on second row -> third row not visible
-        var filterelement = filterbar.selectAll("g")
+        var enter = filterbar.selectAll("rect")
           .data(dataset)
-          .enter()
-          .append("g");
-        filterelement.selectAll("rect")
-          .data(function(d,i,j) { return d; })
-          .enter()
-          .append("rect")
+          .enter();
+        enter.append("rect")
             .attr("class", "filterelement")
+            //.attr("class", function(d,i,j) { return (d.row == data.selectedSub.row && d.column == data.selectedSub.column) ? "selected" : ""; })
             .attr("x", function(d,i,j) { return (d == null) ? 0 : (30 + d.column*(elementWidth+margin)); })
             .attr("y", function(d,i,j) { return (d == null) ? 0 : (10 + d.row*(elementHeight+5)); })
             .attr("width", elementWidth)
             .attr("height", elementHeight)
             .style("display", function(d,i,j) { return (d == null) ? "none" : "inline"; })
-            //TODO: disable click for hidden elements
             .on("click", click);
 
-        filterelement.selectAll("text")
-          .data(function(d,i,j) { return d; })
+        filterbar.selectAll("text")
+          .data(dataset)
           .enter()
           .append("text")
             .attr("y", function(d,i,j) { return (d == null) ? 0 : (10 + d.row*(elementHeight+5)); })
@@ -91,28 +67,24 @@ angular.module('gui')
                 }
                 return elementText;
               });
-
-        // set filter element selected
-        //setActive(filterelement, arg.subgroup.column);
       })
 
       function click(d) {
         var element = d3.select(this);
-        // get id of clicked element
-        var id = Number(element[0][0].id);
         // set clicked filter element selected
-        setActive(element, id);
-        //TODO: set selected = true in corresponding subgroup object
+        setActive(element);
       }
 
       function save(){
         data.saveSubgroup();
       }
 
-      function setActive(element, id){
+      function setActive(element){
         // select element in filterbar, only one selected element at a time
         d3.select('.filterelement.selected').classed('selected', false);
         element.classed('selected', true);
+        // set current selected subgroup
+        data.selectedSub = element[0][0].__data__;
       }
     },
     controllerAs: 'filterbarCtrl'

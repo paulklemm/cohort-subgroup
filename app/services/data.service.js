@@ -24,48 +24,42 @@ angular.module('gui')
     }
 
     dataService.filterToCSV = function(filterValues){
-      //TODO: prevent from filtering by attribute if this attribute was already used for filtering
+      // prevent from filtering by attribute that was used for filtering before
+      var alreadyUsed = this.alreadyUsed(this.currentAttribute);
       //TODO: adjust progressbar when selecting different subgroups, until now the progressbar only adjusts directly after filtering
-      // get selected subgroup
-      selectedSub = this.getSelectedSub();
-      // create object for new subgroup
-      var subgroup = {};
-      subgroup["row"] = selectedSub.row;
-      subgroup["column"] = selectedSub.column+1;
-      subgroup["selected"] = true;
-      var currAtt = this.currentAttribute;
-      subgroup["attribute"] = currAtt;
-      subgroup["filterValues"] = filterValues;
-      // filter selected subgroup
-      subgroup["data"] = selectedSub.data.filter(function(proband){
-        var value = proband[currAtt];
-        for(i=0; i < filterValues.length; i++){
-          if(value == filterValues[i]){
-            return true;
+      if(!alreadyUsed){
+        // create object for new subgroup
+        var subgroup = {};
+        subgroup["row"] = this.selectedSub.row;
+        subgroup["column"] = this.selectedSub.column+1;
+        var currAtt = this.currentAttribute;
+        subgroup["attribute"] = currAtt;
+        subgroup["filterValues"] = filterValues;
+        // filter selected subgroup
+        subgroup["data"] = this.selectedSub.data.filter(function(proband){
+          var value = proband[currAtt];
+          for(i=0; i < filterValues.length; i++){
+            if(value == filterValues[i]){
+              return true;
+            }
           }
+          return false;
+        });
+        // if selected element was not the end of the row: start new row
+        rightNeigh = this.findNeigh(subgroup.row, subgroup.column);
+        if(rightNeigh){
+          subgroup.row += 1;
         }
-        return false;
-      });
-      // if selected element was not the end of the row: start new row
-      rightNeigh = this.subgroups[subgroup.row][subgroup.column];
-      if(rightNeigh){
-        subgroup.row += 1;
-        newRow = [];
-        for(i=0; i < subgroup.column; i++){
-          newRow[i] = null;
-        }
-        newRow[subgroup.column] = subgroup;
-        this.subgroups.push(newRow);
-      }
-      // else: just push subgroup to end of row
-      else {
-        this.subgroups[subgroup.row].push(subgroup);
-      }
+          this.subgroups.push(subgroup);
 
-      // how many probands remain?
-      var percentage = subgroup.data.length/this.dataset.length;
+        // how many probands remain?
+        var percentage = subgroup.data.length/this.dataset.length;
 
-      $rootScope.$broadcast('filtered', {subgroup: subgroup, progress: percentage});
+        // set filtered subgroup as selected subgroup
+        this.selectedSub = subgroup;
+
+        $rootScope.$broadcast('update', {subgroup: subgroup, progress: percentage});
+      }
     }
 
     dataService.calcDistribution = function(key){
@@ -157,14 +151,26 @@ angular.module('gui')
       a.click();
     }
 
-    dataService.getSelectedSub = function(){
-      var group = this.subgroups.map(function(subgroupRow){
-        return subgroupRow.filter(function(subgroup){
-          if(subgroup)
-            return subgroup.selected == true;
-        })
+    dataService.alreadyUsed = function(attribute){
+      var res = false;
+      this.subgroups.forEach(function(subgroup){
+        if(subgroup != null && subgroup.attribute == attribute){
+          res = true;
+        }
       });
-      return group[0][0];
+      return res;
+    }
+
+    dataService.findNeigh = function(row, column){
+      var res = false;
+      var sameRow = this.subgroups.filter(function(subgroup){
+        return subgroup.row == row;
+      });
+      sameRow.forEach(function(subgroup){
+        if(subgroup.column == column)
+          res = true;
+      });
+      return res;
     }
 
     dataService.uniq_fast = function(a) {
