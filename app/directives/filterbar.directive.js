@@ -29,12 +29,12 @@ angular.module('gui')
         // visualize/update subgroup matrix
         var dataset = data.subgroups;
         // 2) TODO: implement shrinking of elements
-        // 3) TODO: set last filtered element selected (corresponding subgroup is already selected) -> use enter
+        // 3) TODO: style filterbar (text smaller, text clickable)
 
         var enter = filterbar.selectAll("rect")
           .data(dataset)
           .enter();
-        enter.append("rect")
+        var entered = enter.append("rect")
             .attr("class", "filterelement")
             //.attr("class", function(d,i,j) { return (d.row == data.selectedSub.row && d.column == data.selectedSub.column) ? "selected" : ""; })
             .attr("x", function(d,i,j) { return (d == null) ? 0 : (30 + d.column*(elementWidth+margin)); })
@@ -43,6 +43,14 @@ angular.module('gui')
             .attr("height", elementHeight)
             .style("display", function(d,i,j) { return (d == null) ? "none" : "inline"; })
             .on("click", click);
+        var enteredElement = null;
+        entered[0].forEach(function(element){
+            if(element != null)
+              enteredElement = element;
+        });
+
+        // set last filtered element selected
+        setActive(d3.select(enteredElement));
 
         filterbar.selectAll("text")
           .data(dataset)
