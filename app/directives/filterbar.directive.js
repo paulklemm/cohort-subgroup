@@ -122,7 +122,6 @@ angular.module('gui')
 
         var entered = enter.append("rect")
             .attr("class", "filterelement")
-            //.attr("class", function(d,i,j) { return (d.row == data.selectedSub.row && d.column == data.selectedSub.column) ? "selected" : ""; })
             .attr("x", function(d,i,j) { return 10 + d.column*(elementWidth+margin); })
             .attr("y", function(d,i,j) { return 10 + d.row*(elementHeight+5); })
             .attr("width", elementWidth)

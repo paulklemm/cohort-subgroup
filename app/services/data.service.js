@@ -23,17 +23,18 @@ angular.module('gui')
       return res;
     }
 
-    dataService.filterToCSV = function(attribute, filterValues){
+    dataService.filterToCSV = function(filterValues){
       // TODO: prevent from filtering by attribute that was used for filtering !on this path! before
       var alreadyUsed = this.alreadyUsed(this.currentAttribute);
-      if(!alreadyUsed){
+      if(alreadyUsed)
+        alert("This attribute was already used for filtering of the current process!")
+      else{
         // create object for new subgroup
         var subgroup = {};
         subgroup["row"] = this.selectedSub.row;
         subgroup["column"] = this.selectedSub.column+1;
         var currAtt = this.currentAttribute;
         subgroup["attribute"] = currAtt;
-        // TODO: evtl. Nachfolger für jede Subgruppe speichern durch Listen-Position des jeweiligen Objekts
         subgroup.pred = this.getIndex(this.selectedSub.attribute);
         subgroup["filterValues"] = filterValues;
         // filter selected subgroup

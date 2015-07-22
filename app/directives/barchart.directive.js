@@ -151,14 +151,17 @@ angular.module('gui')
         }
 
         function buttonClick(d){
-          //TODO: error if no bars are chosen
           var chosenBars = d3.selectAll(".bar").filter(function(d){ return (d3.select(this).style("fill") == "rgb(202, 4, 32)"); });
-          var filterValues = [];
-          chosenBars[0].forEach(function(bar){
-            value = bar.__data__.attributeValue;
-            filterValues.push(value);
-          });
-          data.filterToCSV(data.currentAttribute, filterValues);
+          if(chosenBars[0].length == 0)
+            alert("No bars chosen!");
+          else{
+            var filterValues = [];
+            chosenBars[0].forEach(function(bar){
+              value = bar.__data__.attributeValue;
+              filterValues.push(value);
+            });
+            data.filterToCSV(filterValues);
+          }
         }
 
       })
