@@ -19,30 +19,104 @@ angular.module('gui')
       bar.append("button")
         .attr("class", "btn btn-default")
         .attr("type", "button")
-        //.attr("x", 100)
-        .style("width", 50)
+        .style("width", 0.1*width)
+        //.style("float", "right")
+        //.style("margin-right", "10px")
         .on("click", save)
         .append("text")
           .text("Save");
-
+      // update subgroup matrix
       $scope.$on('update', function(event, arg){
-        // visualize/update subgroup matrix
         var dataset = data.subgroups;
-        // 2) TODO: implement shrinking of elements
-        // 3) TODO: style filterbar (text smaller, text clickable)
+
+        function update(element){
+          var elementdata = element.__data__;
+          // get elements on filter path
+          var path = [];
+          path.push(elementdata);
+          var idx = elementdata.pred;
+          while(idx > -1){
+            path.push(data.subgroups[idx]);
+            idx = data.subgroups[idx].pred;
+          }
+          // sort path elements by column (ascending)
+          path.sort(function(a,b){
+            return a.column - b.column;
+          });
+
+          var row = elementdata.row;
+          var column = elementdata.column;
+          var selection = filterbar.selectAll("rect").data(dataset);
+          selection
+            // adjust height by means of path
+            .attr("height", function(d){
+              if(path.indexOf(d) != -1) //element is on path
+                return elementHeight;
+              else
+                return 10;
+            })
+            // adjust y-position
+            .attr("y", function(d){
+              var bigRow = path[d.column].row;
+              if(bigRow < d.row)
+                return 10+elementHeight+5+(d.row-1)*15;
+              else
+                return 10+d.row*15;
+            });
+
+            var text = filterbar.selectAll("text").data(dataset);
+            text
+              .style("display", function(d){
+                if(d.column >= column && d.row < row)
+                  return "none";
+                else
+                  return "inline";
+              })
+              .attr("y", function(d){
+                if(d.column >= column && d.row < row)
+                  return 10+d.row*(elementHeight+5);
+                else
+                  return 10+d.row*15;
+              });
+        }
+
+        // 2) TODO: make text in filterelement clickable
+        // 3) TODO: adjust tooltips
+
+        var tip = d3.tip()
+                    .attr("class", "d3-tip")
+                    .offset([-15, 0])
+                    .html(function(d){
+                      var elementText = "";
+                      if(d != null && d.filterValues){
+                        for(i=0; i < d.filterValues.length-1; i++){
+                          elementText += d.filterValues[i] + ", ";
+                        }
+                        elementText += d.filterValues[d.filterValues.length-1];
+                      }
+                      if(elementText != "")
+                        return d.attribute + ": " + elementText;
+                      else
+                        return d.attribute;
+                    });
+
+        filterbar.call(tip);
 
         var enter = filterbar.selectAll("rect")
           .data(dataset)
           .enter();
+
         var entered = enter.append("rect")
             .attr("class", "filterelement")
             //.attr("class", function(d,i,j) { return (d.row == data.selectedSub.row && d.column == data.selectedSub.column) ? "selected" : ""; })
-            .attr("x", function(d,i,j) { return (d == null) ? 0 : (30 + d.column*(elementWidth+margin)); })
-            .attr("y", function(d,i,j) { return (d == null) ? 0 : (10 + d.row*(elementHeight+5)); })
+            .attr("x", function(d,i,j) { return 10 + d.column*(elementWidth+margin); })
+            .attr("y", function(d,i,j) { return 10 + d.row*(elementHeight+5); })
             .attr("width", elementWidth)
             .attr("height", elementHeight)
-            .style("display", function(d,i,j) { return (d == null) ? "none" : "inline"; })
-            .on("click", click);
+            .on("click", click)
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide);
+
         var enteredElement = null;
         entered[0].forEach(function(element){
             if(element != null)
@@ -56,14 +130,14 @@ angular.module('gui')
           .data(dataset)
           .enter()
           .append("text")
-            .attr("y", function(d,i,j) { return (d == null) ? 0 : (10 + d.row*(elementHeight+5)); })
-            .style("display", function(d,i,j) { return (d == null) ? "none" : "inline"; })
+            .attr("y", function(d,i,j) { return 10 + d.row*(elementHeight+5); })
+            .on("click", textClick)
             .append("tspan")
-              .attr("x", function(d,i,j) { return (d == null) ? 0 : (35 + d.column*(elementWidth+margin)); })
+              .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
               .attr("dy", "1.2em")
-              .text(function(d,i,j){ return (d == null) ? "" : (d.attribute + ":"); })
+              .text(function(d,i,j){ return d.attribute + ":"; })
             .append("tspan")
-              .attr("x", function(d,i,j) { return (d == null) ? 0 : (35 + d.column*(elementWidth+margin)); })
+              .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
               .attr("dy", "1.2em")
               .text(function(d,i,j){
                 var elementText = "";
@@ -75,12 +149,19 @@ angular.module('gui')
                 }
                 return elementText;
               });
+
+          // shrinking
+          update(enteredElement);
       })
 
       function click(d) {
         var element = d3.select(this);
         // set clicked filter element selected
         setActive(element);
+      }
+
+      function textClick(d) {
+        //console.log(d);
       }
 
       function save(){

@@ -23,10 +23,9 @@ angular.module('gui')
       return res;
     }
 
-    dataService.filterToCSV = function(filterValues){
+    dataService.filterToCSV = function(attribute, filterValues){
       // prevent from filtering by attribute that was used for filtering before
       var alreadyUsed = this.alreadyUsed(this.currentAttribute);
-      //TODO: adjust progressbar when selecting different subgroups, until now the progressbar only adjusts directly after filtering
       if(!alreadyUsed){
         // create object for new subgroup
         var subgroup = {};
@@ -34,6 +33,8 @@ angular.module('gui')
         subgroup["column"] = this.selectedSub.column+1;
         var currAtt = this.currentAttribute;
         subgroup["attribute"] = currAtt;
+        // TODO: evtl. Nachfolger für jede Subgruppe speichern durch Listen-Position des jeweiligen Objekts
+        subgroup.pred = this.getIndex(this.selectedSub.attribute);
         subgroup["filterValues"] = filterValues;
         // filter selected subgroup
         subgroup["data"] = this.selectedSub.data.filter(function(proband){
@@ -49,9 +50,14 @@ angular.module('gui')
         rightNeigh = this.findNeigh(subgroup.row, subgroup.column);
         if(rightNeigh){
           subgroup.row += 1;
+          var downNeigh = this.findDown(subgroup.row, subgroup.column);
+          while(downNeigh){
+            subgroup.row += 1;
+            downNeigh = this.findDown(subgroup.row, subgroup.column);
+          }
         }
-          this.subgroups.push(subgroup);
 
+        this.subgroups.push(subgroup);
         // how many probands remain?
         var percentage = subgroup.data.length/this.dataset.length;
 
@@ -151,6 +157,11 @@ angular.module('gui')
       a.click();
     }
 
+    //get index of certain attribute in subgroup list
+    dataService.getIndex = function(attribute){
+      return this.subgroups.map(function(e){ return e.attribute; }).indexOf(attribute);
+    }
+
     dataService.alreadyUsed = function(attribute){
       var res = false;
       this.subgroups.forEach(function(subgroup){
@@ -168,6 +179,18 @@ angular.module('gui')
       });
       sameRow.forEach(function(subgroup){
         if(subgroup.column == column)
+          res = true;
+      });
+      return res;
+    }
+
+    dataService.findDown = function(row, column){
+      var res = false;
+      var sameCol = this.subgroups.filter(function(subgroup){
+        return subgroup.column == column;
+      });
+      sameCol.forEach(function(subgroup){
+        if(subgroup.row == row)
           res = true;
       });
       return res;
