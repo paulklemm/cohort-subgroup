@@ -6,14 +6,16 @@ angular.module('gui')
     controller: function($scope){
 
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
+      var height = 80;
       var elementWidth = Math.floor((width-175)/10);
       var elementHeight = 30;
+      var elementHeightSmall = 10;
       var margin = 15;
 
       var bar = d3.select("#filterbar");
       var filterbar  = bar.append("svg")
           .attr("width", width)
-          .attr("height", 80);
+          .attr("height", height);
 
       // add save button
       bar.append("button")
@@ -50,33 +52,45 @@ angular.module('gui')
           selection
             // adjust height by means of path
             .attr("height", function(d){
+              //how many small elements are in this column?
+              var subgroupsColumn = data.subgroups.filter(function(subgroup){
+                if(subgroup.column == d.column)
+                  return true;
+                return false;
+              });
               if(path.indexOf(d) != -1) //element is on path
-                return elementHeight;
+                return height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
               else
-                return 10;
+                return elementHeightSmall;
             })
             // adjust y-position
             .attr("y", function(d){
-              var bigRow = path[d.column].row;
-              if(bigRow < d.row)
-                return 10+elementHeight+5+(d.row-1)*15;
+              var bigRow = -1;
+              if(path.length-1 >= d.column)
+                bigRow = path[d.column].row;
+              //how many small elements are in this column?
+              var subgroupsColumn = data.subgroups.filter(function(subgroup){
+                if(subgroup.column == d.column)
+                  return true;
+                return false;
+              });
+              var bigHeight = height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
+              if(bigRow < d.row && bigRow >= 0)
+                return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
               else
-                return 10+d.row*15;
+                return 10+d.row*(elementHeightSmall+5);
             });
 
             var text = filterbar.selectAll("text").data(dataset);
             text
               .style("display", function(d){
-                if(d.column >= column && d.row < row)
-                  return "none";
-                else
+                if(path.indexOf(d) != -1) //element is on path
                   return "inline";
+                else
+                  return "none";
               })
               .attr("y", function(d){
-                if(d.column >= column && d.row < row)
-                  return 10+d.row*(elementHeight+5);
-                else
-                  return 10+d.row*15;
+                  return 10+d.row*(elementHeightSmall+5);
               });
         }
 
