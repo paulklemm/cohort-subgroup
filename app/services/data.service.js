@@ -36,6 +36,7 @@ angular.module('gui')
         var currAtt = this.currentAttribute;
         subgroup["attribute"] = currAtt;
         subgroup.pred = this.getIndex(this.selectedSub.attribute);
+        subgroup.succ = [];
         subgroup["filterValues"] = filterValues;
         // filter selected subgroup
         subgroup["data"] = this.selectedSub.data.filter(function(proband){
@@ -59,6 +60,10 @@ angular.module('gui')
         }
 
         this.subgroups.push(subgroup);
+
+        // set this subgroup as successor of selected subgroup
+        this.selectedSub.succ.push(this.getIndex(subgroup.attribute));
+
         // how many probands remain?
         var percentage = subgroup.data.length/this.dataset.length;
 

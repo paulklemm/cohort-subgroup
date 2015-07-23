@@ -54,17 +54,12 @@ angular.module('gui')
             .attr("height", function(d){
               if(path.indexOf(d) != -1 && d.column == 0) // element is first element on path
                 return height-margin;
-              else if(path.indexOf(d) != -1 && d.column != 0){ //element is on path
-                // get height according to number of elements in this column
-                var subgroupsColumn = data.subgroups.filter(function(subgroup){
-                  if(subgroup.column == d.column)
-                    return true;
-                  return false;
-                });
-                var elementHeight = height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
+              else if(path.indexOf(d) != -1 && d.column != 0){ // element is on path
                 // get height of big element in column before
                 var elementHeightBefore = path[d.column-1].height;
-                var h = Math.min(elementHeight, elementHeightBefore);
+                // get number of successors of parent element (inclusive this big element) -> these elements share the height of the element before
+                var num = path[d.column-1].succ.length;
+                var h = elementHeightBefore-(num-1)*(elementHeightSmall+5);
                 // save height in path array
                 path[d.column]["height"] = h;
                 return h;
@@ -84,7 +79,7 @@ angular.module('gui')
                 return false;
               });
               var bigHeight = height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
-              if(bigRow < d.row && bigRow >= 0)
+              if(bigRow < d.row && bigRow >= 0) //TODO
                 return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
               else
                 return 10+d.row*(elementHeightSmall+5);
