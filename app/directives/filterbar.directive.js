@@ -30,79 +30,10 @@ angular.module('gui')
       $scope.$on('update', function(event, arg){
         var dataset = data.subgroups;
 
-        function update(element){
-          var elementdata = element.__data__;
-          // get elements on filter path
-          var path = [];
-          path.push(elementdata);
-          var idx = elementdata.pred;
-          while(idx > -1){
-            path.push(data.subgroups[idx]);
-            idx = data.subgroups[idx].pred;
-          }
-          // sort path elements by column (ascending)
-          path.sort(function(a,b){
-            return a.column - b.column;
-          });
-          path[0]["height"] = height-margin;
-
-          var row = elementdata.row;
-          var column = elementdata.column;
-          var selection = filterbar.selectAll("rect").data(dataset);
-          selection
-            // adjust height by means of path
-            .attr("height", function(d){
-              if(path.indexOf(d) != -1 && d.column == 0) // element is first element on path
-                return height-margin;
-              else if(path.indexOf(d) != -1 && d.column != 0){ // element is on path
-                // get height of big element in column before
-                var elementHeightBefore = path[d.column-1].height;
-                // get number of successors of parent element (inclusive this big element) -> these elements share the height of the element before
-                var num = path[d.column-1].succ.length;
-                var h = elementHeightBefore-(num-1)*(elementHeightSmall+5);
-                // save height in path array
-                path[d.column]["height"] = h;
-                return h;
-              }
-              else
-                return elementHeightSmall;
-            })
-            // adjust y-position
-            .attr("y", function(d){
-              var bigRow = -1;
-              if(path.length-1 >= d.column)
-                bigRow = path[d.column].row;
-              //how many small elements are in this column?
-              var subgroupsColumn = data.subgroups.filter(function(subgroup){
-                if(subgroup.column == d.column)
-                  return true;
-                return false;
-              });
-              var bigHeight = height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
-              if(bigRow < d.row && bigRow >= 0) //TODO
-                return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
-              else
-                return 10+d.row*(elementHeightSmall+5);
-            });
-
-            var text = filterbar.selectAll("text").data(dataset);
-            text
-              .style("display", function(d){
-                if(path.indexOf(d) != -1) //element is on path
-                  return "inline";
-                else
-                  return "none";
-              })
-              .attr("y", function(d){
-                  return 10+d.row*(elementHeightSmall+5);
-              });
-        }
-
-        // 1) TODO: fix shrinking
         // 2) TODO: make text in filterelement clickable
         // 3) TODO: adjust tooltips
         // 4) TODO: update progress bar
-        // 5) TODO: update matrix on element click
+        // 6) TODO: adjust save button
 
         var tip = d3.tip()
                     .attr("class", "d3-tip")
@@ -174,8 +105,74 @@ angular.module('gui')
           update(enteredElement);
       })
 
+      function update(element){
+        var elementdata = element.__data__;
+        // get elements on filter path
+        var path = [];
+        path.push(elementdata);
+        var idx = elementdata.pred;
+        while(idx > -1){
+          path.push(data.subgroups[idx]);
+          idx = data.subgroups[idx].pred;
+        }
+        // sort path elements by column (ascending)
+        path.sort(function(a,b){
+          return a.column - b.column;
+        });
+        path[0]["height"] = height-margin;
+
+        var row = elementdata.row;
+        var column = elementdata.column;
+        var selection = filterbar.selectAll("rect").data(data.subgroups);
+        selection
+          // adjust height by means of path
+          .attr("height", function(d){
+            if(path.indexOf(d) != -1 && d.column == 0) // element is first element on path
+              return height-margin;
+            else if(path.indexOf(d) != -1 && d.column != 0){ // element is on path
+              // get height of big element in column before
+              var elementHeightBefore = path[d.column-1].height;
+              // get number of successors of parent element (inclusive this big element) -> these elements share the height of the element before
+              var num = path[d.column-1].succ.length;
+              var h = elementHeightBefore-(num-1)*(elementHeightSmall+5);
+              // save height in path array
+              path[d.column]["height"] = h;
+              return h;
+            }
+            else
+              return elementHeightSmall;
+          })
+          // adjust y-position
+          .attr("y", function(d){
+            var bigRow = -1;
+            if(path.length-1 >= d.column)
+              bigRow = path[d.column].row;
+            if(bigRow < d.row && bigRow >= 0){
+              var bigHeight = path[d.column].height;
+              return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
+            }
+            else
+              return 10+d.row*(elementHeightSmall+5);
+          });
+
+          var text = filterbar.selectAll("text").data(data.subgroups);
+          text
+            .style("display", function(d){
+              if(path.indexOf(d) != -1) // element is on path
+                return "inline";
+              else
+                return "none";
+            })
+            .attr("y", function(d){
+                return 10+d.row*(elementHeightSmall+5);
+            });
+      }
+
       function click(d) {
         var element = d3.select(this);
+        // if element is small update filterbar
+        if(element[0][0].height.baseVal.value == elementHeightSmall)
+          update(element[0][0]); //TODO: was soll passieren, wenn ein kleines Element zwei Nachfolger hat, die sich theoretisch die Höhe eines kleinen Elements teilen müssen, selbst aber die Höhen von kleinen Elementen haben?
         // set clicked filter element selected
         setActive(element);
       }
