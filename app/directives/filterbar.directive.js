@@ -8,7 +8,6 @@ angular.module('gui')
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
       var height = 80;
       var elementWidth = Math.floor((width-175)/10);
-      var elementHeight = 30;
       var elementHeightSmall = 10;
       var margin = 15;
 
@@ -45,6 +44,7 @@ angular.module('gui')
           path.sort(function(a,b){
             return a.column - b.column;
           });
+          path[0]["height"] = height-margin;
 
           var row = elementdata.row;
           var column = elementdata.column;
@@ -52,14 +52,23 @@ angular.module('gui')
           selection
             // adjust height by means of path
             .attr("height", function(d){
-              //how many small elements are in this column?
-              var subgroupsColumn = data.subgroups.filter(function(subgroup){
-                if(subgroup.column == d.column)
-                  return true;
-                return false;
-              });
-              if(path.indexOf(d) != -1) //element is on path
-                return height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
+              if(path.indexOf(d) != -1 && d.column == 0) // element is first element on path
+                return height-margin;
+              else if(path.indexOf(d) != -1 && d.column != 0){ //element is on path
+                // get height according to number of elements in this column
+                var subgroupsColumn = data.subgroups.filter(function(subgroup){
+                  if(subgroup.column == d.column)
+                    return true;
+                  return false;
+                });
+                var elementHeight = height-margin-(subgroupsColumn.length-1)*(elementHeightSmall+5);
+                // get height of big element in column before
+                var elementHeightBefore = path[d.column-1].height;
+                var h = Math.min(elementHeight, elementHeightBefore);
+                // save height in path array
+                path[d.column]["height"] = h;
+                return h;
+              }
               else
                 return elementHeightSmall;
             })
@@ -94,8 +103,11 @@ angular.module('gui')
               });
         }
 
+        // 1) TODO: fix shrinking
         // 2) TODO: make text in filterelement clickable
         // 3) TODO: adjust tooltips
+        // 4) TODO: update progress bar
+        // 5) TODO: update matrix on element click
 
         var tip = d3.tip()
                     .attr("class", "d3-tip")
@@ -123,9 +135,9 @@ angular.module('gui')
         var entered = enter.append("rect")
             .attr("class", "filterelement")
             .attr("x", function(d,i,j) { return 10 + d.column*(elementWidth+margin); })
-            .attr("y", function(d,i,j) { return 10 + d.row*(elementHeight+5); })
+            .attr("y", function(d,i,j) { return 10 + d.row*(35); })
             .attr("width", elementWidth)
-            .attr("height", elementHeight)
+            .attr("height", 30)
             .on("click", click)
             .on("mouseover", tip.show)
             .on("mouseout", tip.hide);
@@ -143,7 +155,7 @@ angular.module('gui')
           .data(dataset)
           .enter()
           .append("text")
-            .attr("y", function(d,i,j) { return 10 + d.row*(elementHeight+5); })
+            .attr("y", function(d,i,j) { return 10 + d.row*(35); })
             .on("click", textClick)
             .append("tspan")
               .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
