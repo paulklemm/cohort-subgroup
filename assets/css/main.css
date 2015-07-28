@@ -8,6 +8,36 @@ div[class*="col-md"] {
   padding: 0;
 }
 
-.noborder {
+#overallWrapper{
+  margin-top:40px;
+}
+
+#visualizationWrapper{
+  height:570px;
+  text-align:center;
+}
+
+#filterbarWrapper{
+  margin: 0;
+}
+
+#treeVisualizationWrapper{
   box-shadow: none !important;
+  margin-left: -150px;
+  position: relative;
+  z-index: 1;
+}
+
+#contextInfoColumn{
+  height:570px;
+}
+
+#contextInfoContainer{
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+#contextInfoText{
+  text-align: center;
+  margin-bottom: 20px;
 }
