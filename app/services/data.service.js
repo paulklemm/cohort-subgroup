@@ -58,19 +58,19 @@ angular.module('gui')
             downNeigh = this.findDown(subgroup.row, subgroup.column);
           }
         }
+        // how many probands remain?
+        subgroup["percentage"] = subgroup.data.length/this.dataset.length;
 
         this.subgroups.push(subgroup);
 
         // set this subgroup as successor of selected subgroup
         this.selectedSub.succ.push(this.getIndex(subgroup.attribute));
 
-        // how many probands remain?
-        var percentage = subgroup.data.length/this.dataset.length;
-
         // set filtered subgroup as selected subgroup
         this.selectedSub = subgroup;
 
-        $rootScope.$broadcast('update', {subgroup: subgroup, progress: percentage});
+        $rootScope.$broadcast('update');
+        $rootScope.$broadcast('updateProgress', {progress: subgroup.percentage});
       }
     }
 

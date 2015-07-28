@@ -1,5 +1,5 @@
 angular.module('gui')
-.directive('filterbar', ['data', function(data){
+.directive('filterbar', ['data', '$rootScope', function(data, $rootScope){
   return {
     restrict: 'E',
     template: '<div id="filterbar"></div>',
@@ -11,29 +11,34 @@ angular.module('gui')
       var elementHeightSmall = 10;
       var margin = 15;
 
-      var bar = d3.select("#filterbar");
-      var filterbar  = bar.append("svg")
+      var bar = d3.select("#filterbar")
+          .append("div")
+            .attr("class", "row")
+            .style("margin", 0);
+      filtbar = bar.append("div")
+          .attr("class", "col-md-11");
+      var save = bar.append("div")
+          .attr("class", "col-md-1");
+      var filterbar  = filtbar.append("svg")
           .attr("width", width)
           .attr("height", height);
 
       // add save button
-      bar.append("button")
+      save.append("button")
         .attr("class", "btn btn-default")
         .attr("type", "button")
-        .style("width", 0.1*width)
-        //.style("float", "right")
-        //.style("margin-right", "10px")
+        .style("margin-top", "10px")
+        .style("margin-right", "-10px")
         .on("click", save)
-        .append("text")
-          .text("Save");
-      // update subgroup matrix
-      $scope.$on('update', function(event, arg){
+        .append("span")
+          .attr("class", "glyphicon glyphicon-floppy-disk")
+          .style("font-size", "20px");
+
+      // build initial subgroup matrix
+      $scope.$on('update', function(){
         var dataset = data.subgroups;
 
-        // 2) TODO: make text in filterelement clickable
         // 3) TODO: adjust tooltips
-        // 4) TODO: update progress bar
-        // 6) TODO: adjust save button
 
         var tip = d3.tip()
                     .attr("class", "d3-tip")
@@ -82,7 +87,7 @@ angular.module('gui')
           .enter()
           .append("text")
             .attr("y", function(d,i,j) { return 10 + d.row*(35); })
-            .on("click", textClick)
+            .style("pointer-events", "none")
             .append("tspan")
               .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
               .attr("dy", "1.2em")
@@ -175,10 +180,8 @@ angular.module('gui')
           update(element[0][0]); //TODO: was soll passieren, wenn ein kleines Element zwei Nachfolger hat, die sich theoretisch die Höhe eines kleinen Elements teilen müssen, selbst aber die Höhen von kleinen Elementen haben?
         // set clicked filter element selected
         setActive(element);
-      }
-
-      function textClick(d) {
-        //console.log(d);
+        // update progress bar
+        $rootScope.$broadcast('updateProgress', {progress: element[0][0].__data__.percentage});
       }
 
       function save(){

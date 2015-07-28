@@ -28,12 +28,13 @@ angular.module('gui')
         .attr("y", 1);
 
       progressbar.append("text")
-        .attr("y", 11)
+        .attr("y", 12)
         .attr("x", width/2-13) // 13 is half of the text length of "100%"
+        .style("font-size", "11px")
         .text("100%");
 
       // update progress bar
-      $scope.$on('filtered', function(event, arg){
+      $scope.$on('updateProgress', function(event, arg){
         var percent = Math.round(arg.progress*100);
         d3.select(".progress").attr("width", arg.progress*width);
         progressbar.select("text").text(percent + "%");

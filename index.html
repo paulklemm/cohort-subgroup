@@ -2,7 +2,7 @@
 <html lang="en" ng-app='gui'>
   <head>
 
-    <meta charset="utf-8"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
     <title>Visual Analysis Of Cohort Study Data</title>
 
@@ -64,14 +64,16 @@
       </div>
       <div class='row'>
         <div class='col-md-9' style='height:570px; text-align:center;'>
-          <div class='row'>
+          <div class='row' style="margin: 0;">
             <filterbar></filterbar>
           </div>
           <div class='row'>
             <progressbar></progressbar>
           </div>
           <div class='row'>
-            <div class="noborder" style="margin-left: -150px; position: relative; z-index: 1;"><tree></tree></div>
+            <div class="noborder" style="margin-left: -150px; position: relative; z-index: 1;">
+              <tree></tree>
+            </div>
           </div>
         </div>
         <div class='col-md-3' style='height:570px;' ng-controller="attributeCtrl" ng-show="attributeClicked">
