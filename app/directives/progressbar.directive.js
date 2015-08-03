@@ -5,7 +5,7 @@ angular.module('gui')
     template: '<div id="progressbar"></div>',
     controller: function($scope){
 
-      var width = parseInt(d3.select('#progressbar').style('width'))-60;
+      var width = parseInt(d3.select('#progressbar').style('width'))-40;
       var height = 15;
       var margin = 15;
 
@@ -25,7 +25,8 @@ angular.module('gui')
         .attr("width", width-2)
         .attr("height", 13)
         .attr("x", 1)
-        .attr("y", 1);
+        .attr("y", 1)
+        .attr("stroke", "darkgrey");
 
       progressbar.append("text")
         .attr("y", 12)

@@ -9,12 +9,11 @@ angular.module('gui')
         // enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link
         // hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js
         // small multiples: http://bl.ocks.org/mbostock/1157787
-        // TODO: add small multiples through graph directive with parameter small multiple yes/no
         // TODO: adjust size and positioning of small multiples
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,
-        height = 500 - margin.top - margin.bottom;
+        height = 534 - margin.top - margin.bottom;
 
         var i = 0;
         var duration = 750;
@@ -42,17 +41,6 @@ angular.module('gui')
             d.children = null;
           }
         }
-
-        /*function collapseAll(d){
-          if (d.children) {
-            d._children = d.children;
-            d._children.forEach(collapseAll);
-            d.children = null;
-          }
-          else if(d._children) {
-            d._children.forEach(collapseAll);
-          }
-        }*/
 
         root.children.forEach(collapse);
         root.children.forEach(function(d){ hidden = false; });

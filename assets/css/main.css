@@ -1,8 +1,3 @@
-/* better visualize the columns */
-.row > div {
-  box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
-}
-
 /* remove left and right padding from bootstrap columns */
 div[class*="col-md"] {
   padding: 0;
@@ -13,12 +8,22 @@ div[class*="col-md"] {
 }
 
 #visualizationWrapper{
-  height:570px;
+  height:650px;
   text-align:center;
+  border-top: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
+  border-left: 1px solid darkgrey;
+  border-right: 1px solid darkgrey;
 }
 
 #filterbarWrapper{
   margin: 0;
+}
+
+#progressbarWrapper{
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid darkgrey;
 }
 
 #treeVisualizationWrapper{
@@ -29,7 +34,10 @@ div[class*="col-md"] {
 }
 
 #contextInfoColumn{
-  height:570px;
+  height:650px;
+  border-top: 1px solid darkgrey;
+  border-right: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
 }
 
 #contextInfoContainer{
