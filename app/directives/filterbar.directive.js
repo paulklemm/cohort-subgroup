@@ -206,7 +206,7 @@ angular.module('gui')
               return thisY + thisHeight/2;
             })
             .attr("stroke-width", 1)
-            .attr("stroke", "grey")
+            .attr("stroke", "#D3D3D3")
             //do not display line for first element
             .attr("display", function(d){
               if(d.pred == -1){
