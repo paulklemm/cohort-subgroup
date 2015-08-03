@@ -106,6 +106,18 @@ angular.module('gui')
                 return elementText;
               });
 
+          //add lines
+          filterbar.selectAll("line")
+            .data(dataset)
+            .enter()
+            .append("line")
+              .attr("x1", 0)
+              .attr("y1", 5)
+              .attr("x2", 150)
+              .attr("y2", 5)
+              .attr("stroke-width", 1)
+              .attr("stroke", "grey");
+
           // shrinking
           update(enteredElement);
       })
@@ -149,17 +161,11 @@ angular.module('gui')
           })
           // adjust y-position
           .attr("y", function(d){
-            var bigRow = -1;
-            if(path.length-1 >= d.column)
-              bigRow = path[d.column].row;
-            if(bigRow < d.row && bigRow >= 0){
-              var bigHeight = path[d.column].height;
-              return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
-            }
-            else
-              return 10+d.row*(elementHeightSmall+5);
+            var y = computeYPosition(path, d);
+            return y;
           });
 
+          //update text
           var text = filterbar.selectAll("text").data(data.subgroups);
           text
             .style("display", function(d){
@@ -170,6 +176,45 @@ angular.module('gui')
             })
             .attr("y", function(d){
                 return 10+d.row*(elementHeightSmall+5);
+            });
+
+          //draw lines to visualize connections
+          var lines = filterbar.selectAll("line").data(data.subgroups);
+          lines
+            .attr("x1", function(d){
+              return 10 + d.column*(elementWidth+margin)-margin;
+            })
+            .attr("y1", function(d){
+              if(d.pred != -1){
+                var pred = data.subgroups[d.pred];
+                var predHeight = computeHeight(path, pred);
+                // compute y-position
+                var predY = computeYPosition(path, pred);
+                return predY + predHeight/2;
+              }
+              else{
+                return 0;
+              }
+            })
+            .attr("x2", function(d){
+              return 10 + d.column*(elementWidth+margin);
+            })
+            .attr("y2", function(d){
+              var thisHeight = computeHeight(path, d);
+              // compute y-position
+              var thisY = computeYPosition(path, d);
+              return thisY + thisHeight/2;
+            })
+            .attr("stroke-width", 1)
+            .attr("stroke", "grey")
+            //do not display line for first element
+            .attr("display", function(d){
+              if(d.pred == -1){
+                return "none";
+              }
+              else{
+                return "inline";
+              }
             });
       }
 
@@ -194,6 +239,27 @@ angular.module('gui')
         element.classed('selected', true);
         // set current selected subgroup
         data.selectedSub = element[0][0].__data__;
+      }
+
+      function computeYPosition(path, d){
+        var bigRow = -1;
+        if(path.length-1 >= d.column)
+          bigRow = path[d.column].row;
+        if(bigRow < d.row && bigRow >= 0){
+          var bigHeight = path[d.column].height;
+          return 10+bigHeight+5+(d.row-1)*(elementHeightSmall+5);
+        }
+        else
+          return 10+d.row*(elementHeightSmall+5);
+      }
+
+      function computeHeight(path, d){
+        // if element is on path -> look up height there
+        if(path.indexOf(d) != -1)
+          return path[d.column].height;
+        // else -> elementHeightSmall
+        else
+          return elementHeightSmall;
       }
     },
     controllerAs: 'filterbarCtrl'
