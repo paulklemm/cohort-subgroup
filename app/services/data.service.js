@@ -24,10 +24,9 @@ angular.module('gui')
     }
 
     dataService.filterToCSV = function(filterValues){
-      // TODO: prevent from filtering by attribute that was used for filtering !on this path! before
       var alreadyUsed = this.alreadyUsed(this.currentAttribute);
       if(alreadyUsed)
-        alert("This attribute was already used for filtering of the current process!")
+        alert("This attribute was already used for filtering in the current process!")
       else{
         // create object for new subgroup
         var subgroup = {};
@@ -171,17 +170,13 @@ angular.module('gui')
     dataService.alreadyUsed = function(attribute){
       var res = false;
       var e = this.selectedSub;
-      this.subgroups.forEach(function(subgroup){
-        if(subgroup != null && subgroup.attribute == attribute){
+      // already used on path?
+      while(e.pred != -1){
+        if(e.attribute == attribute){
           res = true;
         }
-      });
-      // already used on path?
-      /*while(this.subgroups[e.pred].data != null){
-        if(e.attribute == attribute)
-          res = true;
         e = this.subgroups[e.pred];
-      }*/
+      }
       return res;
     }
 

@@ -32,7 +32,8 @@ angular.module('gui')
         .on("click", save)
         .append("span")
           .attr("class", "glyphicon glyphicon-floppy-disk")
-          .style("font-size", "20px");
+          .style("font-size", "20px")
+          .style("border-bottom", "1px solid black");
 
       // build initial subgroup matrix
       $scope.$on('update', function(){
