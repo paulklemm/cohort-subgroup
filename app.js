@@ -13,7 +13,7 @@ app.run(['$rootScope', 'data', function($rootScope, data){
     $rootScope.$broadcast("dataLoaded");
   });
   d3.json('data/dictionary_new_names.json', function(result){ data.jsondata = result; });
-  d3.json('data/attributes.json', function(result){ data.visdata = result; $rootScope.$broadcast("visDataLoaded"); });
+  d3.json('data/attributes.json', function(result){ data.visdata = result; $rootScope.$broadcast("visDataLoaded"); }); //216 attributes
   data.currentAttribute = "";
 }]);
 
