@@ -41,6 +41,10 @@
   fill: #CA0420;
 }
 
+.bar.sub{
+  fill: #000;
+}
+
 .x.axis path{
   display: none;
 }

@@ -73,6 +73,21 @@ angular.module('gui')
             .attr("height", function(d){ return height - scaleY(+d.value); })
             .on("click", click);
 
+        // subdivided bars
+        if(data.selectedSub.attribute != "all"){
+            // get distribution for this attribute based on subgroup probands
+            var datas = data.calcDistribution(data.currentAttribute, data.selectedSub.data);
+            chart.selectAll(".sub")
+                .data(datas)
+              .enter().append("rect")
+                .attr("class", "sub")
+                .attr("x", function(d){ return scaleX(d.attributeValue); })
+                .attr("y", function(d){ return scaleY(+d.value); })
+                .attr("width", scaleX.rangeBand())
+                .attr("height", function(d){ return height - scaleY(+d.value); })
+                .on("click", click);
+        }
+
         /* selection frame */
         svg.on("mousedown", function(){
           var p = d3.mouse(this);
@@ -164,7 +179,22 @@ angular.module('gui')
           }
         }
 
+        $scope.$on("updateSubdivisions", function(event, args){
+          var distribution = data.calcDistribution(data.currentAttribute, args.subgroup);
+          chart.selectAll("rect.sub").remove();
+          chart.selectAll(".sub")
+              .data(distribution)
+            .enter().append("rect")
+              .attr("class", "sub")
+              .attr("x", function(d){ return scaleX(d.attributeValue); })
+              .attr("y", function(d){ return scaleY(+d.value); })
+              .attr("width", scaleX.rangeBand())
+              .attr("height", function(d){ return height - scaleY(+d.value); })
+              .on("click", click);
+        })
+
       })
+
     },
     controllerAs: 'barchartCtrl'
 };

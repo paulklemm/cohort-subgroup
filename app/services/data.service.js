@@ -16,7 +16,7 @@ angular.module('gui')
       self = this;
       keys.forEach(function(key){
         tmp = {};
-        tmp["distribution"] = self.calcDistribution(key);
+        tmp["distribution"] = self.calcDistribution(key, self.dataset);
         tmp["type"] = self.jsondata[key].type;
         res[key] = tmp;
       });
@@ -47,6 +47,7 @@ angular.module('gui')
           }
           return false;
         });
+
         // if selected element was not the end of the row: start new row
         rightNeigh = this.findNeigh(subgroup.row, subgroup.column);
         if(rightNeigh){
@@ -70,22 +71,23 @@ angular.module('gui')
 
         $rootScope.$broadcast('update');
         $rootScope.$broadcast('updateProgress', {progress: subgroup.percentage});
+        $rootScope.$broadcast('updateSubdivisions', {subgroup: subgroup.data});
       }
     }
 
-    dataService.calcDistribution = function(key){
+    dataService.calcDistribution = function(key, dataset){
       // compute possible attribute values
       var type = this.jsondata[key].type;
       values = [];
       // collect attribute values of every proband for this specific attribute, contains possible duplicates
-      for(var i = 0; i < this.dataset.length; i++){
+      for(var i = 0; i < dataset.length; i++){
         // if attribute is ordinal, then possible values are strings, e.g. "SHIP2"
         if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
-          values[i] = this.dataset[i][key];
+          values[i] = dataset[i][key];
         // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
         }else{
           //values[i] = +data.dataset[i][this.name]; // without rounding
-          values[i] = d3.round(+this.dataset[i][key]); // with rounding
+          values[i] = d3.round(+dataset[i][key]); // with rounding
         }
       }
       possibleValues = this.uniq_fast(values); //without duplicates
@@ -96,8 +98,7 @@ angular.module('gui')
           // for each attribute value filter probands and count results
           for(var i = 0; i < possibleValues.length; i++){
             var obj = {};
-            var self = this;
-            var selection = this.dataset.filter( function(d){
+            var selection = dataset.filter( function(d){
               if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
                 if (d[key] == possibleValues[i]){
                   return d;

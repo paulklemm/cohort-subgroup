@@ -222,11 +222,13 @@ angular.module('gui')
         var element = d3.select(this);
         // if element is small update filterbar
         if(element[0][0].height.baseVal.value == elementHeightSmall)
-          update(element[0][0]); //TODO: was soll passieren, wenn ein kleines Element zwei Nachfolger hat, die sich theoretisch die Höhe eines kleinen Elements teilen müssen, selbst aber die Höhen von kleinen Elementen haben?
+          update(element[0][0]); 
         // set clicked filter element selected
         setActive(element);
         // update progress bar
         $rootScope.$broadcast('updateProgress', {progress: element[0][0].__data__.percentage});
+        // update barchart subdivisions
+        $rootScope.$broadcast('updateSubdivisions', {subgroup: element[0][0].__data__.data});
       }
 
       function save(){
