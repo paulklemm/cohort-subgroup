@@ -5,7 +5,7 @@ angular.module('gui')
     template: '<div id="progressbar"></div>',
     controller: function($scope){
 
-      var width = parseInt(d3.select('#progressbar').style('width'))-40;
+      var width = parseInt(d3.select('#progressbar').style('width'))-25;
       var height = 15;
       var margin = 15;
 
@@ -32,6 +32,7 @@ angular.module('gui')
         .attr("y", 12)
         .attr("x", width/2-13) // 13 is half of the text length of "100%"
         .style("font-size", "11px")
+        .style("stroke", "#000")
         .text("100%");
 
       // update progress bar

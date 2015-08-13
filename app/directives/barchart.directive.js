@@ -159,10 +159,23 @@ angular.module('gui')
 
 
         function click(d) {
-          if(d3.select(this).classed("selected"))
-            d3.select(this).classed("selected", false);
+          var attributeValue = d3.select(this)[0][0].__data__.attributeValue;
+          var other;
+          // sub bar clicked -> also select corresponding big bar
+          if(d3.select(this).classed("sub"))
+            other = d3.selectAll(".bar").filter(function(d){ return d3.select(this)[0][0].__data__.attributeValue == attributeValue; });
+          // big bar clicked -> also select corresponding sub bar
           else
+            other = d3.selectAll(".sub").filter(function(d){ return d3.select(this)[0][0].__data__.attributeValue == attributeValue; });
+
+          // set selection status
+          if(d3.select(this).classed("selected")){
+            d3.select(this).classed("selected", false);
+            other.classed("selected", false);
+          }else{
             d3.select(this).classed("selected", true);
+            other.classed("selected", true);
+          }
         }
 
         function buttonClick(d){
@@ -180,17 +193,21 @@ angular.module('gui')
         }
 
         $scope.$on("updateSubdivisions", function(event, args){
-          var distribution = data.calcDistribution(data.currentAttribute, args.subgroup);
           chart.selectAll("rect.sub").remove();
-          chart.selectAll(".sub")
-              .data(distribution)
-            .enter().append("rect")
-              .attr("class", "sub")
-              .attr("x", function(d){ return scaleX(d.attributeValue); })
-              .attr("y", function(d){ return scaleY(+d.value); })
-              .attr("width", scaleX.rangeBand())
-              .attr("height", function(d){ return height - scaleY(+d.value); })
-              .on("click", click);
+          if(args.name != "all"){
+            var distribution = data.calcDistribution(data.currentAttribute, args.subgroup);
+            chart.selectAll(".sub")
+                .data(distribution)
+              .enter().append("rect")
+                .attr("class", "sub")
+                .attr("x", function(d){ return scaleX(d.attributeValue); })
+                .attr("y", function(d){ return scaleY(+d.value); })
+                .attr("width", scaleX.rangeBand())
+                .attr("height", function(d){ return height - scaleY(+d.value); })
+                .on("click", click);
+          }else{
+            chart.selectAll("rect.bar").classed('selected', false);
+          }
         })
 
       })

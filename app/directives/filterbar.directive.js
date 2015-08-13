@@ -222,13 +222,13 @@ angular.module('gui')
         var element = d3.select(this);
         // if element is small update filterbar
         if(element[0][0].height.baseVal.value == elementHeightSmall)
-          update(element[0][0]); 
+          update(element[0][0]);
         // set clicked filter element selected
         setActive(element);
         // update progress bar
         $rootScope.$broadcast('updateProgress', {progress: element[0][0].__data__.percentage});
         // update barchart subdivisions
-        $rootScope.$broadcast('updateSubdivisions', {subgroup: element[0][0].__data__.data});
+        $rootScope.$broadcast('updateSubdivisions', {name: element[0][0].__data__.attribute, subgroup: element[0][0].__data__.data});
       }
 
       function save(){

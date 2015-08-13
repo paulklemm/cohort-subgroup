@@ -13,7 +13,7 @@ angular.module('gui')
 
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,
-        height = 534 - margin.top - margin.bottom;
+        height = 734 - margin.top - margin.bottom;
 
         var i = 0;
         var duration = 750;
@@ -147,10 +147,10 @@ angular.module('gui')
                   .attr("y", -7)
                     .append("g");
 
-              chart.selectAll(".bar")
+              chart.selectAll(".smallMultipleBar")
                   .data(distribution)
                 .enter().append("rect")
-                  .attr("class", "bar")
+                  .attr("class", "smallMultipleBar")
                   .attr("x", function(d){ return scaleX(d.attributeValue); })
                   .attr("y", function(d){ return scaleY(+d.value); })
                   .attr("width", scaleX.rangeBand())
@@ -168,7 +168,7 @@ angular.module('gui')
               })
               link.style("stroke", function(l){
                 if(d == l.source || d == l.target)
-                  return "#31B404";
+                  return "#057D9F";
                 else
                   return "#CCC";
               })

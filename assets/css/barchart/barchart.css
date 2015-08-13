@@ -31,6 +31,11 @@
 
 .bar{
   fill: #025167;
+  cursor: pointer;
+}
+
+.smallMultipleBar{
+  fill: #025167;
 }
 
 .bar:hover{
@@ -41,8 +46,17 @@
   fill: #CA0420;
 }
 
-.bar.sub{
-  fill: #000;
+.sub{
+  fill: #7F7F7F;
+  cursor: pointer;
+}
+
+.sub:hover{
+  opacity: 0.85;
+}
+
+.sub.selected{
+  fill: #CA0420;
 }
 
 .x.axis path{
