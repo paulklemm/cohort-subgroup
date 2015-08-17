@@ -6,21 +6,22 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("attributeSet", function(){
 
+        //TODO: set color of big bars back to blue after filtering
+
         // if chart already exists, remove its content
         d3.selectAll(".barchart").select("svg").remove();
         d3.selectAll(".graph").select("svg").remove();
         d3.selectAll(".barchart").select("button").remove();
 
+        // determine parameter
         var margin = {top: 20, right: 30, bottom: 60, left: 40};
-
         var width = parseInt(d3.select('.barchart').style('width'))-margin.left-margin.right;
-
         var height = 180;
-
+        //distribution of selected attribute
         var myObject = data.attributes[data.currentAttribute].distribution;
-
         var barWidth = width / myObject.length;
 
+        // determine the range of coordinate system in x- and y-direction
         var scaleX = d3.scale.ordinal()
           .domain(myObject.map(function (d){ return d.attributeValue; }))
           .rangeRoundBands([0, width], .1);
@@ -29,6 +30,7 @@ angular.module('gui')
           .domain([0, d3.max(myObject, function(d){ return +d.value; })+50])
           .range([height, 0]);
 
+        // create axes of the coordinate system
         var xAxis = d3.svg.axis()
           .scale(scaleX)
           .orient("bottom");
@@ -37,6 +39,7 @@ angular.module('gui')
           .scale(scaleY)
           .orient("left");
 
+        // create svg for barchart
         var barchart = d3.select(".barchart");
         var svg = barchart.append("svg")
           .attr("width", width + margin.left + margin.right)
@@ -45,6 +48,7 @@ angular.module('gui')
         var chart = svg.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        // append x- and y-axes with titles
         chart.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -63,6 +67,7 @@ angular.module('gui')
             .style("text-anchor", "end")
             .text("Probands");
 
+        // create bars according to distribution
         chart.selectAll(".bar")
             .data(myObject)
           .enter().append("rect")
@@ -88,7 +93,7 @@ angular.module('gui')
                 .on("click", click);
         }
 
-        /* selection frame */
+        // selection frame
         svg.on("mousedown", function(){
           var p = d3.mouse(this);
 
@@ -148,6 +153,7 @@ angular.module('gui')
           svg.selectAll( "rect.selection").remove();
         });
 
+        // append button for filtering
         barchart.append("button")
           .attr("class", "btn btn-default")
           .attr("type", "button")
@@ -157,7 +163,7 @@ angular.module('gui')
           .append("text")
             .text("Apply filter");
 
-
+        // click on bar
         function click(d) {
           var attributeValue = d3.select(this)[0][0].__data__.attributeValue;
           var other;
@@ -178,6 +184,7 @@ angular.module('gui')
           }
         }
 
+        // collect selected filter values and "auslösen" filtering process
         function buttonClick(d){
           var chosenBars = d3.selectAll(".bar").filter(function(d){ return (d3.select(this).style("fill") == "rgb(202, 4, 32)"); });
           if(chosenBars[0].length == 0)
@@ -192,6 +199,7 @@ angular.module('gui')
           }
         }
 
+        // update subdivisions if another subgroup was selected in filterbar
         $scope.$on("updateSubdivisions", function(event, args){
           chart.selectAll("rect.sub").remove();
           if(args.name != "all"){

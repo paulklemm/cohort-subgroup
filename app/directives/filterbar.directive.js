@@ -5,12 +5,14 @@ angular.module('gui')
     template: '<div id="filterbar"></div>',
     controller: function($scope){
 
+      // determine parameter
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
       var height = 80;
       var elementWidth = Math.floor((width-175)/10);
-      var elementHeightSmall = 10;
+      var elementHeightSmall = 10; // height for shrinked elements
       var margin = 15;
 
+      // place filterbar and save button next to each other
       var bar = d3.select("#filterbar")
           .append("div")
             .attr("class", "row")
@@ -19,11 +21,12 @@ angular.module('gui')
           .attr("class", "col-md-11");
       var save = bar.append("div")
           .attr("class", "col-md-1");
+      // create svg for filterbar
       var filterbar  = filtbar.append("svg")
           .attr("width", width)
           .attr("height", height);
 
-      // add save button
+      // append save button
       save.append("button")
         .attr("class", "btn btn-default")
         .attr("type", "button")
@@ -36,10 +39,13 @@ angular.module('gui')
 
       // build initial subgroup matrix
       $scope.$on('update', function(){
+
+        // create one filterelement for each subgroup
         var dataset = data.subgroups;
 
         // 3) TODO: adjust tooltips
 
+        // add tooltips for filter elements showing the attribute and filter values
         var tip = d3.tip()
                     .attr("class", "d3-tip")
                     .offset([-15, 0])
@@ -59,6 +65,7 @@ angular.module('gui')
 
         filterbar.call(tip);
 
+        // create filterelements for added subgroups
         var enter = filterbar.selectAll("rect")
           .data(dataset)
           .enter();
@@ -74,6 +81,7 @@ angular.module('gui')
             .on("mouseout", tip.hide);
 
         var enteredElement = null;
+        // entered[0] contains "null" for each subgroup "bis auf" the subgroup created by the last filtering process
         entered[0].forEach(function(element){
             if(element != null)
               enteredElement = element;
@@ -82,6 +90,7 @@ angular.module('gui')
         // set last filtered element selected
         setActive(d3.select(enteredElement));
 
+        // add text to filterelements (attribute and filtervalues)
         filterbar.selectAll("text")
           .data(dataset)
           .enter()
@@ -106,7 +115,7 @@ angular.module('gui')
                 return elementText;
               });
 
-          //add lines
+          //add connecting lines between filterelements
           filterbar.selectAll("line")
             .data(dataset)
             .enter()
@@ -118,7 +127,7 @@ angular.module('gui')
               .attr("stroke-width", 1)
               .attr("stroke", "grey");
 
-          // shrinking
+          // shrinking of elements that do not lie on the current filter path
           update(enteredElement);
       })
 
@@ -138,8 +147,10 @@ angular.module('gui')
         });
         path[0]["height"] = height-margin;
 
+        // get row and column of the last added element
         var row = elementdata.row;
         var column = elementdata.column;
+        // get all elements
         var selection = filterbar.selectAll("rect").data(data.subgroups);
         selection
           // adjust height by means of path
@@ -220,7 +231,7 @@ angular.module('gui')
 
       function click(d) {
         var element = d3.select(this);
-        // if element is small update filterbar
+        // if element is small update filterbar (this element and all others on the filter path get big)
         if(element[0][0].height.baseVal.value == elementHeightSmall)
           update(element[0][0]);
         // set clicked filter element selected
@@ -231,6 +242,7 @@ angular.module('gui')
         $rootScope.$broadcast('updateSubdivisions', {name: element[0][0].__data__.attribute, subgroup: element[0][0].__data__.data});
       }
 
+      // trigger save function of dataservice if "save" button is clicked
       function save(){
         data.saveSubgroup();
       }
