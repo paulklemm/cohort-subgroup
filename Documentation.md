@@ -1,3 +1,5 @@
+TODO: aussagekräftige Kommentare in DataService  
+
 Visual Analysis of Cohort Study Data  
 ====================================
 
@@ -7,18 +9,6 @@ Visual Analysis of Cohort Study Data
 
 File system
 ===========
-
-###index.html  
-This is the default web page that is displayed when entering the URL.  
-It is used to structure the interface by arranging the individual components within a grid layout. The components themselves are stored externally in directives (to be found in app/directives) and are just called within the index file.
-
-###app.js  
-TODO  
-- is executed at the beginning
-- load initial data: the proband dataset, the list of attributes including details and type, the list of attributes sorted into categories
-- initialize the list of subgroups for filtering with the complete dataset as well as set the initially selected subgroup to this group
-- set a list of attributes containing the distribution and type for each attribute
-- controller for displaying context information according to selected attribute
 
 ###app  
 This folder contains the directives and services that control the data management as well as the individual components.
@@ -43,12 +33,24 @@ The main.css is the main stylesheet for the user interface. It holds all the val
 *js*:  
 This folder contains the js file for the tooltips used for filter elements. It holds a constructor as well as functions for showing, hiding, removing and manipulating tooltips in terms of attributes, style, direction, offset and content.
 
+###index.html  
+This is the default web page that is displayed when entering the URL.  
+It is used to structure the interface by arranging the individual components within a grid layout. The components themselves are stored externally in directives (to be found in app/directives) and are just called within the index file.
+
+###app.js  
+This file designates the root element of the AngularJS application which is executed once the web page has loaded.  
+It is therefore used to load the initial data: *attributes.json*, *dictionary_new_names.json* and *breast_fat_labels.csv* as mentioned above.  
+Furthermore, initializing a list to manage the subgroups resulting from filtering takes place here. In the beginning, this list only consists of a subgroup holding the complete dataset. Setting the initially selected subgroup to this subgroup is also done.  
+In addition, a list of all attributes containing the distribution and type for each attribute is set up here, whose exact data structure can be checked up in the section "Implementation".  
+The app.js file also holds a controller for displaying context information according to the currently selected attribute.
+
 -----------------
 
 Libraries
 =========
 ###AngularJS
-This web application framework is used to organize the code according to the model-view-controller architecture and therefore support the development of the user interface.
+This client-side web application framework is used to organize the code according to the model-view-controller architecture and therefore support the development of the user interface.
+Among others it consists of directives that are embedded in the HTML document and tell Angular to run some JavaScript code as well as controllers that define the application's behavior by defining functions and values.
 ###Bootstrap  
 This front-end framework supports responsive as well as fast and easy web development and provides various custom HTML and CSS components. It is used for keeping the layout simple and applicable to various devices of different shapes.
 ###D3  
@@ -106,7 +108,7 @@ This searchfield is used to search for a specific attribute whose context inform
 The list of attributes is searched for the searchterm and suggests attributes that match the searchterm or contain it.
 
 ###List of Attributes (directives/tree.directive.js)  
-Exploring the list of attributes and selecting one of them for further processing is possible using the tree layout.  
+Exploring the list of attributes and selecting one of them for further processing is possible using a tree layout.  
 A preview of the attributes' distributions can be seen inside the tree layout via small multiples.
 
 -----------------
