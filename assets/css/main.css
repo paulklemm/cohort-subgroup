@@ -44,15 +44,3 @@ div[class*="col-md"] {
   padding-top:20px;
   padding-bottom:20px;
 }
-
-.glyphicon-floppy-disk:after {
-  background-color: #323232;
-  content: "";
-  display: inline-block;
-  height: 1px;
-  position: relative;
-  float: left;
-  vertical-align: bottom;
-  width: 92%;
-  margin-top: -2px;
-}

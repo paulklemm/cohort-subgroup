@@ -12,26 +12,31 @@ angular.module('gui')
 
         // TODO: adjust size and positioning of small multiples
 
+        // determine parameter
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,
         height = 734 - margin.top - margin.bottom;
 
         var i = 0;
-        var duration = 750;
+        var duration = 750; // determines the duration of opening a node when it is clicked
 
+        // create d3 tree
         var tree = d3.layout.tree()
           .size([height, width]);
 
         var diagonal = d3.svg.diagonal()
           .projection(function(d) { return [d.y, d.x]; });
 
+        // create svg that holds the tree layout
         var svg = d3.select(".tree")
           .attr("width", width + margin.right + margin.left)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        // bind data to tree
         var root = data.visdata;
+        // set position of root node (is hidden later on)
         root.x0 = height / 2;
         root.y0 = 0;
 
@@ -43,28 +48,31 @@ angular.module('gui')
           }
         }
 
+        // close all nodes
         root.children.forEach(collapse);
         root.children.forEach(function(d){ hidden = false; });
-        //collapseAll(root);
+        // hide root node
         root.hidden = true;
+        // render tree layout
         update(root);
 
         d3.select(self.frameElement).style("height", "500px");
 
         function update(source) {
 
-          // Compute the new tree layout.
+          // get nodes and their connections
           var nodes = tree.nodes(root).filter(function(d){ return !d.hidden; }).reverse();
           var links = tree.links(nodes);
 
-          // Normalize for fixed-depth.
+          // this determines the horizontal distance between nodes and their child nodes
           nodes.forEach(function(d) { d.y = d.depth * 200; });
 
-          // Declare the nodes...
+          // bind data to the nodes
           var node = svg.selectAll("g.node")
               .data(nodes, function(d) { return d.id || (d.id = ++i); });
 
-          // Enter any new nodes at the parent's previous position.
+          // declare nodes as inner and leaf nodes for future differentiation when adding small multiples
+          // transform them to the right position
           var nodeEnter = node.enter().append("g")
               .attr("class", function(n){
                 if(n._children)
@@ -76,12 +84,13 @@ angular.module('gui')
               .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
               .on("click", click);
 
+          // create the circles representing the nodes
           svg.selectAll("g.node")
             .append("circle")
               .attr("r", 1e-6)
-              //.attr("r", 10)
               .style("fill", function(d){ return d._children ? "lightsteelblue" : "#fff"; });
 
+          // append corresponding attribute names to circles
           svg.selectAll('g.node')
             .append("text")
               .attr("x", function(d) { return d.children || d._children ? -10 : 80; })
@@ -95,18 +104,21 @@ angular.module('gui')
           var chartWidth = 60;
           var chartHeight = 20;
 
-          // append small multiple dependent on type and distribution of attribute of node
+          // append small multiples to leaf nodes depending on type and distribution of bound attribute
           var leafnodes = svg.selectAll('g.leaf.node');
           leafnodes[0].forEach(function(leafnode){
             var name = leafnode.__data__.name;
             var type = data.attributes[name].type;
             var distribution = data.attributes[name].distribution;
+            // if node represents a numerical attribute append a graph displaying the distribution of this attribute
             if(type == "numerical"){
 
+              // sort distribution
               distribution.sort(function(a,b){
                 return a.attributeValue - b.attributeValue;
               });
 
+              // create graph
               var scaleX = d3.scale.linear()
                 .domain([0, d3.max(distribution, function(d){ return d.attributeValue; })])
                 .range([0, chartWidth]);
@@ -120,6 +132,7 @@ angular.module('gui')
                 .y(function(d) { return scaleY(d.value); })
                 .interpolate('linear');
 
+              // append graph to node representing the processed attribute
               leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: kann ich irgendwie direkt an den leafnode appenden, ohne zu filtern?
                 .attr("width", chartWidth)
                 .attr("height", chartHeight)
@@ -130,7 +143,9 @@ angular.module('gui')
                     .style("stroke-width", 1)
                     .attr("class", "line")
                     .attr("d", valueline(distribution));
+            // if attribute is nominal or ordinal append a barchart
             }else{
+              // create barchart
               var barWidth = chartWidth / distribution.length;
 
               var scaleX = d3.scale.ordinal()
@@ -141,6 +156,7 @@ angular.module('gui')
                 .domain([0, d3.max(distribution, function(d){ return +d.value; })])
                 .range([chartHeight, 0]);
 
+              // get corresponding node and initialize chart
               var chart = leafnodes.filter(function(d){ return d.name == name }).append("svg") //TODO: direktes Appenden an leafnode, siehe todo oben
                   .attr("width", chartWidth)
                   .attr("height", chartHeight)
@@ -148,6 +164,7 @@ angular.module('gui')
                   .attr("y", -7)
                     .append("g");
 
+              // append bars
               chart.selectAll(".smallMultipleBar")
                   .data(distribution)
                 .enter().append("rect")
@@ -159,7 +176,7 @@ angular.module('gui')
             }
           });
 
-
+          // enhance corresponding link and circle when the mouse is moved over a node
           node.on("mouseover", function(d){
               link.style("stroke-width", function(l) {
                 if(d == l.target)
@@ -182,6 +199,7 @@ angular.module('gui')
               }
           })
 
+          // reset link and circle styles when mouse is moved out of node
           node.on("mouseout", function(d){
               d3.select(this).select('circle')
                 .attr("r", 5)
@@ -192,7 +210,7 @@ angular.module('gui')
               link.style("stroke", "#ccc");
           })
 
-          // Transition nodes to their new position.
+          // translate child nodes to their new position if parent node was opened
           var nodeUpdate = node.transition()
               .duration(duration)
               .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
@@ -204,7 +222,7 @@ angular.module('gui')
           nodeUpdate.select("text")
               .style("fill-opacity", 1);
 
-          // Transition exiting nodes to the parent's new position.
+          // transform child nodes back to the parent's position if parent node was closed
           var nodeExit = node.exit().transition()
               .duration(duration)
               .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
@@ -216,11 +234,11 @@ angular.module('gui')
           nodeExit.select("text")
               .style("fill-opacity", 1e-6);
 
-          // Declare the links…
+          // declare the links
           var link = svg.selectAll("path.link")
               .data(links, function(d) { return d.target.id; });
 
-          // Enter any new links at the parent's previous position.
+          // create new links for child nodes if a node was opened
           link.enter().insert("path", "g")
               .attr("class", "link")
               .attr("d", function(d) {
@@ -228,12 +246,12 @@ angular.module('gui')
                 return diagonal({source: o, target: o});
               })
 
-          // Transition links to their new position.
+          // transition links from a parent node to its child nodes if parent node was opened
           link.transition()
               .duration(duration)
               .attr("d", diagonal);
 
-          // Transition exiting nodes to the parent's new position.
+          // transition links of child nodes back into the parent's position if parent node was closed
           link.exit().transition()
               .duration(duration)
               .attr("d", function(d) {
@@ -242,17 +260,19 @@ angular.module('gui')
               })
               .remove();
 
-          // Stash the old positions for transition.
+          // stash the old positions for transition.
           nodes.forEach(function(d) {
             d.x0 = d.x;
             d.y0 = d.y;
           });
         }
 
-        // Toggle children on click.
+        // toggle nodes on click
         function click(d) {
+          // if leaf node was clicked, set the corresponding attribute and open detailed information
           if(d.depth == 2)
             data.setCurrentAttribute(d.name);
+          // else adjust variables
           if (d.children) {
             d._children = d.children;
             d.children = null;
@@ -260,6 +280,7 @@ angular.module('gui')
             d.children = d._children;
             d._children = null;
           }
+          // update tree layout
           update(d);
         }
 
