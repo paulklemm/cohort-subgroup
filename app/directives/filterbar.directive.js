@@ -5,6 +5,8 @@ angular.module('gui')
     template: '<div id="filterbar"></div>',
     controller: function($scope){
 
+      //TODO: crop too long strings -> http://bl.ocks.org/mbostock/7555321
+
       // determine parameter
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
       var height = 80;
@@ -95,25 +97,20 @@ angular.module('gui')
           .data(dataset)
           .enter()
           .append("text")
+            .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
             .attr("y", function(d,i,j) { return 10 + d.row*(35); })
+            .attr("dy", "1.2em")
             .style("pointer-events", "none")
-            .append("tspan")
-              .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
-              .attr("dy", "1.2em")
-              .text(function(d,i,j){ return d.attribute + ":"; })
-            .append("tspan")
-              .attr("x", function(d,i,j) { return 15 + d.column*(elementWidth+margin); })
-              .attr("dy", "1.2em")
-              .text(function(d,i,j){
-                var elementText = "";
-                if(d != null && d.filterValues){
-                  for(i=0; i < d.filterValues.length-1; i++){
-                    elementText += d.filterValues[i] + ", ";
-                  }
-                  elementText += d.filterValues[d.filterValues.length-1];
+            .text(function(d,i,j){
+              var str = d.attribute + ": ";
+              if(d != null && d.filterValues){
+                for(i=0; i < d.filterValues.length-1; i++){
+                  str += d.filterValues[i] + ", ";
                 }
-                return elementText;
-              });
+                str += d.filterValues[d.filterValues.length-1];
+              }
+              return str;
+            });
 
           //add connecting lines between filterelements
           filterbar.selectAll("line")
@@ -177,6 +174,7 @@ angular.module('gui')
           });
 
           //update text
+          //TODO: fix missing white spaces in text when clicking on a small element
           var text = filterbar.selectAll("text").data(data.subgroups);
           text
             .style("display", function(d){
@@ -187,7 +185,8 @@ angular.module('gui')
             })
             .attr("y", function(d){
                 return 10+d.row*(elementHeightSmall+5);
-            });
+            })
+            .call(wrap, elementWidth);
 
           //draw lines to visualize connections
           var lines = filterbar.selectAll("line").data(data.subgroups);
@@ -227,6 +226,34 @@ angular.module('gui')
                 return "inline";
               }
             });
+      }
+
+      // wrap text so it does not exceed the given width -> used to wrap text inside svg rectangle
+      //TODO: crop text if it exceeds height of rectangle
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              x = text.attr("x"),
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy"));
+              tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              // if text is too wide and consists of more than one word -> break line
+              if (tspan.node().getComputedTextLength() > width && tspan.text().split(/\s+/).length > 1) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+              }
+          }
+        });
       }
 
       function click(d) {
