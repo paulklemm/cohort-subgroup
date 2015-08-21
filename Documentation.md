@@ -61,30 +61,9 @@ This JavaScript library helps manipulating documents based on data. It combines 
 Components
 ==========
 ###Dataservice (services/data.service.js)  
-This class organizes the data, traces current states and provides functions to do calculations  and filter processes on the data as well as exporting the created subgroups.  
-
-
-Member variables:  
-*dataset*  
-*subgroups*  
-*selectedSub*  
-*attributes*  
-*currentAttribute*  
-*jsondata*  
-*visdata*  
-
-Member functions:  
-*setCurrentAttribute*  
-*setAttributes*  
-*filterToCSV*  
-*calcDistribution*  
-*getCSVString*  
-*saveSubgroup*  
-*getIndex*  
-*alreadyUsed*  
-*findNeigh*  
-*findDown*  
-*uniq_fast*
+This class forms the core of data handling.  
+It holds all required global variables such as the data basis itself, arising data like created subgroups and metadata about attributes as well as current states e.g. the currently selected attribute or subgroup.  
+Furthermore this service provides functions to make use of these data in terms of filtering or exporting created subgroups.
 
 ###Barchart (directives/barchart.directive.js)  
 This directive creates a barchart visualizing the distribution of a not continuous attribute as soon as such an attribute is selected.  
@@ -115,8 +94,79 @@ A preview of the attributes' distributions can be seen inside the tree layout vi
 
 Implementation
 ==============
+
+###services/data.service.js  
+#####Variables  
+var *dataset*: holds the proband data imported from data/breast_fat_labels.csv.  
+type *dataset*: array of objects with every object representing a proband via enumeration of attributes and corresponding values.  
+example *dataset*: [{Age: "34", Body_Weight: "68.5", ...}, {...}, ...]  
+
+var *jsondata*: holds a detailed description in english and german as well as the type for each attribute  
+type *jsondata*: object with an object for each attribute containing detail, detail_ger and type  
+example *jsondata*: {Cohort: {detail: "Cohort affiliation (SHIP-TREND-0 or SHIP-2)", detail_ger: "Kohortenzugehörigkeit (SHIP-TREND-0 oder SHIP-2)", type: "nominal"}, Examination-Location: {...}, ...}  
+
+var *visdata*: stores the hierarchical structure of attributes organized in categories for the visualization in a tree layout  
+type *visdata*: object with root node (name) and array of objects as children which themselves have a name and child nodes  
+example *visdata*:  
+{name: "root", children: [  
+  {name: "Study", \_children: [  
+  {name: "Cohort", size: 8883}  
+  ]},  
+  {name: "Personal", \_children: [  
+  {name: "Age", size: 8883},  
+  {name: "Marital_Status", size: 8883},  
+  {...},  
+  {...}  
+  ]},  
+  {...},  
+  ...  
+]}  
+
+var *subgroups*: holds the subgroups resulting from filter processes.  
+Each time a filter is applied, the resulting subgroup is added to this list. From here they themselves can be filtered to create another subgroup or they can be exported for further analysis.  
+Initially this variable consists of a subgroup "all" containing the initial proband dataset before any filtering was done.  
+type *subgroups*: array of objects with an object representing a subgroup through row, column, attribute, pred, succ, filtervalues, data and percentage.  
+row, column: position for corresponding filterelement inside the imaginary matrix  
+attribute: the attribute according to which filtering was done, e.g. Age  
+pred: the subgroup from which filtering was done to create this subgroup  
+succ: the subgroup that was created by applying a filter on this subgroup  
+filtervalues: the values of the given attribute that were used for filtering, e.g. >50  
+data: the array of objects representing the resulting probands that fulfill the filtervalues  
+percentage: how many probands of the initial number of probands are left?  
+Predecessor and successor are stored as the index where the predecessor subgroup or rather the successor subgroup is stored in the list of subgroups. The corresponding subgroup can therefore be accessed through *subgroups*[pred] or *subgroups*[succ].  
+example *subgroups*: [{row: 0, column: 0, attribute: "all", pred: -1, succ: 1, filterValues: null, data: *dataset*, percentage: 1}, {row: 0, column: 1, attribute: "Cohort", pred: 0, succ: [], filterValues: "TREND0", data: [...], percentage: 0.62}, {...}, ...]  
+
+var *attributes*: holds the distribution and type for every attribute  
+type *attributes*: object with objects containing distribution and type for each attribute  
+example *attributes*: {Cohort: {distribution: [{attributeValue: "SHIP2", value: 387}, {attributeValue: "TREND0", value: 631}], type: "nominal"}, Age: {...}, Mobility: {...}, ...}  
+
+var *selectedSub*: holds the subgroup that is currently selected. Used for filtering and export of subgroups. Initialized with the complete proband dataset - the "all" subgroup in *subgroups*.  
+type *selectedSub*: object  
+example *selectedSub*: {row: 0, column: 1, attribute: "Cohort", pred: 0, succ: [], filterValues: "TREND0", data: [...], percentage: 0.62}
+
+var *currentAttribute*: the attribute that is currently selected, resulting in the corresponding context information (barchart/graph) being displayed. Initially an empty string. Set via click on an attribute in searchbar or tree layout.  
+type *currentAttribute*: string  
+example *currentAttribute*: "Cohort"  
+
+#####Functions  
+*setCurrentAttribute*  
+*setAttributes*  
+*filterToCSV*  
+*calcDistribution*  
+*getCSVString*  
+*saveSubgroup*  
+*getIndex*  
+*alreadyUsed*  
+*findNeigh*  
+*findDown*  
+*uniq_fast*  
+
 ###directives/tree.directive.js  
 The tree layout was implemented using the Collapsible Tree of the D3 library.  
+
+###directives/filterbar.directive.js  
+Structure:  
+Organized in terms of a matrix -> describe more detailed
 
 -----------------
 
