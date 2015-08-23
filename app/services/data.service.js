@@ -1,41 +1,47 @@
 angular.module('gui')
   .factory('data', ['$rootScope', function($rootScope){
 
+    // empty constructor, initial variables are set in app.js
     var dataService = function(){
 
     };
 
+    // set the currently selected attribute (for context information)
     dataService.setCurrentAttribute = function(name){
       this.currentAttribute = name;
       $rootScope.$broadcast("attributeSet");
     }
 
+    // set the list of attributes with distribution and type for each attribute
     dataService.setAttributes = function(){
       res = {};
       var keys = d3.keys(this.dataset[0]);
       self = this;
       keys.forEach(function(key){
+        // object for one attribute
         tmp = {};
         tmp["distribution"] = self.calcDistribution(key, self.dataset);
         tmp["type"] = self.jsondata[key].type;
+        // add this attribute to list
         res[key] = tmp;
       });
       return res;
     }
 
+    // filter the selected subgroup according to given criteria
     dataService.filterToCSV = function(filterValues){
       var alreadyUsed = this.alreadyUsed(this.currentAttribute);
       if(alreadyUsed)
         alert("This attribute was already used for filtering in the current process!")
       else{
+        var currAtt = this.currentAttribute;
         // create object for new subgroup
         var subgroup = {};
         subgroup["row"] = this.selectedSub.row;
         subgroup["column"] = this.selectedSub.column+1;
-        var currAtt = this.currentAttribute;
         subgroup["attribute"] = currAtt;
-        subgroup.pred = this.getIndex(this.selectedSub.attribute);
-        subgroup.succ = [];
+        subgroup["pred"] = this.getIndex(this.selectedSub.attribute);
+        subgroup["succ"] = [];
         subgroup["filterValues"] = filterValues;
         // filter selected subgroup
         subgroup["data"] = this.selectedSub.data.filter(function(proband){
@@ -61,6 +67,7 @@ angular.module('gui')
         // how many probands remain?
         subgroup["percentage"] = subgroup.data.length/this.dataset.length;
 
+        // add to list of created subgroups
         this.subgroups.push(subgroup);
 
         // set this subgroup as successor of selected subgroup
@@ -69,17 +76,20 @@ angular.module('gui')
         // set filtered subgroup as selected subgroup
         this.selectedSub = subgroup;
 
+        // update filter element matrix, progressbar and subdivided barcharts
         $rootScope.$broadcast('update');
         $rootScope.$broadcast('updateProgress', {progress: subgroup.percentage});
         $rootScope.$broadcast('updateSubdivisions', {subgroup: subgroup.data});
       }
     }
 
+    // compute distribution of given attribute based on complete proband data
     dataService.calcDistribution = function(key, dataset){
-      // compute possible attribute values
+      // type of given attribute
       var type = this.jsondata[key].type;
+      // compute possible attribute values
       values = [];
-      // collect attribute values of every proband for this specific attribute, contains possible duplicates
+      // collect attribute values of every proband for given attribute, contains possible duplicates
       for(var i = 0; i < dataset.length; i++){
         // if attribute is ordinal, then possible values are strings, e.g. "SHIP2"
         if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
@@ -87,15 +97,16 @@ angular.module('gui')
         // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
         }else{
           //values[i] = +data.dataset[i][this.name]; // without rounding
-          values[i] = d3.round(+dataset[i][key]); // with rounding
+          values[i] = d3.round(+dataset[i][key]); // converted to integer and with rounding
         }
       }
-      possibleValues = this.uniq_fast(values); //without duplicates
+      // remove duplicates
+      possibleValues = this.uniq_fast(values);
 
       // compute distribution from possible values
       var result = [];
         if(possibleValues != null){
-          // for each attribute value filter probands and count results
+          // for each attribute value: filter probands and count results
           for(var i = 0; i < possibleValues.length; i++){
             var obj = {};
             var selection = dataset.filter( function(d){
@@ -117,11 +128,15 @@ angular.module('gui')
       return result;
     }
 
+    // compose string from subgroup data for saving subgroup as csv
     dataService.getCSVString = function(subgroup){
+      // complete string
       var csvArray = [];
+      // first row contains attribute names
       var keys = d3.keys(this.dataset[0]);
       csvArray.push("\"" + keys.join("\",\"") + "\"\n");
 
+      // build one row with data for each proband
       subgroup.forEach(function(proband){
         var csv = "";
         var attributeValue;
@@ -144,30 +159,36 @@ angular.module('gui')
       return csvArray;
     }
 
+    // export of subgroup as csv via save file dialog
     dataService.saveSubgroup = function(){
       // get selected subgroup
       var subgroup = this.getSelectedSub();
 
-      // get csv string from subgroup
+      // get csv string for subgroup
       var csvArray = this.getCSVString(subgroup.data);
 
-      // save csv file
+      // encode string
       var csvString = encodeURI(csvArray);
-        // remove commas from the beginning of each proband that come through encodeURI
+      // remove commas from the beginning of each proband that come through encodeURI
       csvString = csvString.split('%0A,').join('%0A');
+
+      // simulate save file dialog
       var a = document.createElement('a');
       a.href = 'data:attachment/csv,' + csvString;
       a.target = '_blank';
+      // set filename
       a.download = 'subgroup.csv';
       document.body.appendChild(a);
+      // trigger click -> opens dialog
       a.click();
     }
 
-    //get index of certain attribute in subgroup list
+    //get index of subgroup that was created using given attribute in list of subgroups (used for position of predecessor in list)
     dataService.getIndex = function(attribute){
       return this.subgroups.map(function(e){ return e.attribute; }).indexOf(attribute);
     }
 
+    // determine if attribute has already been used in the current filter process
     dataService.alreadyUsed = function(attribute){
       var res = false;
       var e = this.selectedSub;
@@ -181,6 +202,7 @@ angular.module('gui')
       return res;
     }
 
+    // does a filter element already exist to the right of the filtered subgroup?
     dataService.findNeigh = function(row, column){
       var res = false;
       var sameRow = this.subgroups.filter(function(subgroup){
@@ -193,6 +215,7 @@ angular.module('gui')
       return res;
     }
 
+    // does an element already exist below?
     dataService.findDown = function(row, column){
       var res = false;
       var sameCol = this.subgroups.filter(function(subgroup){
@@ -205,6 +228,7 @@ angular.module('gui')
       return res;
     }
 
+    // remove duplicates from an array ([1 2 2 4 3 7 7 5] -> [1 2 4 3 7 5])
     dataService.uniq_fast = function(a) {
       var seen = {};
       var out = [];

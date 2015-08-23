@@ -1,5 +1,3 @@
-TODO: aussagekräftige Kommentare in DataService  
-
 Visual Analysis of Cohort Study Data  
 ====================================
 
