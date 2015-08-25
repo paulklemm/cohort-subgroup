@@ -147,17 +147,37 @@ type *currentAttribute*: string
 example *currentAttribute*: "Cohort"  
 
 #####Functions  
-*setCurrentAttribute*  
-*setAttributes*  
-*filterToCSV*  
-*calcDistribution*  
-*getCSVString*  
-*saveSubgroup*  
-*getIndex*  
-*alreadyUsed*  
-*findNeigh*  
-*findDown*  
-*uniq_fast*  
+*setCurrentAttribute*: sets the currently selected attribute  
+@param name: the name of the currently selected attribute  
+*setAttributes*: sets the distribution and type for every attribute  
+@return: the list of attributes with distribution and type  
+*getCSVString*: composes a string from subgroup data that is later encoded for csv export  
+@param subgroup: the subgroup to be saved  
+@return: the resulting string  
+*getIndex*: gets position of a specific subgroup in the list of subgroups  
+@param attribute: the attribute that was used to create the specific subgroup  
+@return: the index of the subgroup  
+*calcDistribution*: computes the distribution of an attribute  
+@param key: the name of the attribute  
+@param dataset: the dataset the distribution is based on  
+@return: the distribution of the attribute as a list of every possible attribute value with the corresponding number  
+*filterToCSV*: filters the currently selected subgroup according to the currently selected attribute  
+@param filterValues: the criteria/attribute values according to which the subgroup is filtered  
+*saveSubgroup*: exports the currently selected subgroup as csv file  
+*alreadyUsed*: determines if attribute has already been used in the current filter process  
+@param attribute: the attribute to be checked
+@return: true if attribute has already been used  
+*findNeigh*: determine if a filter element already exists in the column where filtered subgroup is to be placed  
+@param row: the row in which the filtered subgroup is to be placed  
+@param column: the column in which the filtered subgroup is to be placed  
+@return: true if there is already an element and filtered subgroup has to be moved  
+*findDown*: determine if a filter element already exists in the row where filtered subgroup is to be placed  
+@param row: the row in which the filtered subgroup is to be placed  
+@param column: the column in which the filtered subgroup is to be placed  
+@return: true if there is already an element and filtered subgroup has to be moved  
+*uniq_fast*: removes duplicates from an array  
+@param a: the array to be processed  
+@return: the array without duplicates
 
 ###directives/tree.directive.js  
 The tree layout was implemented using the Collapsible Tree of the D3 library.  

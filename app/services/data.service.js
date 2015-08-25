@@ -28,6 +28,86 @@ angular.module('gui')
       return res;
     }
 
+    // compose string from subgroup data for saving subgroup as csv
+    dataService.getCSVString = function(subgroup){
+      // complete string
+      var csvArray = [];
+      // first row contains attribute names
+      var keys = d3.keys(this.dataset[0]);
+      csvArray.push("\"" + keys.join("\",\"") + "\"\n");
+
+      // build one row with data for each proband
+      subgroup.forEach(function(proband){
+        var csv = "";
+        var attributeValue;
+        for(i=0; i < keys.length-1; i++){
+          if(!isNaN(Number(proband[keys[i]]))){
+            attributeValue = Number(proband[keys[i]]);
+          }else{
+            attributeValue = "\"" + proband[keys[i]] + "\"";
+          }
+          csv += attributeValue + ",";
+        }
+        // not necessary cause last attribute value of a proband is always a string
+        if(!isNaN(Number(proband[keys[keys.length-1]]))){
+          attributeValue = Number(proband[keys[keys.length-1]]);
+        }
+        attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
+        csv += attributeValue + "\n";
+        csvArray.push(csv);
+      });
+      return csvArray;
+    }
+
+    //get index of subgroup that was created using given attribute in list of subgroups (used for position of predecessor in list)
+    dataService.getIndex = function(attribute){
+      return this.subgroups.map(function(e){ return e.attribute; }).indexOf(attribute);
+    }
+
+    // compute distribution of given attribute based on a given dataset
+    dataService.calcDistribution = function(key, dataset){
+      // type of given attribute
+      var type = this.jsondata[key].type;
+      // compute possible attribute values
+      values = [];
+      // collect attribute values of every proband for given attribute, contains possible duplicates
+      for(var i = 0; i < dataset.length; i++){
+        // if attribute is ordinal, then possible values are strings, e.g. "SHIP2"
+        if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
+          values[i] = dataset[i][key];
+        // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
+        }else{
+          //values[i] = +data.dataset[i][this.name]; // without rounding
+          values[i] = d3.round(+dataset[i][key]); // converted to integer and with rounding
+        }
+      }
+      // remove duplicates
+      possibleValues = this.uniq_fast(values);
+      // compute distribution from possible values
+      var result = [];
+        if(possibleValues != null){
+          // for each attribute value: filter probands and count results
+          for(var i = 0; i < possibleValues.length; i++){
+            var obj = {};
+            var selection = dataset.filter( function(d){
+              if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
+                if (d[key] == possibleValues[i]){
+                  return d;
+                }
+              }else{
+                if(d3.round(+d[key]) == possibleValues[i]){ // with rounding
+                  return d;
+                }
+              }
+            });
+            obj["attributeValue"] = possibleValues[i];
+            obj["value"] = selection.length;
+            result.push(obj);
+          }
+        }
+      return result;
+    }
+
     // filter the selected subgroup according to given criteria
     dataService.filterToCSV = function(filterValues){
       var alreadyUsed = this.alreadyUsed(this.currentAttribute);
@@ -64,15 +144,13 @@ angular.module('gui')
             downNeigh = this.findDown(subgroup.row, subgroup.column);
           }
         }
+
         // how many probands remain?
         subgroup["percentage"] = subgroup.data.length/this.dataset.length;
-
         // add to list of created subgroups
         this.subgroups.push(subgroup);
-
         // set this subgroup as successor of selected subgroup
         this.selectedSub.succ.push(this.getIndex(subgroup.attribute));
-
         // set filtered subgroup as selected subgroup
         this.selectedSub = subgroup;
 
@@ -81,82 +159,6 @@ angular.module('gui')
         $rootScope.$broadcast('updateProgress', {progress: subgroup.percentage});
         $rootScope.$broadcast('updateSubdivisions', {subgroup: subgroup.data});
       }
-    }
-
-    // compute distribution of given attribute based on complete proband data
-    dataService.calcDistribution = function(key, dataset){
-      // type of given attribute
-      var type = this.jsondata[key].type;
-      // compute possible attribute values
-      values = [];
-      // collect attribute values of every proband for given attribute, contains possible duplicates
-      for(var i = 0; i < dataset.length; i++){
-        // if attribute is ordinal, then possible values are strings, e.g. "SHIP2"
-        if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
-          values[i] = dataset[i][key];
-        // if attribute is continuous then possible attribute values are numbers instead of strings, e.g. 68.5 kg (and values are rounded)
-        }else{
-          //values[i] = +data.dataset[i][this.name]; // without rounding
-          values[i] = d3.round(+dataset[i][key]); // converted to integer and with rounding
-        }
-      }
-      // remove duplicates
-      possibleValues = this.uniq_fast(values);
-
-      // compute distribution from possible values
-      var result = [];
-        if(possibleValues != null){
-          // for each attribute value: filter probands and count results
-          for(var i = 0; i < possibleValues.length; i++){
-            var obj = {};
-            var selection = dataset.filter( function(d){
-              if(type == "nominal" || type == "ordinal" || type == "dichotomous"){
-                if (d[key] == possibleValues[i]){
-                  return d;
-                }
-              }else{
-                if(d3.round(+d[key]) == possibleValues[i]){ // with rounding
-                  return d;
-                }
-              }
-            });
-            obj["attributeValue"] = possibleValues[i];
-            obj["value"] = selection.length;
-            result.push(obj);
-          }
-        }
-      return result;
-    }
-
-    // compose string from subgroup data for saving subgroup as csv
-    dataService.getCSVString = function(subgroup){
-      // complete string
-      var csvArray = [];
-      // first row contains attribute names
-      var keys = d3.keys(this.dataset[0]);
-      csvArray.push("\"" + keys.join("\",\"") + "\"\n");
-
-      // build one row with data for each proband
-      subgroup.forEach(function(proband){
-        var csv = "";
-        var attributeValue;
-        for(i=0; i < keys.length-1; i++){
-          if(!isNaN(Number(proband[keys[i]]))){
-            attributeValue = Number(proband[keys[i]]);
-          }else{
-            attributeValue = "\"" + proband[keys[i]] + "\"";
-          }
-          csv += attributeValue + ",";
-        }
-        // not necessary cause last attribute value of a proband is always a string
-        if(!isNaN(Number(proband[keys[keys.length-1]]))){
-          attributeValue = Number(proband[keys[keys.length-1]]);
-        }
-        attributeValue = "\"" + proband[keys[keys.length-1]] + "\"";
-        csv += attributeValue + "\n";
-        csvArray.push(csv);
-      });
-      return csvArray;
     }
 
     // export of subgroup as csv via save file dialog
@@ -181,11 +183,6 @@ angular.module('gui')
       document.body.appendChild(a);
       // trigger click -> opens dialog
       a.click();
-    }
-
-    //get index of subgroup that was created using given attribute in list of subgroups (used for position of predecessor in list)
-    dataService.getIndex = function(attribute){
-      return this.subgroups.map(function(e){ return e.attribute; }).indexOf(attribute);
     }
 
     // determine if attribute has already been used in the current filter process
