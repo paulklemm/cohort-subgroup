@@ -6,8 +6,6 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("visDataLoaded", function(){
 
-        // TODO: adjust size and positioning of small multiples
-
         // determine parameter
         var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 800 - margin.right - margin.left,

@@ -191,10 +191,25 @@ As the tree layout is used to only represent a list of attributes classified int
 ###directives/filterbar.directive.js  
 Structure:  
 Organized in terms of a matrix -> describe more detailed
+Labels croppen see http://bl.ocks.org/mbostock/7555321
 
 -----------------
 
 Future Work
 ==============
 
-TODO: add TODOs that I did not finish
+###directives/barchart.directive.js  
+The labels of the x axis are way too long and need to be wrapped or cropped. At the moment they are rotated by 45 degrees to prevent overlapping but they still
+cannot be seen at their whole length. Either they are wrapped to fit on multiple lines (see http://bl.ocks.org/mbostock/7555321) or they are cropped at a specific length or one establishes abbreviations for each label.  
+
+###directives/graph.directive.js  
+Diskretisierung  
+
+###directives/filterbar.directive.js  
+Label fixen: wenn kleines Element geöffnet, fehlen Leerzeichen -> Label misses empty spaces when updated (that is the wrap function is called a second time but the words are already split and that crashes)  
+Filterungen löschen  
+Filterung nach mehr als einem Attribut auf einmal -> Zwischen-Subgruppen nicht erzeugen  
+
+###directives/tree.directive.js
+At the moment the position and the width and height of the small multiples are fixed. This leads to overlaps when many of the inner nodes of the tree layout are opened because there is not enough vertical space for all of the multiples to fit in without overlapping. Therefore the height and position of the small multiples needs to be dynamically adapted according to the number of leaf nodes that are currently displayed.  
+It can also be considered to add the subdivided bars known from the barchart to the small multiples.  

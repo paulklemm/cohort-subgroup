@@ -6,8 +6,6 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("attributeSet", function(){
 
-        //TODO: set color of big bars back to blue after filtering
-
         // if chart already exists, remove its content
         d3.selectAll(".barchart").select("svg").remove();
         d3.selectAll(".graph").select("svg").remove();
@@ -56,7 +54,7 @@ angular.module('gui')
             .selectAll("text")
             .style("text-anchor", "end")
             .attr("transform", "rotate(-45)");
-            //.call(wrap, scaleX.rangeBand()); //TODO: fix long texts that go out of the svg element
+            //.call(wrap, scaleX.rangeBand());
 
         chart.append("g")
           .attr("class", "y axis")
@@ -211,7 +209,7 @@ angular.module('gui')
 
         // collect selected filter values and "auslösen" filtering process
         function buttonClick(d){
-          var chosenBars = d3.selectAll(".bar").filter(function(d){ return (d3.select(this).style("fill") == "rgb(202, 4, 32)"); });
+          var chosenBars = d3.selectAll(".bar").filter(function(d){ return (d3.select(this).classed("selected") == true); });
           if(chosenBars[0].length == 0)
             alert("No bars chosen!");
           else{
@@ -222,6 +220,8 @@ angular.module('gui')
             });
             data.filterToCSV(filterValues);
           }
+          // set bars unselected
+          chosenBars.classed("selected", false);
         }
 
         // update subdivisions if another subgroup was selected in filterbar

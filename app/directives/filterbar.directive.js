@@ -5,8 +5,6 @@ angular.module('gui')
     template: '<div id="filterbar"></div>',
     controller: function($scope){
 
-      //TODO: crop too long strings -> http://bl.ocks.org/mbostock/7555321
-
       // determine parameter
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
       var height = 80;
@@ -44,8 +42,6 @@ angular.module('gui')
 
         // create one filterelement for each subgroup
         var dataset = data.subgroups;
-
-        // 3) TODO: adjust tooltips
 
         // add tooltips for filter elements showing the attribute and filter values
         var tip = d3.tip()
@@ -174,7 +170,6 @@ angular.module('gui')
           });
 
           //update text
-          //TODO: fix missing white spaces in text when clicking on a small element
           var text = filterbar.selectAll("text").data(data.subgroups);
           text
             .style("display", function(d){
