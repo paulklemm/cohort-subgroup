@@ -8,7 +8,8 @@ angular.module('gui')
       // determine parameter
       var width = 0.9*parseInt(d3.select('#filterbar').style('width'));
       var height = 80;
-      var elementWidth = Math.floor((width-175)/10);
+      var elementWidth = Math.floor((width-175)/7);
+      var elementHeight = 30;
       var elementHeightSmall = 10; // height for shrinked elements
       var margin = 15;
 
@@ -73,7 +74,7 @@ angular.module('gui')
             .attr("x", function(d,i,j) { return 10 + d.column*(elementWidth+margin); })
             .attr("y", function(d,i,j) { return 10 + d.row*(35); })
             .attr("width", elementWidth)
-            .attr("height", 30)
+            .attr("height", elementHeight)
             .on("click", click)
             .on("mouseover", tip.show)
             .on("mouseout", tip.hide);
@@ -181,7 +182,7 @@ angular.module('gui')
             .attr("y", function(d){
                 return 10+d.row*(elementHeightSmall+5);
             })
-            .call(wrap, elementWidth);
+            .call(wrap, elementWidth, elementHeight);
 
           //draw lines to visualize connections
           var lines = filterbar.selectAll("line").data(data.subgroups);
@@ -225,7 +226,7 @@ angular.module('gui')
 
       // wrap text so it does not exceed the given width -> used to wrap text inside svg rectangle
       //TODO: crop text if it exceeds height of rectangle
-      function wrap(text, width) {
+      function wrap(text, width, height) {
         text.each(function() {
           var text = d3.select(this),
               words = text.text().split(/\s+/).reverse(),
@@ -235,7 +236,7 @@ angular.module('gui')
               lineHeight = 1.1, // ems
               x = text.attr("x"),
               y = text.attr("y"),
-              dy = parseFloat(text.attr("dy"));
+              dy = parseFloat(text.attr("dy")),
               tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
           while (word = words.pop()) {
               line.push(word);
@@ -245,7 +246,11 @@ angular.module('gui')
                 line.pop();
                 tspan.text(line.join(" "));
                 line = [word];
-                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+                var newHeight = ++lineNumber * lineHeight + dy;
+                if(newHeight < height/5) // conversion of pixel height to em, assuming font-size of 10px
+                  tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", newHeight + "em").text(word);
+                else
+                  break;
               }
           }
         });

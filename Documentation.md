@@ -177,7 +177,21 @@ example *currentAttribute*: "Cohort"
 @return: true if there is already an element and filtered subgroup has to be moved  
 *uniq_fast*: removes duplicates from an array  
 @param a: the array to be processed  
-@return: the array without duplicates
+@return: the array without duplicates  
+
+###directives/barchart.directive.js  
+See http://bost.ocks.org/mike/bar/3/ and previous sections of the shown tutorial.  
+
+###directives/graph.directive.js  
+See http://bl.ocks.org/d3noob/b3ff6ae1c120eea654b5.  
+
+###directives/filterbar.directive.js  
+Structure:  
+Organized in terms of a matrix -> describe more detailed
+Labels croppen see http://bl.ocks.org/mbostock/7555321  
+
+###directives/searchbar.directive.js  
+The search field was implemented by adapting the code of the D3 autocomplete component example. It can be seen at http://www.brightpointinc.com/clients/brightpointinc.com/library/autocomplete/index.html?source=d3js.
 
 ###directives/tree.directive.js  
 The tree layout was implemented using the Collapsible Tree of the D3 library (for the example code see http://bl.ocks.org/mbostock/4339083).  
@@ -187,11 +201,6 @@ One can also access the children of a given node through *\_children*. This give
 The nodes are labelled as inner nodes and leaf nodes according to their position inside the tree. The inner nodes are the categories and the leaf nodes are the attributes themselves. Each node is represented by a circle and a label and the leaf nodes additionally have a small multiple (example code at http://bl.ocks.org/mbostock/1157787) representing the distribution of the bound attribute.  
 A link has a *source* and a *target* node and can directly be styled using the css style attribute (see http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link).  
 As the tree layout is used to only represent a list of attributes classified into categories the root node is not needed and therefore hidden by just setting the *hidden* attribute of the root node to true.
-
-###directives/filterbar.directive.js  
-Structure:  
-Organized in terms of a matrix -> describe more detailed
-Labels croppen see http://bl.ocks.org/mbostock/7555321
 
 -----------------
 
@@ -213,3 +222,8 @@ Filterung nach mehr als einem Attribut auf einmal -> Zwischen-Subgruppen nicht e
 ###directives/tree.directive.js
 At the moment the position and the width and height of the small multiples are fixed. This leads to overlaps when many of the inner nodes of the tree layout are opened because there is not enough vertical space for all of the multiples to fit in without overlapping. Therefore the height and position of the small multiples needs to be dynamically adapted according to the number of leaf nodes that are currently displayed.  
 It can also be considered to add the subdivided bars known from the barchart to the small multiples.  
+
+###Graphical User Interface  
+Remove border lines and place components closer to each other to make it look less like a prototype. Use the law of proximity to achieve an impression of togetherness/cohesion.  
+To achieve a more responsive design of the visualizations themselves one could use the bootstrap grid layout to place for example the tree layout instead of setting negative margins as it is handled at the moment. Otherwise the overall layout is responsive but the visualizations themselves are adjusted to one specific display ratio.  
+In general, the layout of the interface can be improved towards a more attractive design.  

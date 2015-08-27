@@ -28,7 +28,7 @@ div[class*="col-md"] {
 
 #treeVisualizationWrapper{
   box-shadow: none !important;
-  margin-left: -150px;
+  margin-left: -350px;
   position: relative;
   z-index: 1;
 }
