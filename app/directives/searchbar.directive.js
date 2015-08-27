@@ -5,8 +5,6 @@ angular.module('gui')
     template: '<div id="searchbar"></div>',
     controller: function($scope){
 
-      //TODO: hide dropdown when clicked outside of dropdown/searchfield
-
       $scope.$on("dataLoaded", function(){
 
         var keys = d3.keys(data.dataset[0]);
@@ -183,6 +181,16 @@ angular.module('gui')
                   function showDropDown() {
                       dropDown.style("display","block");
                   }
+
+                  // close dropdown when clicked outside of it
+                  $(document).click(function(){
+                    hideDropDown();
+                  });
+
+                  // do not close dropdown when clicked inside
+                  $(".bp-autocomplete-dropdown").click(function(e){
+                    e.stopPropagation();
+                  });
 
               });
           }
