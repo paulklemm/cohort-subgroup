@@ -6,10 +6,6 @@ angular.module('gui')
     controller: function($scope){
       $scope.$on("visDataLoaded", function(){
 
-        // enhance links when hovering over node: http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link
-        // hide unrelated parent nodes: http://stackoverflow.com/questions/29873947/hide-unrelated-parent-nodes-but-child-node-in-d3-js
-        // small multiples: http://bl.ocks.org/mbostock/1157787
-
         // TODO: adjust size and positioning of small multiples
 
         // determine parameter

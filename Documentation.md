@@ -180,7 +180,13 @@ example *currentAttribute*: "Cohort"
 @return: the array without duplicates
 
 ###directives/tree.directive.js  
-The tree layout was implemented using the Collapsible Tree of the D3 library.  
+The tree layout was implemented using the Collapsible Tree of the D3 library (for the example code see http://bl.ocks.org/mbostock/4339083).  
+A tree consists of nodes that represent the data and links that represent the hierarchy.  
+A node has a *name* e.g. "Study", a *depth* e.g. 1 and an *id* e.g. 10. Its *x and y coordinates* are also stored as well as the *parent* node.
+One can also access the children of a given node through *\_children*. This gives not the node itself as a tree node but the name and size as stored in the json file.  
+The nodes are labelled as inner nodes and leaf nodes according to their position inside the tree. The inner nodes are the categories and the leaf nodes are the attributes themselves. Each node is represented by a circle and a label and the leaf nodes additionally have a small multiple (example code at http://bl.ocks.org/mbostock/1157787) representing the distribution of the bound attribute.  
+A link has a *source* and a *target* node and can directly be styled using the css style attribute (see http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link).  
+As the tree layout is used to only represent a list of attributes classified into categories the root node is not needed and therefore hidden by just setting the *hidden* attribute of the root node to true.
 
 ###directives/filterbar.directive.js  
 Structure:  
