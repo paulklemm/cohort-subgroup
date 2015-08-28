@@ -182,7 +182,10 @@ angular.module('gui')
             .attr("y", function(d){
                 return 10+d.row*(elementHeightSmall+5);
             })
-            .call(wrap, elementWidth, elementHeight);
+
+          // only execute label wrapping for added filterelement
+          var enteredText = filterbar.selectAll("text").filter(function(d){ return d.attribute == elementdata.attribute; });
+          enteredText.call(wrap, elementWidth, elementHeight);
 
           //draw lines to visualize connections
           var lines = filterbar.selectAll("line").data(data.subgroups);
@@ -225,7 +228,6 @@ angular.module('gui')
       }
 
       // wrap text so it does not exceed the given width -> used to wrap text inside svg rectangle
-      //TODO: crop text if it exceeds height of rectangle
       function wrap(text, width, height) {
         text.each(function() {
           var text = d3.select(this),

@@ -214,10 +214,12 @@ cannot be seen at their whole length. Either they are wrapped to fit on multiple
 ###directives/graph.directive.js  
 Diskretisierung  
 
-###directives/filterbar.directive.js  
-Label fixen: wenn kleines Element geöffnet, fehlen Leerzeichen -> Label misses empty spaces when updated (that is the wrap function is called a second time but the words are already split and that crashes)  
-Filterungen löschen  
-Filterung nach mehr als einem Attribut auf einmal -> Zwischen-Subgruppen nicht erzeugen  
+###directives/filterbar.directive.js
+At the moment it is only possible to create a subgroup by filtering according to one single attribute. Filtering according to a query containing multiple attributes e.g. "Age > 50 and Living_with_Partner yes" is done sequentially. But sometimes it might be the case that the user previously knows that he only needs the subgroup that fulfills both criteria without having the subgroups in between. It then could be useful to provide the functionality to filter according to several attributes at the same time to avoid creating non-essential subgroups.  
+It might also be useful to allow subgroups and therefore filter processes to be removed. In this case one has to think of how to deal with following subgroups that were filtered based on the removed subgroup. Furthermore the possibility to reset the whole filterbar without having to reload the page could be offered.
+The labels are wrapped in the svg rectangles belonging to the filter elements using a function that divides a label into its single words and then adds the words to a line as long as the given width is not exceeded. If this is the case a new line is started. It also simply crops the label if the given height is exceeded.  
+If a small filter element (with hidden label) is clicked the update function is executed with this filter element as input and the wrap function is executed a second time for the belonging label. This leads to wrong outcomes because the input text of the label now somehow has another composition which results in missing empty spaces and wrong positions for the line break.
+TODO: fix csv export -> remove error "n.apply is not a function" when clicked on save button to make save dialog work! 
 
 ###directives/tree.directive.js
 At the moment the position and the width and height of the small multiples are fixed. This leads to overlaps when many of the inner nodes of the tree layout are opened because there is not enough vertical space for all of the multiples to fit in without overlapping. Therefore the height and position of the small multiples needs to be dynamically adapted according to the number of leaf nodes that are currently displayed.  
