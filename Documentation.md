@@ -186,8 +186,8 @@ See http://bost.ocks.org/mike/bar/3/ and previous sections of the shown tutorial
 See http://bl.ocks.org/d3noob/b3ff6ae1c120eea654b5.  
 
 ###directives/filterbar.directive.js  
-Structure:  
-Organized in terms of a matrix -> describe more detailed
+The filterbar is used to display the filtering history and the subgroups it creates.  
+The underlying data structure is therefore the list of subgroups mentioned in the data service section before. For each of these subgroups a row and a column index is stored which indicates the position of this subgroup inside of the filtering history which is organized in terms of a matrix.  
 Labels croppen see http://bl.ocks.org/mbostock/7555321  
 
 ###directives/searchbar.directive.js  
@@ -212,14 +212,18 @@ The labels of the x axis are way too long and need to be wrapped or cropped. At 
 cannot be seen at their whole length. Either they are wrapped to fit on multiple lines (see http://bl.ocks.org/mbostock/7555321) or they are cropped at a specific length or one establishes abbreviations for each label.  
 
 ###directives/graph.directive.js  
-Diskretisierung  
+In order to make the numerical attributes and therefore the graph visualizations applicable for filtering a discretization is needed.  
+This could be implemented using lines (german: Geraden) that separate the co-domain (german: Wertebereich) into several sections. These sections can then be used for filtering, e.g. the attribute "Age" with the sections "0-20", "20-40", "40-60", ... .  
+The sections are created by shifting the lines along the x-axis or simply entering the desired value in an input field. Initially one line is existent in the graph visualization, by clicking a "+"-button the user can add as many lines as he needs.  
+The discretization can be saved by creating a new quantitative (im Sinne von: diskrete Ausprägungen, die in eine Reihenfolge gebracht werden können) attribute out of the defined sections. This quantitative attribute can then be used for filtering in the known manner.  
+Positioning the lines could be facilitated by providing functionalities like snapping lines to specific predefined positions or a tool to directly divide the co-domain in a certain number of equal sections.
 
 ###directives/filterbar.directive.js
 At the moment it is only possible to create a subgroup by filtering according to one single attribute. Filtering according to a query containing multiple attributes e.g. "Age > 50 and Living_with_Partner yes" is done sequentially. But sometimes it might be the case that the user previously knows that he only needs the subgroup that fulfills both criteria without having the subgroups in between. It then could be useful to provide the functionality to filter according to several attributes at the same time to avoid creating non-essential subgroups.  
 It might also be useful to allow subgroups and therefore filter processes to be removed. In this case one has to think of how to deal with following subgroups that were filtered based on the removed subgroup. Furthermore the possibility to reset the whole filterbar without having to reload the page could be offered.
 The labels are wrapped in the svg rectangles belonging to the filter elements using a function that divides a label into its single words and then adds the words to a line as long as the given width is not exceeded. If this is the case a new line is started. It also simply crops the label if the given height is exceeded.  
 If a small filter element (with hidden label) is clicked the update function is executed with this filter element as input and the wrap function is executed a second time for the belonging label. This leads to wrong outcomes because the input text of the label now somehow has another composition which results in missing empty spaces and wrong positions for the line break.
-TODO: fix csv export -> remove error "n.apply is not a function" when clicked on save button to make save dialog work! 
+TODO: fix csv export -> remove error "n.apply is not a function" when clicked on save button to make save dialog work!
 
 ###directives/tree.directive.js
 At the moment the position and the width and height of the small multiples are fixed. This leads to overlaps when many of the inner nodes of the tree layout are opened because there is not enough vertical space for all of the multiples to fit in without overlapping. Therefore the height and position of the small multiples needs to be dynamically adapted according to the number of leaf nodes that are currently displayed.  
