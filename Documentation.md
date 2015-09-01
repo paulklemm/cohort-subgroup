@@ -187,8 +187,30 @@ See http://bl.ocks.org/d3noob/b3ff6ae1c120eea654b5.
 
 ###directives/filterbar.directive.js  
 The filterbar is used to display the filtering history and the subgroups it creates.  
-The underlying data structure is therefore the list of subgroups mentioned in the data service section before. For each of these subgroups a row and a column index is stored which indicates the position of this subgroup inside of the filtering history which is organized in terms of a matrix.  
-Labels croppen see http://bl.ocks.org/mbostock/7555321  
+The underlying data structure is therefore the list of subgroups mentioned in the data service section before. Subgroups can be selected by clicking the corresponding filter element in the filterbar. There is always one selected subgroup at a time. These selections are used for exporting subgroup data.
+For each of these subgroups a row and a column index is stored which indicates the position of this subgroup inside of the filtering history which is organized in terms of a matrix. How do we get this row and column indices for a subgroup? The arrangement of the filter elements works as follows:  
+A subgroup resulting from filtering is placed to the right of the subgroup "von der aus gefiltert wurde, dem Vorgänger". If two ore more subgroups are created based on the same predecessor then the second and following filter elements are also placed to the right of the predecessor but respectively a row below. Connecting lines illustrate the correlations between filter elements. Thus, for each created subgroup we know the predecessor and possible successor subgroups. This leads to a filter path showing the process that was passed through on the way to creating a specific subgroup. Clicking on a filter element leads to a shrinking of irrelevant elements while all the subgroups that lie on this path or more precisely that were involved creating the specific subgroup remain big.  
+
+#####Functions
+*update*: shrinks filter elements that do not lie on the current filter path  
+@param element: the filter element that was lastly added via filtering  
+*wrap*: wraps the labels inside the filter elements (see http://bl.ocks.org/mbostock/7555321)  
+@param text: the label text that needs to be wrapped  
+@param width: the width of the filter element that should not be exceeded  
+@param height: the height of the filter element that should not be exceeded  
+*click*: processes the click of a filter element. If a small element is clicked then this and the other elements on the filter path are displayed big. Sets the corresponding subgroup active and triggers the update of progessbar and subdivided barchart.  
+@param d: the clicked element  
+*saveSub*: triggers the export of the currently selected subgroup  
+*setActive*: sets an element and its corresponding subgroup selected for further processing  
+@param element: the element to be selected  
+*computeYPosition*: determines the vertical position of the given element  
+@param d: the subgroup corresponding to the element whose y-coordinate is to be computed
+@param path: the list of subgroups, that are on the filter path of the given element  
+@return: the y-coordinate of the element  
+*computeHeight*: determines the height of a given element (depending on whether the element is among the filter path)  
+@param d: the subgroup corresponding to the element whose height is to be computed  
+@param path: the list of subgroups, that are on the filter path of the given element
+@return: the height of the element  
 
 ###directives/searchbar.directive.js  
 The search field was implemented by adapting the code of the D3 autocomplete component example. It can be seen at http://www.brightpointinc.com/clients/brightpointinc.com/library/autocomplete/index.html?source=d3js.
@@ -199,8 +221,21 @@ A tree consists of nodes that represent the data and links that represent the hi
 A node has a *name* e.g. "Study", a *depth* e.g. 1 and an *id* e.g. 10. Its *x and y coordinates* are also stored as well as the *parent* node.
 One can also access the children of a given node through *\_children*. This gives not the node itself as a tree node but the name and size as stored in the json file.  
 The nodes are labelled as inner nodes and leaf nodes according to their position inside the tree. The inner nodes are the categories and the leaf nodes are the attributes themselves. Each node is represented by a circle and a label and the leaf nodes additionally have a small multiple (example code at http://bl.ocks.org/mbostock/1157787) representing the distribution of the bound attribute.  
-A link has a *source* and a *target* node and can directly be styled using the css style attribute (see http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link).  
-As the tree layout is used to only represent a list of attributes classified into categories the root node is not needed and therefore hidden by just setting the *hidden* attribute of the root node to true.
+A link has a *source* and a *target* node and can directly be styled using the css style attribute.  
+As the tree layout is used to only represent a list of attributes classified into categories the root node is not needed and therefore hidden by just setting the *hidden* attribute of the root node to true.  
+
+#####Functions  
+Controller function: creates and updates the tree layout  
+*collapse*: close an open node on click by transition of its child nodes  
+@param d: the node whose children are translated  
+*update*: renders the tree and corresponding barcharts/graphs when a node was clicked. Taking the clicked node as the root, the tree layout is computed from there on.  
+@param source: the clicked node that is taken as the root for the updated tree  
+*mouseover*: enhances the corresponding link of the hovered node. If it is a leaf node the node itself is also enhanced (see http://stackoverflow.com/questions/19111581/d3js-force-directed-on-hover-to-node-highlight-colourup-linked-nodes-and-link).  
+@param d: the hovered node  
+*mouseout*: resets the previously enhanced link and node to their default style  
+@param d: the node that was left by the mouse  
+*click*: opens or rather closes a node (according to its state) by setting child nodes and triggers the update of the resulting tree  
+@param d: the clicked node
 
 -----------------
 
@@ -222,8 +257,7 @@ Positioning the lines could be facilitated by providing functionalities like sna
 At the moment it is only possible to create a subgroup by filtering according to one single attribute. Filtering according to a query containing multiple attributes e.g. "Age > 50 and Living_with_Partner yes" is done sequentially. But sometimes it might be the case that the user previously knows that he only needs the subgroup that fulfills both criteria without having the subgroups in between. It then could be useful to provide the functionality to filter according to several attributes at the same time to avoid creating non-essential subgroups.  
 It might also be useful to allow subgroups and therefore filter processes to be removed. In this case one has to think of how to deal with following subgroups that were filtered based on the removed subgroup. Furthermore the possibility to reset the whole filterbar without having to reload the page could be offered.
 The labels are wrapped in the svg rectangles belonging to the filter elements using a function that divides a label into its single words and then adds the words to a line as long as the given width is not exceeded. If this is the case a new line is started. It also simply crops the label if the given height is exceeded.  
-If a small filter element (with hidden label) is clicked the update function is executed with this filter element as input and the wrap function is executed a second time for the belonging label. This leads to wrong outcomes because the input text of the label now somehow has another composition which results in missing empty spaces and wrong positions for the line break.
-TODO: fix csv export -> remove error "n.apply is not a function" when clicked on save button to make save dialog work!
+If a small filter element (with hidden label) is clicked the update function is executed with this filter element as input and the wrap function is executed a second time for the belonging label. This leads to wrong outcomes because the input text of the label now somehow has another composition which results in missing empty spaces and wrong positions for the line break.  
 
 ###directives/tree.directive.js
 At the moment the position and the width and height of the small multiples are fixed. This leads to overlaps when many of the inner nodes of the tree layout are opened because there is not enough vertical space for all of the multiples to fit in without overlapping. Therefore the height and position of the small multiples needs to be dynamically adapted according to the number of leaf nodes that are currently displayed.  

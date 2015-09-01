@@ -164,7 +164,7 @@ angular.module('gui')
     // export of subgroup as csv via save file dialog
     dataService.saveSubgroup = function(){
       // get selected subgroup
-      var subgroup = this.getSelectedSub();
+      var subgroup = this.selectedSub;
 
       // get csv string for subgroup
       var csvArray = this.getCSVString(subgroup.data);

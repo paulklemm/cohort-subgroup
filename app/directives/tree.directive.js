@@ -171,38 +171,9 @@ angular.module('gui')
           });
 
           // enhance corresponding link and circle when the mouse is moved over a node
-          node.on("mouseover", function(d){
-              link.style("stroke-width", function(l) {
-                if(d == l.target)
-                  return "4px";
-                else
-                  return "1.5px";
-              })
-              link.style("stroke", function(l){
-                if(d == l.source || d == l.target)
-                  return "#057D9F";
-                else
-                  return "#CCC";
-              })
-              if(d.depth == 2){
-                d3.select(this).select('circle')
-                  .attr("r", 8)
-                  .style("stroke-width", "4px");
-                d3.select(this).select('text')
-                  .style("font-size", "14px");
-              }
-          })
-
+          node.on("mouseover", mouseover);
           // reset link and circle styles when mouse is moved out of node
-          node.on("mouseout", function(d){
-              d3.select(this).select('circle')
-                .attr("r", 5)
-                .style("stroke-width", "1.5px");
-              d3.select(this).select('text')
-                .style("font-size", "10px");
-              link.style("stroke-width", "1.5px");
-              link.style("stroke", "#ccc");
-          })
+          node.on("mouseout", mouseout);
 
           // translate child nodes to their new position if parent node was opened
           var nodeUpdate = node.transition()
@@ -259,6 +230,38 @@ angular.module('gui')
             d.x0 = d.x;
             d.y0 = d.y;
           });
+
+          function mouseover(d) {
+            link.style("stroke-width", function(l) {
+              if(d == l.target)
+                return "4px";
+              else
+                return "1.5px";
+            })
+            link.style("stroke", function(l){
+              if(d == l.source || d == l.target)
+                return "#057D9F";
+              else
+                return "#CCC";
+            })
+            if(d.depth == 2){
+              d3.select(this).select('circle')
+                .attr("r", 8)
+                .style("stroke-width", "4px");
+              d3.select(this).select('text')
+                .style("font-size", "14px");
+            }
+          }
+
+          function mouseout(d) {
+            d3.select(this).select('circle')
+              .attr("r", 5)
+              .style("stroke-width", "1.5px");
+            d3.select(this).select('text')
+              .style("font-size", "10px");
+            link.style("stroke-width", "1.5px");
+            link.style("stroke", "#ccc");
+          }
         }
 
         // toggle nodes on click

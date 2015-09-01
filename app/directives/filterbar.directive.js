@@ -32,8 +32,7 @@ angular.module('gui')
         .attr("class", "btn btn-default")
         .attr("type", "button")
         .style("margin-top", "10px")
-        .style("margin-right", "-10px")
-        .on("click", save)
+        .on("click", saveSub)
         .append("span")
           .attr("class", "glyphicon glyphicon-floppy-disk")
           .style("font-size", "20px");
@@ -272,7 +271,7 @@ angular.module('gui')
       }
 
       // trigger save function of dataservice if "save" button is clicked
-      function save(){
+      function saveSub() {
         data.saveSubgroup();
       }
 
