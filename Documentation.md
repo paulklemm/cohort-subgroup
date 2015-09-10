@@ -1,7 +1,9 @@
 Visual Analysis of Cohort Study Data  
 ====================================
 
-####This interface is used for intuitively and effectively filtering a given dataset consisting of about 300 attributes for each participant to create proband subgroups that can then be analyzed using a method of choice.
+**This interface is used for intuitively and effectively filtering a given dataset consisting of about 300 attributes for each participant to create subject subgroups that can then be analyzed using a method of choice.**
+
+*The prototype currently only works using Firefox (Tested with Firefox 39.0)*
 
 -----------------
 
@@ -12,13 +14,13 @@ File system
 This folder contains the directives and services that control the data management as well as the individual components.
 
 ###data  
-This folder contains the data basis for the user interface. This includes the proband data as well as details and structuring of the attributes.  
+This folder contains the data basis for the user interface. This includes the subject data as well as details and structuring of the attributes.  
 *attributes.json*:
 This file contains all attributes sorted into 12 categories and is used for the visualization as described in 'List of Attributes'.  
 *dictionary_new_names.json*:  
 This file contains a short description and the type (e.g. nominal, ordinal, ...) for each attribute. These information are needed for displaying the distribution of an attribute according to its type via barchart or graph.  
 *breast_fat_labels.csv*:  
-This file holds the full dataset of probands consisting of ?.
+This file holds the full dataset of subjects consisting of ?.
 
 ###bower_components
 This folder contains all required files for the used libraries.
@@ -52,7 +54,7 @@ Among others it consists of directives that are embedded in the HTML document an
 ###Bootstrap  
 This front-end framework supports responsive as well as fast and easy web development and provides various custom HTML and CSS components. It is used for keeping the layout simple and applicable to various devices of different shapes.
 ###D3  
-This JavaScript library helps manipulating documents based on data. It combines powerful visualization components with a data-driven approach to DOM manipulation and therefore is used for simply visualizing the given proband data of the study.
+This JavaScript library helps manipulating documents based on data. It combines powerful visualization components with a data-driven approach to DOM manipulation and therefore is used for simply visualizing the given subject data of the study.
 
 -----------------
 
@@ -65,7 +67,7 @@ Furthermore this service provides functions to make use of these data in terms o
 
 ###Barchart (directives/barchart.directive.js)  
 This directive creates a barchart visualizing the distribution of a not continuous attribute as soon as such an attribute is selected.  
-Filtering can be done by selecting single/multiple bars via mouseclick or selection frame and hitting the button "Apply filter". This creates a new subgroup with probands that fulfill the chosen criteria.
+Filtering can be done by selecting single/multiple bars via mouseclick or selection frame and hitting the button "Apply filter". This creates a new subgroup with subjects that fulfill the chosen criteria.
 If one or more subgroups have already been created then the bars are subdivided showing the initial distribution (blue) as well as the distribution within the selected subgroup (grey).
 
 ###Graph (directives/graph.directive.js)  
@@ -77,8 +79,8 @@ For each filtering process a new subgroup is created and visualized in terms of 
 A selected subgroup in the filterbar can be saved to the computer by clicking the disk button.
 
 ###Progressbar (directives/progressbar.directive.js)  
-This directive visualizes how many probands of the initial dataset are left in a subgroup. With each filtering the progressbar is updated showing the percentage of probands in the resulting subgroup compared to the number of probands in the initial dataset.  
-Amongst others this prevents the user from creating subgroups with too few probands that are not statistically relevant.
+This directive visualizes how many subjects of the initial dataset are left in a subgroup. With each filtering the progressbar is updated showing the percentage of subjects in the resulting subgroup compared to the number of subjects in the initial dataset.  
+Amongst others this prevents the user from creating subgroups with too few subjects that are not statistically relevant.
 
 ###Searchbar (directives/searchbar.directive.js)  
 This searchfield is used to search for a specific attribute whose context information can then be viewed or that can be used for filtering.  
@@ -95,8 +97,8 @@ Implementation
 
 ###services/data.service.js  
 #####Variables  
-var *dataset*: holds the proband data imported from data/breast_fat_labels.csv.  
-type *dataset*: array of objects with every object representing a proband via enumeration of attributes and corresponding values.  
+var *dataset*: holds the subject data imported from data/breast_fat_labels.csv.  
+type *dataset*: array of objects with every object representing a subject via enumeration of attributes and corresponding values.  
 example *dataset*: [{Age: "34", Body_Weight: "68.5", ...}, {...}, ...]  
 
 var *jsondata*: holds a detailed description in english and german as well as the type for each attribute  
@@ -122,15 +124,15 @@ example *visdata*:
 
 var *subgroups*: holds the subgroups resulting from filter processes.  
 Each time a filter is applied, the resulting subgroup is added to this list. From here they themselves can be filtered to create another subgroup or they can be exported for further analysis.  
-Initially this variable consists of a subgroup "all" containing the initial proband dataset before any filtering was done.  
+Initially this variable consists of a subgroup "all" containing the initial subject dataset before any filtering was done.  
 type *subgroups*: array of objects with an object representing a subgroup through row, column, attribute, pred, succ, filtervalues, data and percentage.  
 row, column: position for corresponding filterelement inside the imaginary matrix  
 attribute: the attribute according to which filtering was done, e.g. Age  
 pred: the subgroup from which filtering was done to create this subgroup  
 succ: the subgroup that was created by applying a filter on this subgroup  
 filtervalues: the values of the given attribute that were used for filtering, e.g. >50  
-data: the array of objects representing the resulting probands that fulfill the filtervalues  
-percentage: how many probands of the initial number of probands are left?  
+data: the array of objects representing the resulting subjects that fulfill the filtervalues  
+percentage: how many subjects of the initial number of subjects are left?  
 Predecessor and successor are stored as the index where the predecessor subgroup or rather the successor subgroup is stored in the list of subgroups. The corresponding subgroup can therefore be accessed through *subgroups*[pred] or *subgroups*[succ].  
 example *subgroups*: [{row: 0, column: 0, attribute: "all", pred: -1, succ: 1, filterValues: null, data: *dataset*, percentage: 1}, {row: 0, column: 1, attribute: "Cohort", pred: 0, succ: [], filterValues: "TREND0", data: [...], percentage: 0.62}, {...}, ...]  
 
@@ -138,7 +140,7 @@ var *attributes*: holds the distribution and type for every attribute
 type *attributes*: object with objects containing distribution and type for each attribute  
 example *attributes*: {Cohort: {distribution: [{attributeValue: "SHIP2", value: 387}, {attributeValue: "TREND0", value: 631}], type: "nominal"}, Age: {...}, Mobility: {...}, ...}  
 
-var *selectedSub*: holds the subgroup that is currently selected. Used for filtering and export of subgroups. Initialized with the complete proband dataset - the "all" subgroup in *subgroups*.  
+var *selectedSub*: holds the subgroup that is currently selected. Used for filtering and export of subgroups. Initialized with the complete subject dataset - the "all" subgroup in *subgroups*.  
 type *selectedSub*: object  
 example *selectedSub*: {row: 0, column: 1, attribute: "Cohort", pred: 0, succ: [], filterValues: "TREND0", data: [...], percentage: 0.62}
 
